@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050507">
+  <meta name="description" content="Musik Club: formación, música y comunidad DJ.">
+  <title>Musik Club — Academia DJ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Michroma&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Musik Academia de Música, inicio"><img src="assets/musik-logo-hd.png" alt="Logo de Musik"><span>ACADEMIA DE MÚSICA</span></a>
+    <nav class="desktop-nav" aria-label="Navegación principal">
+      <a class="active" href="#inicio">Inicio</a><a href="#academia">Academia</a><a href="club.html">Club exclusivo</a><a href="#membresias">Membresías</a>
+    </nav>
+    <a class="member-btn" href="club.html">Ingresá al Club <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="promo-carousel" id="promo-carousel" aria-label="Novedades y promociones"></section>
+    <section class="hero" id="inicio">
+      <div class="club-lights" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="hero-eq" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <div class="eyebrow"><i></i> Comunidad privada para DJs</div>
+        <h1>APRENDÉ EN SERIO.<br><span>CREÁ TU SONIDO.</span></h1>
+        <p>Academia de DJs y producción musical. Formación presencial u online, equipamiento profesional y una nueva comunidad para seguir creciendo dentro y fuera de la cabina.</p>
+        <div class="hero-actions"><a class="btn primary" href="#academia">Ver formación <b>→</b></a><a class="btn ghost" href="#membresias">Conocer el Club</a></div>
+        <div class="trust-row"><span class="avatars"><b>LU</b><b>TM</b><b>+8</b></span><p><strong>Una comunidad que mezcla</strong><br>Conectá, practicá y compartí.</p></div>
+      </div>
+      <div class="hero-visual" aria-label="Vista previa de sesión DJ">
+        <div class="hernan-portrait">
+          <img class="persona-image hernan-state" src="assets/hernan-paredes-dj.png" alt="Hernán Paredes tocando en una cabina de DJ">
+          <img class="persona-image groovero-state" src="assets/groovero-dj.png" alt="Groovero tocando en una cabina de DJ">
+          <div class="persona-flash" aria-hidden="true"></div>
+          <div class="hernan-caption persona-caption hernan-copy"><span>DIRECTOR / FOUNDER</span><strong>Hernán<br>Paredes</strong><p>DJ · Productor · Coach</p><a href="#musik-radio">Escuchar su música ↘</a></div>
+          <div class="hernan-caption persona-caption groovero-copy"><span>ALTER EGO / FUNKY MODE</span><strong>GROOVERO</strong><p>Groove · Disco · Good vibes</p><a href="#musik-radio">Entrar en el groove ↘</a></div>
+          <button class="persona-switch" type="button" aria-label="Transformar entre Hernán y Groovero" aria-pressed="false"><i></i><span>HERNÁN</span><b>/</b><span>GROOVERO</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="sound-lab section" id="musik-radio">
+      <div class="section-head"><div><span class="kicker">MUSIK RADIO / ON AIR</span><h2>Escuchá lo que<br><em>nace en Musik.</em></h2></div><p>Producciones, remixes y sets del director de la academia y de artistas formados en nuestra comunidad.</p></div>
+      <div class="radio-layout">
+        <div class="radio-selector">
+          <button class="radio-track active" data-sound="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/hernan-paredes&color=%2300eaf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=true">
+            <span class="radio-number">01</span><span class="radio-avatar hp">HP</span><span class="radio-copy"><small>DIRECTOR / DJ &amp; PRODUCER</small><strong>Hernán Paredes</strong><em>Techno · Tech House · Remixes</em></span><b>▶</b>
+          </button>
+          <button class="radio-track" data-sound="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/sabrina-minelli/tracks&color=%23cf00ff&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=true">
+            <span class="radio-number">02</span><span class="radio-avatar sm">SM</span><span class="radio-copy"><small>ALUMNI MUSIK / ARTISTA</small><strong>Sabrina Minelli</strong><em>Deep · Tech House · Funky House</em></span><b>▶</b>
+          </button>
+          <button class="radio-track upload-track" data-toast="Los miembros podrán enviar su track desde su perfil.">
+            <span class="radio-number">＋</span><span class="radio-avatar add">↑</span><span class="radio-copy"><small>ALUMNOS MUSIK</small><strong>Publicá tu track</strong><em>Envíalo para formar parte de Musik Radio</em></span><b>↗</b>
+          </button>
+        </div>
+        <div class="radio-player">
+          <div class="radio-live"><i></i> REPRODUCTOR OFICIAL</div>
+          <iframe id="soundcloud-player" title="Reproductor Musik Radio" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/hernan-paredes&color=%2300eaf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=true"></iframe>
+          <div class="radio-wave" aria-hidden="true"></div>
+          <div class="radio-meta"><span><b>CURADURÍA MUSIK</b>Selección oficial de la comunidad</span><a href="https://soundcloud.com/hernan-paredes/tracks" target="_blank" rel="noopener">Abrir en SoundCloud ↗</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="marquee" aria-hidden="true"><div>APRENDÉ ✦ MEZCLÁ ✦ CONECTÁ ✦ TOCÁ ✦ APRENDÉ ✦ MEZCLÁ ✦ CONECTÁ ✦ TOCÁ ✦</div></section>
+
+    <section class="academy section" id="academia">
+      <div class="section-head"><div><span class="kicker">FORMACIÓN MUSIK</span><h2>De tu primera mezcla<br><em>a tu carrera.</em></h2></div><p>Programas presenciales y online, con equipamiento disponible en la academia y certificación Musik al completar la formación.</p></div>
+      <div class="academy-feature">
+        <div class="program-main"><span class="program-index">01 / CARRERA</span><h3>DJ<br>PROFESIONAL</h3><p>Una formación integral para dominar cabina, vinilos, software, Ableton Live y performance Hybrid.</p><div class="program-meta"><span><b>14 meses</b>Duración</span><span><b>5 módulos</b>Formación</span><span><b>Diploma</b>Musik</span></div><a href="https://musikargentina.com/2025/01/03/carrera-dj-profesional/" target="_blank" rel="noopener">Ver programa completo ↗</a></div>
+        <div class="program-art program-gear"><img src="assets/pioneer-cdj-3000x-djm-v10.png" alt="Setup profesional con dos Pioneer DJ CDJ-3000X y mixer DJM-V10"><div class="gear-label"><span>SETUP PROFESIONAL</span><strong>CDJ-3000X<br>+ DJM-V10</strong></div></div>
+      </div>
+      <div class="program-grid">
+        <article><span>02 / CURSO</span><h3>DJ Profesional 1</h3><p>Uso de cabina, selección musical, BPM, ecualización y mezcla acompasada desde cero.</p><div><b>12 clases</b><b>24 horas</b></div><a href="https://musikargentina.com/2025/01/02/01-dj-inicial/" target="_blank" rel="noopener">Más información ↗</a></article>
+        <article><span>03 / CURSO</span><h3>Producción Musical 1</h3><p>Ableton Live, samples, loops, automatización, instrumentos virtuales y creación de tracks.</p><div><b>12 clases</b><b>Inicial</b></div><a href="https://musikargentina.com/2025/01/02/curso-produccion-musical-1/" target="_blank" rel="noopener">Más información ↗</a></article>
+        <article><span>04 / CARRERA</span><h3>DJ Productor</h3><p>La experiencia completa: técnica DJ, creación musical, MIDI, efectos y producción con Ableton.</p><div><b>16 meses</b><b>4 módulos</b></div><a href="https://musikargentina.com/2025/01/03/carrera-dj-productor/" target="_blank" rel="noopener">Más información ↗</a></article>
+      </div>
+      <div class="services-head"><span class="kicker">TODOS LOS SERVICIOS</span><h3>Cursos, carreras y especializaciones.</h3><p>Elegí el recorrido que mejor acompañe tu nivel y tu objetivo artístico.</p></div>
+      <div class="services-grid">
+        <article class="service-card cyan"><span>CURSO / INICIAL</span><h3>DJ Profesional 1</h3><p>Cabina, selección musical, BPM, ecualización y mezcla acompasada. No requiere conocimientos previos.</p><a href="https://musikargentina.com/2025/01/02/01-dj-inicial/" target="_blank" rel="noopener">Ver curso ↗</a></article>
+        <article class="service-card blue"><span>CURSO / AVANZADO</span><h3>DJ Profesional 2</h3><p>Técnicas avanzadas para perfeccionar la mezcla, la performance y el dominio del equipamiento.</p><a href="https://musikargentina.com/" target="_blank" rel="noopener">Consultar ↗</a></article>
+        <article class="service-card magenta"><span>PRODUCCIÓN / INICIAL</span><h3>Producción Musical 1</h3><p>Ableton Live, samples, loops, automatización, instrumentos virtuales y creación de tracks.</p><a href="https://musikargentina.com/2025/01/02/curso-produccion-musical-1/" target="_blank" rel="noopener">Ver curso ↗</a></article>
+        <article class="service-card violet"><span>PRODUCCIÓN / AVANZADO</span><h3>Producción Musical 2</h3><p>Profundización creativa y técnica para desarrollar producciones propias con acabado profesional.</p><a href="https://musikargentina.com/" target="_blank" rel="noopener">Consultar ↗</a></article>
+        <article class="service-card feature-service"><span>CARRERA / 14 MESES</span><h3>DJ Profesional</h3><p>DJ Inicial y Avanzado, vinilos, Ableton Live modo DJ y performance Hybrid.</p><a href="https://musikargentina.com/2025/01/03/carrera-dj-profesional/" target="_blank" rel="noopener">Ver carrera ↗</a></article>
+        <article class="service-card feature-service"><span>CARRERA / 16 MESES</span><h3>DJ Productor</h3><p>Formación completa que combina técnica DJ, creación musical, MIDI y producción.</p><a href="https://musikargentina.com/2025/01/03/carrera-dj-productor/" target="_blank" rel="noopener">Ver carrera ↗</a></article>
+        <article class="service-card"><span>CARRERA</span><h3>Músico Electrónico</h3><p>Composición, interpretación y herramientas digitales para desarrollar una identidad sonora propia.</p><a href="https://musikargentina.com/" target="_blank" rel="noopener">Consultar ↗</a></article>
+        <article class="service-card"><span>CLASES</span><h3>Teclado y Sintetizador</h3><p>Armonía, interpretación y aplicación práctica de teclados y sintetizadores en música electrónica.</p><a href="https://musikargentina.com/" target="_blank" rel="noopener">Consultar ↗</a></article>
+        <article class="service-card"><span>ESPECIALIZACIÓN</span><h3>CDJs Pioneer</h3><p>Dominio específico del estándar de cabina profesional y sus funciones de performance.</p><a href="https://musikargentina.com/" target="_blank" rel="noopener">Consultar ↗</a></article>
+        <article class="service-card"><span>ESPECIALIZACIÓN</span><h3>Scratch & Freestyle</h3><p>Técnicas de scratch, creatividad, improvisación y recursos expresivos para DJs.</p><a href="https://musikargentina.com/" target="_blank" rel="noopener">Consultar ↗</a></article>
+        <article class="service-card online"><span>MODALIDAD FLEXIBLE</span><h3>Cursos online</h3><p>Formación a distancia para aprender y avanzar desde cualquier lugar.</p><a href="https://wa.me/5491157190480" target="_blank" rel="noopener">Consultar por WhatsApp ↗</a></article>
+        <article class="service-card shop"><span>EQUIPAMIENTO</span><h3>Musik Shop</h3><p>Una sección dedicada a equipamiento y recursos para DJs y productores.</p><a href="https://musikargentina.com/" target="_blank" rel="noopener">Visitar sección ↗</a></article>
+      </div>
+      <div class="academy-strip"><p><strong>También podés estudiar</strong> DJ Avanzado · Producción Musical 2 · Músico Electrónico · Teclado y Sintetizador · CDJs Pioneer · Scratch & Freestyle</p><a href="https://musikargentina.com/" target="_blank" rel="noopener">Ver toda la oferta ↗</a></div>
+    </section>
+
+    <section class="news-section section" id="novedades">
+      <div class="section-head"><div><span class="kicker">NOVEDADES / MUSIK</span><h2>Lo próximo<br><em>ya está sonando.</em></h2></div><p>Masterclasses, lanzamientos, beneficios y experiencias especiales. Todas las novedades se actualizan desde el panel de administración.</p></div>
+      <div class="news-slider" id="news-slider" aria-live="polite"></div>
+    </section>
+
+    <section class="content section" id="club">
+      <div class="section-head"><div><span class="kicker">NUEVO / MUSIK CLUB</span><h2>La academia sigue.<br><em>Después de clase.</em></h2></div><p>Una propuesta de comunidad por membresía con material exclusivo, feedback, sesiones y encuentros para alumnos y graduados. <a href="club.html" class="inline-link">Entrar al Club ↗</a></p></div>
+      <div class="filters" role="tablist"><button class="active" data-filter="all">Todo</button><button data-filter="curso">Cursos</button><button data-filter="track">Track IDs</button><button data-filter="session">Sessions</button></div>
+      <div class="content-grid">
+        <article class="media-card featured" data-type="curso"><div class="card-art art-one"><span class="pill">CURSO</span><div class="big-type">MIX<br>01</div><button class="round-play" aria-label="Ver curso">▶</button></div><div class="card-info"><div><h3>Fundamentos de mezcla</h3><p>8 clases · Nivel inicial</p></div><span>01</span></div></article>
+        <article class="media-card" data-type="session"><div class="card-art art-two"><span class="pill">SESSION</span><div class="eq-mini"></div><button class="round-play" aria-label="Ver session">▶</button></div><div class="card-info"><div><h3>Sunset grooves</h3><p>54 min · House</p></div><span>02</span></div></article>
+        <article class="media-card" data-type="track"><div class="card-art art-three"><span class="pill dark">TRACK IDS</span><div class="disc">M</div><button class="round-play" aria-label="Ver tracks">▶</button></div><div class="card-info"><div><h3>Selección de la semana</h3><p>20 tracks · Curado por Musik</p></div><span>03</span></div></article>
+      </div>
+    </section>
+
+    <section class="events section" id="eventos">
+      <div class="section-head"><div><span class="kicker">AGENDA DEL CLUB / DEMO</span><h2>Próximos<br><em>encuentros.</em></h2></div><p>Ejemplo de cómo se verían workshops, prácticas abiertas y noches exclusivas para miembros.</p></div>
+      <div class="event-list">
+        <article><div class="date"><strong>08</strong><span>NOV</span></div><div class="event-main"><span class="pill">WORKSHOP</span><h3>Construí tu primer set</h3><p>Musik Lab · 18:30 h</p></div><button class="event-action" data-toast="¡Lugar guardado! Te avisaremos con los detalles.">Reservar lugar <b>↗</b></button></article>
+        <article><div class="date"><strong>16</strong><span>NOV</span></div><div class="event-main"><span class="pill magenta">CLUB NIGHT</span><h3>Musik Family Night</h3><p>Ubicación secreta · 23:59 h</p></div><button class="event-action" data-toast="Estás en la lista para recibir la ubicación.">Estoy dentro <b>↗</b></button></article>
+        <article><div class="date"><strong>23</strong><span>NOV</span></div><div class="event-main"><span class="pill outline">OPEN DECKS</span><h3>Práctica + feedback</h3><p>Musik Studio · 17:00 h</p></div><button class="event-action" data-toast="Turno solicitado. Revisá tu perfil para confirmarlo.">Pedir turno <b>↗</b></button></article>
+      </div>
+    </section>
+
+    <section class="membership section" id="membresias">
+      <div class="membership-intro"><span class="kicker">PROPUESTA DE MEMBRESÍAS</span><h2>Entrá al club.</h2><p>Planes y valores ilustrativos para visualizar el nuevo modelo de comunidad.</p><div class="billing"><button class="active" data-cycle="monthly">Mensual</button><button data-cycle="annual">Anual <small>beneficio sugerido</small></button></div></div>
+      <div class="plans">
+        <article class="plan"><span class="plan-name">STARTER</span><h3 data-price="12000">$12.000<small>/mes</small></h3><p>Para empezar a mezclar y explorar.</p><ul><li>✓ Biblioteca esencial</li><li>✓ 2 cursos completos</li><li>✓ Comunidad privada</li><li>✓ Descuentos en eventos</li></ul><button data-open-modal>Elegir Starter</button></article>
+        <article class="plan pro"><div class="popular">MÁS ELEGIDO</div><span class="plan-name">PRO CLUB</span><h3 data-price="22000">$22.000<small>/mes</small></h3><p>La experiencia completa de Musik.</p><ul><li>✓ Todo el contenido</li><li>✓ Clases en vivo seleccionadas</li><li>✓ Feedback sobre tus sets</li><li>✓ Eventos exclusivos incluidos</li></ul><button data-open-modal>Quiero ser Pro</button></article>
+      </div>
+    </section>
+
+    <section class="cta"><img src="assets/musik-logo-hd.png" alt="Logo Musik 10 años"><div><span>ESTO RECIÉN EMPIEZA</span><h2>Tu próximo set<br>empieza <em>acá.</em></h2><button class="btn dark" data-open-modal>Crear mi cuenta →</button></div></section>
+  </main>
+
+  <footer><a class="brand" href="#inicio"><img src="assets/musik-logo-hd.png" alt="Logo Musik"><span>ACADEMIA DE MÚSICA</span></a><p>© 2026 Musik Argentina · Hecho para la pista.</p><div><a href="https://musikargentina.com/" target="_blank" rel="noopener">Web actual</a><a href="mailto:musik.argentina@gmail.com">Email</a><a href="https://wa.me/5491157190480" target="_blank" rel="noopener">WhatsApp</a></div></footer>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <nav class="mobile-nav" aria-label="Navegación móvil"><a class="active" href="#inicio">⌂<span>Inicio</span></a><a href="#academia">▤<span>Academia</span></a><a href="club.html">◇<span>Club</span></a><button data-open-modal>◎<span>Perfil</span></button></nav>
+  <dialog id="member-modal"><button class="modal-close" aria-label="Cerrar">×</button><div class="modal-mark">M</div><span class="kicker">BIENVENIDO AL CLUB</span><h2>Entrá a tu cuenta</h2><p>Esta demo deja listo el acceso para conectar autenticación y pagos en la próxima etapa.</p><form id="login-form"><label>Email<input type="email" placeholder="vos@email.com" required></label><label>Contraseña<input type="password" placeholder="••••••••" minlength="6" required></label><button class="btn primary" type="submit">Ingresar →</button></form><small>¿Todavía no sos miembro? <a href="#membresias" class="join-link">Ver membresías</a></small></dialog>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
