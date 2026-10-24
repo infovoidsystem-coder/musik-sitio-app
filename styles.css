@@ -56,6 +56,20 @@
 
 /* Keep both persona layers available when the OS reduces motion */
 @media(prefers-reduced-motion:reduce){.hernan-portrait .persona-image,.hernan-portrait .persona-caption{display:block!important}.hernan-portrait .persona-flash{display:block!important}.hernan-portrait.transforming:before{animation:none;opacity:0}.hernan-portrait .persona-image,.hernan-portrait .persona-caption{transition:opacity .15s linear!important,transform .15s linear!important}}
+
+/* El ecualizador del hero reacciona al reproductor de Musik Radio. */
+.hero-eq{animation-play-state:paused;transform-origin:center bottom;transition:opacity .35s ease,filter .35s ease}
+.hero-eq:before,.hero-eq:after{content:"";position:absolute;inset:0;background:inherit;transform-origin:center bottom;opacity:.55;animation:musikEqAlt .72s steps(4,end) infinite;animation-play-state:paused}
+.hero-eq:after{opacity:.35;animation-name:musikEqFast;animation-duration:.47s;animation-delay:-.19s}
+.music-playing .hero-eq{opacity:.24;filter:drop-shadow(0 0 12px rgba(0,234,242,.38));animation-play-state:running}
+.music-playing .hero-eq:before,.music-playing .hero-eq:after{animation-play-state:running}
+.radio-wave{animation-play-state:paused;transform-origin:center;transition:opacity .3s ease,filter .3s ease}
+.music-playing .radio-wave{opacity:.9;filter:drop-shadow(0 0 8px rgba(0,234,242,.55));animation:radioWaveLive .42s steps(3,end) infinite}
+.music-playing .radio-track.active>b{background:var(--cyan);border-color:var(--cyan);color:#001719;box-shadow:0 0 20px rgba(0,234,242,.35)}
+@keyframes musikEqAlt{0%{transform:scaleY(.34)}25%{transform:scaleY(.92)}50%{transform:scaleY(.52)}75%{transform:scaleY(1.08)}100%{transform:scaleY(.41)}}
+@keyframes musikEqFast{0%{transform:scaleY(.82)}33%{transform:scaleY(.28)}66%{transform:scaleY(1.15)}100%{transform:scaleY(.57)}}
+@keyframes radioWaveLive{0%{transform:scaleY(.48) scaleX(1)}25%{transform:scaleY(1.28) scaleX(1.01)}50%{transform:scaleY(.72) scaleX(.99)}75%{transform:scaleY(1.5) scaleX(1.01)}100%{transform:scaleY(.58) scaleX(1)}}
+@media(prefers-reduced-motion:reduce){.hero-eq,.hero-eq:before,.hero-eq:after,.radio-wave{animation:none!important;transform:none!important}.music-playing .hero-eq{opacity:.18}.music-playing .radio-wave{opacity:.75}}
 .groovero-copy strong{white-space:nowrap;font-size:clamp(28px,3.2vw,38px)}
 .brand,.brand span,h1,h2,h3,.big-type,.program-main h3,.plan h3,.gear-label strong{font-family:"Michroma","Space Grotesk",sans-serif}.academy .kicker,.academy .program-index,.events .kicker,.booking .kicker{color:#006a72}.academy h2 em,.events h2 em,.booking h2 em{-webkit-text-stroke-color:#006a72}.academy-feature .program-index{color:#18f4fb}.program-main h3{letter-spacing:-3px;line-height:.84}.section h2{letter-spacing:-2px}.hero h1{letter-spacing:-3px}
 

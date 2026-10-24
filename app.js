@@ -32,7 +32,34 @@ function setPersona(next){grooveMode=next;persona.classList.add('transforming');
 function restartPersona(){clearInterval(personaTimer);personaTimer=setInterval(()=>setPersona(!grooveMode),7000)}
 if(persona&&personaSwitch){personaSwitch.addEventListener('click',()=>{setPersona(!grooveMode);restartPersona()});restartPersona()}
 
-document.querySelectorAll('.radio-track[data-sound]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.radio-track[data-sound]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelector('#soundcloud-player').src=btn.dataset.sound}));
+const soundcloudFrame=document.querySelector('#soundcloud-player');
+const radioTracks=[...document.querySelectorAll('.radio-track[data-sound]')];
+let soundcloudWidget=null;
+function setRadioPlaying(playing){
+  document.body.classList.toggle('music-playing',playing);
+  radioTracks.forEach(btn=>{
+    const icon=btn.querySelector(':scope > b');
+    if(icon)icon.textContent=btn.classList.contains('active')&&playing?'Ⅱ':'▶';
+    btn.setAttribute('aria-pressed',String(btn.classList.contains('active')&&playing));
+  });
+}
+function connectSoundcloudWidget(){
+  if(!soundcloudFrame||!window.SC?.Widget)return;
+  soundcloudWidget=window.SC.Widget(soundcloudFrame);
+  soundcloudWidget.bind(window.SC.Widget.Events.PLAY,()=>setRadioPlaying(true));
+  soundcloudWidget.bind(window.SC.Widget.Events.PAUSE,()=>setRadioPlaying(false));
+  soundcloudWidget.bind(window.SC.Widget.Events.FINISH,()=>setRadioPlaying(false));
+}
+soundcloudFrame?.addEventListener('load',connectSoundcloudWidget);
+connectSoundcloudWidget();
+radioTracks.forEach(btn=>btn.addEventListener('click',()=>{
+  radioTracks.forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const nextSource=new URL(btn.dataset.sound);
+  nextSource.searchParams.set('auto_play','true');
+  soundcloudFrame.src=nextSource.href;
+  setRadioPlaying(true);
+}));
 
 const masterclassBanner={id:20261022,eyebrow:'MUSIK MASTERCLASS',title:'Técnicas profesionales de mezcla',text:'Una experiencia exclusiva junto a Hernán Paredes, DJ, productor y director de MUSIK, con más de 30 años de trayectoria profesional.',meta:'3 h 30 min · Solo 20 participantes',details:['Técnicas profesionales de mezcla y secretos de cabina','Demostraciones en vivo','HANDS-ON: práctica en 4 islas con setups profesionales','Supervisión y correcciones personalizadas','Coffee break, networking y certificado MUSIK'],prices:['General · $75.000','Preventa · $60.000','Alumnos MUSIK · $50.000'],cta:'Reservá tu lugar',url:'https://wa.me/5491154190480',color:'#cf00ff',image:'',enabled:true};
 const defaultBanners=[masterclassBanner,{id:1,eyebrow:'INSCRIPCIONES',title:'Inscripciones abiertas',text:'Nuevos grupos de DJ y Producción Musical.',meta:'Vacantes disponibles',details:[],prices:[],cta:'Conocer cursos',url:'#academia',color:'#00eaf2',image:'',enabled:true}];
