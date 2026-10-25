@@ -58,3 +58,17 @@ where email = 'TU_EMAIL_DE_GOOGLE';
 
 La tabla `payments` guarda importe, estado e identificador del proveedor. La creación y actualización de pagos debe realizarse desde una función segura o backend usando webhooks de Mercado Pago u otro proveedor. No almacenar números de tarjeta, códigos de seguridad ni secretos del proveedor.
 
+## 7. Conectar las publicaciones de Instagram
+
+La página de inicio ya consume la función segura `instagram-feed`. El token nunca se coloca en GitHub ni en el navegador.
+
+1. En Meta for Developers crear una app y habilitar **Instagram API with Instagram Login** para la cuenta profesional `@musik_academy`.
+2. Obtener el identificador de la cuenta y un access token de larga duración.
+3. En Supabase, abrir **Edge Functions > Secrets** y crear:
+   - `INSTAGRAM_USER_ID`
+   - `INSTAGRAM_ACCESS_TOKEN`
+4. Desplegar `supabase/functions/instagram-feed/index.ts` como función `instagram-feed`.
+5. Al publicar una novedad en Instagram, el inicio de MUSIK mostrará automáticamente las seis publicaciones más recientes. La respuesta se almacena en caché durante 10 minutos.
+
+No guardar el token de Instagram en `auth-config.js`, archivos `.env` versionados ni GitHub Pages.
+

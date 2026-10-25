@@ -77,6 +77,33 @@ radioTracks.forEach(btn=>btn.addEventListener('click',()=>{
   setRadioPlaying(true);
 }));
 
+const instagramGrid=document.querySelector('#instagram-grid');
+const escapeInstagramText=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+function renderInstagramPosts(posts){
+  if(!instagramGrid)return;
+  instagramGrid.innerHTML=posts.slice(0,6).map((post,index)=>{
+    const media=post.media_type==='VIDEO'?(post.thumbnail_url||post.media_url):post.media_url;
+    const caption=escapeInstagramText(post.caption||'Publicación de Musik Academy');
+    return `<a class="instagram-post" href="${post.permalink}" target="_blank" rel="noopener" aria-label="Ver publicación ${index+1} en Instagram"><img src="${media}" alt="${caption.slice(0,120)}" loading="lazy"><span class="instagram-overlay"><b>${post.media_type==='VIDEO'?'▶ REEL':'◎ POST'}</b><small>${caption.slice(0,115)}</small></span></a>`;
+  }).join('');
+}
+async function loadInstagramFeed(){
+  if(!instagramGrid)return;
+  const config=window.MUSIK_AUTH_CONFIG||{};
+  if(!config.supabaseUrl||!config.supabaseAnonKey){instagramGrid.innerHTML='<a class="instagram-connect" href="https://www.instagram.com/musik_academy/" target="_blank" rel="noopener"><strong>@musik_academy</strong><span>Visitá nuestras últimas publicaciones →</span></a>';return}
+  try{
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),5000);
+    const response=await fetch(`${config.supabaseUrl}/functions/v1/instagram-feed`,{signal:controller.signal,headers:{apikey:config.supabaseAnonKey,Authorization:`Bearer ${config.supabaseAnonKey}`}});
+    clearTimeout(timeout);
+    if(!response.ok)throw new Error('feed unavailable');
+    const data=await response.json();
+    if(!Array.isArray(data.posts)||!data.posts.length)throw new Error('empty feed');
+    renderInstagramPosts(data.posts);
+  }catch(_error){instagramGrid.innerHTML='<a class="instagram-connect" href="https://www.instagram.com/musik_academy/" target="_blank" rel="noopener"><strong>Instagram · @musik_academy</strong><span>El feed automático está listo para conectar. Mientras tanto, mirá las publicaciones en Instagram →</span></a>'}
+}
+loadInstagramFeed();
+
 const masterclassBanner={id:20261022,eyebrow:'MUSIK MASTERCLASS',title:'Técnicas profesionales de mezcla',text:'Una experiencia exclusiva junto a Hernán Paredes, DJ, productor y director de MUSIK, con más de 30 años de trayectoria profesional.',meta:'3 h 30 min · Solo 20 participantes',details:['Técnicas profesionales de mezcla y secretos de cabina','Demostraciones en vivo','HANDS-ON: práctica en 4 islas con setups profesionales','Supervisión y correcciones personalizadas','Coffee break, networking y certificado MUSIK'],prices:['General · $75.000','Preventa · $60.000','Alumnos MUSIK · $50.000'],cta:'Reservá tu lugar',url:'https://wa.me/5491154190480',color:'#cf00ff',image:'',enabled:true};
 const defaultBanners=[masterclassBanner,{id:1,eyebrow:'INSCRIPCIONES',title:'Inscripciones abiertas',text:'Nuevos grupos de DJ y Producción Musical.',meta:'Vacantes disponibles',details:[],prices:[],cta:'Conocer cursos',url:'#academia',color:'#00eaf2',image:'',enabled:true}];
 const promo=document.querySelector('#promo-carousel'),news=document.querySelector('#news-slider');let bannerIndex=0,newsIndex=0,promoTimer,newsTimer;

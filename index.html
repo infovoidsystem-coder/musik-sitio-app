@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Michroma&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
   <div class="noise"></div>
@@ -131,6 +131,12 @@
       </div>
     </section>
 
+    <section class="instagram-section section" id="instagram">
+      <div class="instagram-head"><div><span class="kicker">EN VIVO / @MUSIK_ACADEMY</span><h2>Lo último en<br><em>Instagram.</em></h2></div><div class="instagram-profile"><span class="instagram-avatar"><img src="assets/musik-logo-hd.png" alt="Musik Academy"></span><div><strong>@musik_academy</strong><small>Academia de DJs y Productores</small></div><a href="https://www.instagram.com/musik_academy/" target="_blank" rel="noopener">Seguir ↗</a></div></div>
+      <div class="instagram-grid" id="instagram-grid" aria-live="polite"><div class="instagram-loading"><i></i><span>Conectando con Instagram…</span></div></div>
+      <div class="instagram-foot"><span>Publicaciones oficiales de MUSIK</span><a href="https://www.instagram.com/musik_academy/" target="_blank" rel="noopener">Ver todo el perfil en Instagram ↗</a></div>
+    </section>
+
     <section class="cta"><img src="assets/musik-logo-hd.png" alt="Logo Musik 10 años"><div><span>ESTO RECIÉN EMPIEZA</span><h2>Tu próximo set<br>empieza <em>acá.</em></h2><button class="btn dark" data-open-modal>Crear mi cuenta →</button></div></section>
   </main>
 
@@ -141,6 +147,7 @@
   <dialog id="member-modal"><button class="modal-close" aria-label="Cerrar">×</button><div class="modal-mark">M</div><span class="kicker">BIENVENIDO AL CLUB</span><h2>Entrá a tu cuenta</h2><p>Esta demo deja listo el acceso para conectar autenticación y pagos en la próxima etapa.</p><form id="login-form"><label>Email<input type="email" placeholder="vos@email.com" required></label><label>Contraseña<input type="password" placeholder="••••••••" minlength="6" required></label><button class="btn primary" type="submit">Ingresar →</button></form><small>¿Todavía no sos miembro? <a href="#membresias" class="join-link">Ver membresías</a></small></dialog>
   <div class="toast" role="status" aria-live="polite"></div>
   <script src="https://w.soundcloud.com/player/api.js"></script>
+  <script src="auth-config.js?v=2"></script>
   <script src="app.js"></script>
   <script src="brand-admin.js"></script>
 </body>
