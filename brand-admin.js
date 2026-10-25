@@ -8,6 +8,7 @@
       clearTimeout(timer);
       if(count>=3){
         count=0;
+        sessionStorage.setItem('musik-admin-login','1');
         window.location.href='admin.html';
         return;
       }
