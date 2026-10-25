@@ -66,6 +66,7 @@ function connectSoundcloudWidget(){
   soundcloudWidget.bind(window.SC.Widget.Events.PLAY,()=>setRadioPlaying(true));
   soundcloudWidget.bind(window.SC.Widget.Events.PAUSE,()=>setRadioPlaying(false));
   soundcloudWidget.bind(window.SC.Widget.Events.FINISH,()=>setRadioPlaying(false));
+  soundcloudWidget.bind(window.SC.Widget.Events.READY,()=>soundcloudWidget.isPaused(paused=>setRadioPlaying(!paused)));
 }
 soundcloudFrame?.addEventListener('load',connectSoundcloudWidget);
 connectSoundcloudWidget();
@@ -109,6 +110,12 @@ async function loadCommunityTracks(){
   renderCommunityTracks(items);
 }
 loadCommunityTracks();
+
+/* Algunos navegadores no propagan PLAY desde el iframe: sincronizamos su estado real. */
+setInterval(()=>{
+  if(!soundcloudWidget||communityAudio&&!communityAudio.paused&&!communityAudio.ended)return;
+  try{soundcloudWidget.isPaused(paused=>setRadioPlaying(!paused))}catch(_error){}
+},700);
 
 const instagramGrid=document.querySelector('#instagram-grid');
 const escapeInstagramText=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
