@@ -44,12 +44,12 @@ El botón **Olvidé mi contraseña** envía el enlace al email escrito en el for
 
 ## 5. Definir al dueño como administrador
 
-Primero crear el usuario del dueño desde **Authentication > Users > Add user** con su email. Después ejecutar en SQL Editor:
+Primero crear el usuario del dueño desde **Authentication > Users > Add user** con `info.void.system@gmail.com`. Después ejecutar en SQL Editor:
 
 ```sql
 update public.profiles
 set role = 'admin'
-where email = 'TU_EMAIL_DE_GOOGLE';
+where email = 'info.void.system@gmail.com';
 ```
 
 ## 6. Pagos

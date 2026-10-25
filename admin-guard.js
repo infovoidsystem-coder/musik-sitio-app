@@ -3,6 +3,7 @@
   const gateStatus=document.querySelector('#admin-access-status');
   const loginForm=document.querySelector('#admin-login-form');
   const resetForm=document.querySelector('#admin-reset-form');
+  if(loginForm?.email&&!loginForm.email.value)loginForm.email.value=window.MUSIK_AUTH_CONFIG?.adminEmail||'';
   const showGate=message=>{
     document.body.classList.add('admin-locked');
     gate?.removeAttribute('hidden');
