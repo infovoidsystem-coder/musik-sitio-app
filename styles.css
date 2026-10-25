@@ -93,6 +93,8 @@
 .topbar .brand{gap:13px}
 .topbar .brand img{width:96px;height:76px;object-fit:contain;object-position:center;image-rendering:auto;border-radius:8px}
 .topbar .brand span{font-size:12px;line-height:1.2}
+#community-tracks{display:grid;gap:10px}
+.radio-avatar.student{background:linear-gradient(135deg,#00eaf2,#cf00ff)}
 @media(max-width:620px){.topbar{height:80px}.topbar .brand{gap:8px}.topbar .brand img{width:78px;height:62px}.topbar .brand span{font-size:9px;letter-spacing:1.2px;max-width:105px}}
 
 /* Feature the professional booth as the visual focus */

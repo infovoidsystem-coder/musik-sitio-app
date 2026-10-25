@@ -33,8 +33,9 @@ function restartPersona(){clearInterval(personaTimer);personaTimer=setInterval((
 if(persona&&personaSwitch){personaSwitch.addEventListener('click',()=>{setPersona(!grooveMode);restartPersona()});restartPersona()}
 
 const soundcloudFrame=document.querySelector('#soundcloud-player');
-const radioTracks=[...document.querySelectorAll('.radio-track[data-sound]')];
+let radioTracks=[...document.querySelectorAll('.radio-track[data-sound]')];
 let soundcloudWidget=null;
+let communityAudio=null;
 function buildLiveEqualizer(element,count){
   if(!element||element.children.length)return;
   const fragment=document.createDocumentFragment();
@@ -68,14 +69,46 @@ function connectSoundcloudWidget(){
 }
 soundcloudFrame?.addEventListener('load',connectSoundcloudWidget);
 connectSoundcloudWidget();
-radioTracks.forEach(btn=>btn.addEventListener('click',()=>{
+function bindRadioTrack(btn){btn.addEventListener('click',()=>{
   radioTracks.forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  if(btn.dataset.audio){
+    soundcloudWidget?.pause();
+    communityAudio?.pause();
+    communityAudio=new Audio(btn.dataset.audio);
+    communityAudio.addEventListener('play',()=>setRadioPlaying(true));
+    communityAudio.addEventListener('pause',()=>setRadioPlaying(false));
+    communityAudio.addEventListener('ended',()=>setRadioPlaying(false));
+    communityAudio.play().catch(()=>setRadioPlaying(false));
+    return;
+  }
   const nextSource=new URL(btn.dataset.sound);
   nextSource.searchParams.set('auto_play','true');
   soundcloudFrame.src=nextSource.href;
   setRadioPlaying(true);
-}));
+})}
+radioTracks.forEach(bindRadioTrack);
+
+const communityTracks=document.querySelector('#community-tracks');
+const safeTrack=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const trackSourceAttribute=url=>String(url||'').includes('soundcloud.com/')?`data-sound="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%2300eaf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=true"`:`data-audio="${safeTrack(url)}"`;
+function renderCommunityTracks(items){
+  if(!communityTracks)return;
+  const approved=items.filter(item=>item.status==='approved');
+  communityTracks.innerHTML=approved.map((item,index)=>`<button class="radio-track community-track" ${trackSourceAttribute(item.audio_url||item.url)}><span class="radio-number">${String(index+3).padStart(2,'0')}</span><span class="radio-avatar student">${safeTrack((item.artist_name||'M').split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase())}</span><span class="radio-copy"><small>ALUMNI MUSIK / APROBADO</small><strong>${safeTrack(item.title)}</strong><em>${safeTrack(item.artist_name)} · ${safeTrack(item.genre||'Musik')}</em></span><b>▶</b></button>`).join('');
+  const dynamic=[...communityTracks.querySelectorAll('.radio-track')];
+  dynamic.forEach(bindRadioTrack);
+  radioTracks=[...document.querySelectorAll('.radio-track[data-sound],.radio-track[data-audio]')];
+}
+async function loadCommunityTracks(){
+  let items=JSON.parse(localStorage.getItem('musik-track-submissions')||'[]');
+  const config=window.MUSIK_AUTH_CONFIG||{};
+  if(config.supabaseUrl&&config.supabaseAnonKey){
+    try{const response=await fetch(`${config.supabaseUrl}/rest/v1/track_submissions?status=eq.approved&select=id,title,artist_name,genre,audio_url,status&order=reviewed_at.desc`,{headers:{apikey:config.supabaseAnonKey,Authorization:`Bearer ${config.supabaseAnonKey}`}});if(response.ok)items=await response.json()}catch(_error){}
+  }
+  renderCommunityTracks(items);
+}
+loadCommunityTracks();
 
 const instagramGrid=document.querySelector('#instagram-grid');
 const escapeInstagramText=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
