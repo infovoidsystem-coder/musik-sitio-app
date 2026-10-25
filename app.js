@@ -35,6 +35,22 @@ if(persona&&personaSwitch){personaSwitch.addEventListener('click',()=>{setPerson
 const soundcloudFrame=document.querySelector('#soundcloud-player');
 const radioTracks=[...document.querySelectorAll('.radio-track[data-sound]')];
 let soundcloudWidget=null;
+function buildLiveEqualizer(element,count){
+  if(!element||element.children.length)return;
+  const fragment=document.createDocumentFragment();
+  for(let index=0;index<count;index++){
+    const bar=document.createElement('i');
+    const base=18+((index*37)%58),peak=55+((index*29)%46);
+    bar.style.setProperty('--base',`${base}%`);
+    bar.style.setProperty('--peak',`${peak}%`);
+    bar.style.setProperty('--speed',`${.34+((index*13)%28)/100}s`);
+    bar.style.setProperty('--delay',`${-((index*17)%43)/100}s`);
+    fragment.appendChild(bar);
+  }
+  element.appendChild(fragment);
+}
+buildLiveEqualizer(document.querySelector('.hero-eq'),54);
+buildLiveEqualizer(document.querySelector('.radio-wave'),42);
 function setRadioPlaying(playing){
   document.body.classList.toggle('music-playing',playing);
   radioTracks.forEach(btn=>{

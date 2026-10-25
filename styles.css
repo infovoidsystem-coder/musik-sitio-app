@@ -71,6 +71,16 @@
 @keyframes radioWaveLive{0%{transform:scaleY(.48) scaleX(1)}25%{transform:scaleY(1.28) scaleX(1.01)}50%{transform:scaleY(.72) scaleX(.99)}75%{transform:scaleY(1.5) scaleX(1.01)}100%{transform:scaleY(.58) scaleX(1)}}
 @media(prefers-reduced-motion:reduce){.hero-eq,.hero-eq:before,.hero-eq:after,.radio-wave{animation:none!important;transform:none!important}.music-playing .hero-eq{opacity:.18}.music-playing .radio-wave{opacity:.75}}
 .groovero-copy strong{white-space:nowrap;font-size:clamp(28px,3.2vw,38px)}
+
+/* Barras independientes: reaccionan como un secuenciador al audio de Musik Radio. */
+.hero-eq,.radio-wave{display:flex;align-items:flex-end;gap:clamp(3px,.48vw,8px);background:none!important;clip-path:none!important;animation:none!important;transform:none!important}
+.hero-eq>i,.radio-wave>i{display:block;flex:1;min-width:2px;height:var(--base);border-radius:5px 5px 0 0;transform-origin:center bottom;animation:musikSequencer var(--speed) steps(3,end) var(--delay) infinite;animation-play-state:paused}
+.hero-eq>i{background:linear-gradient(to top,rgba(0,234,242,.2),var(--cyan))}
+.radio-wave>i{background:linear-gradient(to top,#006a72,var(--cyan));box-shadow:0 0 8px rgba(0,234,242,.15)}
+.music-playing .hero-eq>i,.music-playing .radio-wave>i{animation-play-state:running}
+.music-playing .radio-wave>i{box-shadow:0 0 10px rgba(0,234,242,.5)}
+@keyframes musikSequencer{0%,100%{height:var(--base);opacity:.48}25%{height:var(--peak);opacity:1}50%{height:calc(var(--base) * .55);opacity:.68}75%{height:calc(var(--peak) * .72);opacity:.92}}
+@media(prefers-reduced-motion:reduce){.hero-eq>i,.radio-wave>i{animation:none!important}}
 .brand,.brand span,h1,h2,h3,.big-type,.program-main h3,.plan h3,.gear-label strong{font-family:"Michroma","Space Grotesk",sans-serif}.academy .kicker,.academy .program-index,.events .kicker,.booking .kicker{color:#006a72}.academy h2 em,.events h2 em,.booking h2 em{-webkit-text-stroke-color:#006a72}.academy-feature .program-index{color:#18f4fb}.program-main h3{letter-spacing:-3px;line-height:.84}.section h2{letter-spacing:-2px}.hero h1{letter-spacing:-3px}
 
 /* Feature the professional booth as the visual focus */
