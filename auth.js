@@ -31,6 +31,26 @@
     if(error)throw error;
     return true;
   };
+  api.signInPassword=async(email,password)=>{
+    if(!client)return false;
+    const{data,error}=await client.auth.signInWithPassword({email,password});
+    if(error)throw error;
+    paint(data.user);
+    return data;
+  };
+  api.sendPasswordReset=async email=>{
+    if(!client)return false;
+    const redirectTo=new URL('admin.html?reset=1',location.href).href;
+    const{error}=await client.auth.resetPasswordForEmail(email,{redirectTo});
+    if(error)throw error;
+    return true;
+  };
+  api.updatePassword=async password=>{
+    if(!client)return false;
+    const{error}=await client.auth.updateUser({password});
+    if(error)throw error;
+    return true;
+  };
   api.signOut=async()=>{if(client)await client.auth.signOut();paint(null)};
   if(client){client.auth.getSession().then(({data})=>paint(data.session?.user));client.auth.onAuthStateChange((_event,session)=>paint(session?.user))}
   else document.addEventListener('DOMContentLoaded',()=>paint(null));

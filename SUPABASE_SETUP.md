@@ -28,25 +28,23 @@ Pegarlos en `auth-config.js`. Es normal que estos dos valores estén en el front
 
 Nunca colocar en el navegador la `service_role`, la contraseña de Postgres ni secretos de pagos.
 
-## 4. Activar Google
+## 4. Configurar email, contraseña y recuperación
 
-1. En Google Cloud crear un proyecto y configurar OAuth Consent Screen.
-2. Crear credenciales **OAuth Client ID > Web application**.
-3. En Supabase abrir **Authentication > Providers > Google** y copiar la Callback URL que muestra Supabase.
-4. En Google agregar esa URL en **Authorized redirect URIs**.
-5. En Google agregar como JavaScript origins:
-   - `https://musik-club-academia.silbersteinsantiago.chatgpt.site`
-   - `http://localhost:4173`
-6. Copiar Client ID y Client Secret en el proveedor Google de Supabase y guardar.
-7. En **Authentication > URL Configuration** usar como Site URL:
-   - `https://musik-club-academia.silbersteinsantiago.chatgpt.site`
-8. Agregar como Redirect URLs:
-   - `https://musik-club-academia.silbersteinsantiago.chatgpt.site/club.html`
+1. En Supabase abrir **Authentication > Providers > Email** y mantener habilitado Email/Password.
+2. En **Authentication > URL Configuration** usar como Site URL:
+   - `https://infovoidsystem-coder.github.io/musik-sitio-app/`
+3. Agregar como Redirect URLs:
+   - `https://infovoidsystem-coder.github.io/musik-sitio-app/admin.html?reset=1`
+   - `https://infovoidsystem-coder.github.io/musik-sitio-app/club.html`
+   - `http://localhost:4173/admin.html?reset=1`
    - `http://localhost:4173/club.html`
+4. Cuando el proyecto se migre al dominio o a la cuenta del cliente, reemplazar la Site URL y agregar las nuevas Redirect URLs antes de retirar las actuales.
+
+El botón **Olvidé mi contraseña** envía el enlace al email escrito en el formulario. Actualmente debe usarse el email del administrador del proyecto; al migrar, se crea o actualiza el usuario administrador con el email del cliente.
 
 ## 5. Definir al dueño como administrador
 
-Primero iniciar sesión una vez con Google. Después ejecutar en SQL Editor:
+Primero crear el usuario del dueño desde **Authentication > Users > Add user** con su email. Después ejecutar en SQL Editor:
 
 ```sql
 update public.profiles
