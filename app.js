@@ -7,7 +7,7 @@ document.querySelector('.join-link').addEventListener('click',()=>modal.close())
 const toast=document.querySelector('.toast');let toastTimer;
 function showToast(message){toast.textContent=message;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2800)}
 document.querySelectorAll('[data-toast]').forEach(btn=>btn.addEventListener('click',()=>showToast(btn.dataset.toast)));
-document.querySelector('#login-form').addEventListener('submit',e=>{e.preventDefault();modal.close();showToast('Demo iniciada. ¡Bienvenido a Musik Club!')});
+document.querySelector('#login-form').addEventListener('submit',async e=>{e.preventDefault();const fields=e.currentTarget.elements,button=e.currentTarget.querySelector('button[type="submit"]');button.disabled=true;button.textContent='Ingresando…';try{if(!window.MusikAuth?.configured)throw new Error('Falta conectar Supabase.');await window.MusikAuth.signInPassword(fields[0].value.trim(),fields[1].value);modal.close();showToast('Sesión iniciada. Ya podés descargar ✓');loadPublicDownloads()}catch(error){showToast(error.message==='Invalid login credentials'?'Email o contraseña incorrectos.':error.message||'No pudimos iniciar sesión.')}finally{button.disabled=false;button.textContent='Ingresar →'}});
 
 document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.media-card').forEach(card=>card.classList.toggle('hidden',btn.dataset.filter!=='all'&&card.dataset.type!==btn.dataset.filter))}));
 
@@ -110,6 +110,15 @@ async function loadCommunityTracks(){
   renderCommunityTracks(items);
 }
 loadCommunityTracks();
+
+/* Catálogo público administrado desde el panel; descarga exclusiva para miembros. */
+const publicDownloadGrid=document.querySelector('#public-download-grid');
+const publicDownloadFallback=[{id:'demo-tip',category:'tip',title:'Checklist antes de tocar',description:'Preparación de cabina, niveles, cues y organización para llegar listo a cada set.',file_name:'Checklist Musik.pdf',enabled:true},{id:'demo-track',category:'track',title:'Warm-up tools · Vol. 01',description:'Recursos y referencias para trabajar aperturas y construcción de energía.',file_name:'Audio pack',enabled:true},{id:'demo-material',category:'material',title:'Guía de selección musical',description:'Un método simple para ordenar música, momentos y energía de un set.',file_name:'Guía Musik.pdf',enabled:true}];
+const escapeDownload=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+function renderPublicDownloads(items){if(!publicDownloadGrid)return;publicDownloadGrid.innerHTML=items.filter(item=>item.enabled!==false).map((item,index)=>`<article class="public-download-card"><div class="public-download-top"><span>${escapeDownload(item.category||'material')}</span><b>${String(index+1).padStart(2,'0')}</b></div><h3>${escapeDownload(item.title)}</h3><p>${escapeDownload(item.description)}</p><small>${escapeDownload(item.file_name||'Recurso MUSIK')}</small><button data-public-download="${escapeDownload(item.id)}">${window.MusikAuth?.user?'Descargar recurso ↓':'Ingresar para descargar →'}</button></article>`).join('')||'<p class="download-empty">Próximamente vas a encontrar nuevos recursos MUSIK.</p>';publicDownloadGrid.querySelectorAll('[data-public-download]').forEach(button=>button.onclick=()=>downloadPublicResource(items.find(item=>String(item.id)===button.dataset.publicDownload)))}
+async function loadPublicDownloads(){let items=publicDownloadFallback;renderPublicDownloads(items);const client=window.MusikAuth?.client;if(client){const{data,error}=await client.from('member_downloads').select('*').eq('enabled',true).order('created_at',{ascending:false});if(!error&&data?.length){items=data;renderPublicDownloads(items)}}return items}
+async function downloadPublicResource(item){if(!window.MusikAuth?.user){modal.showModal();showToast('Ingresá como miembro para descargar.');return}try{let url=item.external_url;if(item.file_path){const{data,error}=await window.MusikAuth.client.storage.from('member-downloads').createSignedUrl(item.file_path,60);if(error)throw error;url=data.signedUrl}if(!url){showToast('Este recurso es una demostración.');return}window.open(url,'_blank','noopener');showToast('Descarga autorizada ✓')}catch(_error){showToast('No pudimos generar la descarga. Intentá nuevamente.')}}
+loadPublicDownloads();setTimeout(loadPublicDownloads,1000);
 
 /* Algunos navegadores no propagan PLAY desde el iframe: sincronizamos su estado real. */
 setInterval(()=>{
