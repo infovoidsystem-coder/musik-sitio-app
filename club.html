@@ -6,8 +6,11 @@
     <meta name="theme-color" content="#050507" />
     <meta
       name="description"
-      content="Musik Club — comunidad, agenda y reservas para miembros."
+      content="MUSIK Club: membresías, clases en vivo, reservas, contenidos y recursos exclusivos para DJs y productores."
     />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <link rel="canonical" href="https://infovoidsystem-coder.github.io/musik-sitio-app/club.html" />
+    <meta property="og:type" content="website" /><meta property="og:locale" content="es_AR" /><meta property="og:site_name" content="MUSIK" /><meta property="og:title" content="MUSIK Club — Comunidad para DJs y Productores" /><meta property="og:description" content="Reservas, clases en vivo, contenidos y beneficios exclusivos de la comunidad MUSIK." /><meta property="og:url" content="https://infovoidsystem-coder.github.io/musik-sitio-app/club.html" /><meta property="og:image" content="https://infovoidsystem-coder.github.io/musik-sitio-app/assets/musik-logo-hd.png" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/musik-app-180.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -154,7 +157,7 @@
             <li>Acceso a eventos del Club</li>
             <li>Feedback de la comunidad</li>
           </ul>
-          <button class="btn primary" data-member>Quiero registrarme →</button>
+          <button class="btn primary" data-checkout-kind="membership" data-checkout-sku="Pro Club">Asociarme con Mercado Pago →</button>
         </div>
       </section>
     </main>
@@ -236,6 +239,8 @@
     <script src="auth-config.js?v=2"></script>
     <script src="auth.js"></script>
     <script src="club.js"></script>
+    <script src="payments.js"></script>
+    <script src="site-extras.js"></script>
     <script src="brand-admin.js"></script>
   </body>
 </html>

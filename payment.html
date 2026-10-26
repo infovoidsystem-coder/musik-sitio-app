@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#050507" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Estado del pago — MUSIK</title>
+    <style>
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+      .payment-result {
+        width: min(620px, 100%);
+        padding: 45px;
+        border: 1px solid #303038;
+        border-radius: 26px;
+        background: #111116;
+        text-align: center;
+      }
+      .payment-result b {
+        display: grid;
+        place-items: center;
+        width: 70px;
+        height: 70px;
+        margin: auto;
+        border-radius: 50%;
+        background: #00eaf2;
+        color: #001719;
+        font-size: 30px;
+      }
+      .payment-result h1 {
+        font-size: clamp(30px, 6vw, 52px);
+        margin: 25px 0 14px;
+      }
+      .payment-result p {
+        color: #aaa;
+        line-height: 1.6;
+      }
+      .payment-result .btn {
+        justify-content: center;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="payment-result">
+      <b id="payment-icon">✓</b>
+      <h1 id="payment-title">Estamos verificando tu pago</h1>
+      <p id="payment-copy">
+        Mercado Pago nos informará el resultado de forma segura. Puede demorar
+        unos segundos en aparecer en tu panel.
+      </p>
+      <a class="btn primary" href="member.html">Ir a mi panel →</a>
+    </main>
+    <script>
+      const result = new URLSearchParams(location.search).get("result"),
+        title = document.querySelector("#payment-title"),
+        copy = document.querySelector("#payment-copy"),
+        icon = document.querySelector("#payment-icon");
+      if (result === "approved") {
+        title.textContent = "Pago recibido";
+        copy.textContent =
+          "Estamos confirmando la acreditación. Tu membresía o curso se activará automáticamente.";
+      } else if (result === "pending") {
+        title.textContent = "Pago pendiente";
+        icon.textContent = "…";
+        copy.textContent =
+          "Mercado Pago todavía está procesando la operación. Te avisaremos cuando se acredite.";
+      } else if (result === "failure") {
+        title.textContent = "El pago no se completó";
+        icon.textContent = "×";
+        icon.style.background = "#ff6f91";
+        copy.textContent =
+          "No se realizó ningún cobro confirmado. Podés volver a intentarlo desde el sitio.";
+      }
+    </script>
+  </body>
+</html>
