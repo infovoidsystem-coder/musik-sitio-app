@@ -30,3 +30,5 @@
 
 .admin-download{display:grid;grid-template-columns:80px 1fr auto auto;align-items:center;gap:18px;padding:17px 0;border-top:1px solid #2b2b33}.admin-download>span{color:var(--cyan);font-size:9px;font-weight:900;letter-spacing:1.3px}.admin-download h3{font-size:15px;margin-bottom:5px}.admin-download p,.admin-download small{color:#777}.admin-page textarea{background:#09090c;border:1px solid #3b3b43;border-radius:9px;color:#fff;padding:11px;font:inherit}.admin-page input[type="file"]{padding:10px}
 @media(max-width:650px){.admin-download{grid-template-columns:1fr auto}.admin-download>span,.admin-download>div{grid-column:1/-1}}
+
+.admin-header-actions{display:flex;align-items:center;gap:10px}.admin-logout{border:1px solid #4b3038;border-radius:99px;background:transparent;color:#ff94ad;padding:11px 15px;font:700 12px "DM Sans";cursor:pointer;transition:.2s}.admin-logout:hover{background:#2b1119;border-color:#ff668d;color:#fff}.admin-logout:disabled{opacity:.55;cursor:wait}@media(max-width:750px){.admin-header-actions{width:100%;justify-content:space-between}.admin-header-actions .preview-link,.admin-header-actions .admin-logout{flex:1;text-align:center}}
