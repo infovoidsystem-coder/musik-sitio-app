@@ -1,1 +1,27 @@
-{"name":"Musik Club","short_name":"Musik Club","description":"Comunidad, reservas y contenido exclusivo de Musik Argentina","start_url":"./club.html","display":"standalone","background_color":"#050507","theme_color":"#00eaf2","icons":[{"src":"./assets/musik-logo-hd.png","sizes":"1024x1024","type":"image/png","purpose":"any maskable"}]}
+{
+  "name": "Musik Club",
+  "short_name": "Musik Club",
+  "description": "Comunidad, reservas y contenido exclusivo de Musik Argentina",
+  "id": "./club.html?app=1",
+  "start_url": "./club.html?app=1",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#050507",
+  "theme_color": "#00eaf2",
+  "icons": [
+    {
+      "src": "./assets/musik-app-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/musik-app-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
