@@ -67,7 +67,7 @@ Deno.serve(async (request) => {
     );
     const { data: payment } = await admin
       .from("payments")
-      .select("id,membership_id,enrollment_id")
+      .select("id,user_id,membership_id,enrollment_id")
       .eq("external_reference", reference)
       .single();
     if (!payment) return new Response("ok");
@@ -94,6 +94,23 @@ Deno.serve(async (request) => {
         .from("enrollments")
         .update({ status: "active" })
         .eq("id", payment.enrollment_id);
+    if (status === "approved") {
+      const { data: profile } = await admin
+        .from("profiles")
+        .select("email")
+        .eq("id", payment.user_id)
+        .single();
+      await admin.from("billing_invoices").upsert(
+        {
+          payment_id: payment.id,
+          user_id: payment.user_id,
+          provider: Deno.env.get("BILLING_PROVIDER") || "pending_integration",
+          status: "pending",
+          recipient_email: profile?.email || null,
+        },
+        { onConflict: "payment_id", ignoreDuplicates: true },
+      );
+    }
     return new Response("ok");
   } catch (error) {
     console.error(error);

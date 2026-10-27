@@ -1,3 +1,6 @@
 [functions.mercadopago-webhook]
 verify_jwt = false
 
+[functions.billing-callback]
+verify_jwt = false
+
