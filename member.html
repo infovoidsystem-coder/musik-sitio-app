@@ -12,13 +12,13 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="member.css" />
-    <title>Mi Club — Musik</title>
+    <title>Mi panel — Musik</title>
   </head>
-  <body class="member-page">
+  <body class="member-page access-checking">
     <aside class="member-side">
       <a class="brand" href="index.html"
         ><img src="assets/musik-logo-hd.png" alt="Musik" /><span
-          >MI CLUB</span
+          >MI PANEL</span
         ></a
       >
       <nav>
@@ -32,10 +32,10 @@
     <main>
       <header class="member-header">
         <div>
-          <span class="kicker">ÁREA PRIVADA / PRO CLUB</span>
+          <span class="kicker">PANEL PERSONAL / ALUMNO</span>
           <h1>Hola, <span id="student-name">DJ</span>.</h1>
           <p>
-            Tu música, tus clases y toda la comunidad Musik en un solo lugar.
+            Tus cursos, materiales, pagos y beneficios MUSIK en un solo lugar.
           </p>
         </div>
         <button class="member-avatar" id="student-menu">
@@ -54,19 +54,23 @@
           <a href="club.html#agenda">Ver mi reserva →</a>
         </article>
         <article>
-          <small>PLAN ACTIVO</small><strong>PRO CLUB</strong>
-          <p>Todos los contenidos</p>
+          <small>TIPO DE ACCESO</small><strong id="access-plan">VERIFICANDO</strong>
+          <p id="access-expiry">Estamos validando tu pago.</p>
         </article>
         <article>
           <small>PROGRESO</small><strong id="progress-number">35%</strong>
           <p>Ruta DJ Profesional</p>
         </article>
       </section>
+      <section class="member-plan" id="mi-plan">
+        <div><span class="kicker">MI PLAN Y PAGOS</span><h2 id="plan-title">Tu acceso MUSIK.</h2><p id="plan-description">El contenido de cada curso comprado queda en tu biblioteca. El Club se habilita durante el curso o mientras tu membresía mensual esté vigente.</p></div>
+        <a class="btn primary" id="plan-action" href="club.html#planes">Ver membresías →</a>
+      </section>
       <section class="member-content" id="contenidos">
         <div class="member-section-head">
           <div>
-            <span class="kicker">CONTENIDO EXCLUSIVO</span>
-            <h2>Seguí aprendiendo.</h2>
+            <span class="kicker">MI BIBLIOTECA</span>
+            <h2>Cursos y Club.</h2>
           </div>
           <div class="content-tabs">
             <button class="active" data-content-filter="all">Todo</button

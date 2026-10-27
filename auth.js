@@ -79,7 +79,7 @@
   };
   api.signUpPassword = async (name, email, password) => {
     if (!client) return false;
-    const redirectTo = new URL("member.html", location.href).href;
+    const redirectTo = new URL("club.html#planes", location.href).href;
     const { data, error } = await client.auth.signUp({
       email,
       password,

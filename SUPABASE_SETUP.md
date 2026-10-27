@@ -14,8 +14,11 @@
 2. Elegir **New query**.
 3. Copiar todo el archivo `supabase/schema.sql`.
 4. Ejecutar con **Run**.
+5. Crear otra consulta, copiar `supabase/paid_access_model.sql` y ejecutarla.
 
 El esquema incluye perfiles, membresías, cursos, inscripciones, actividades, reservas, contenidos y referencias de pagos. Todas las tablas expuestas tienen Row Level Security.
+
+La segunda migración aplica la regla comercial: registrarse no habilita el panel; un curso pagado deja su contenido disponible permanentemente e incluye Club hasta que finaliza; la membresía mensual mantiene el Club activo mientras esté vigente. Al vencer el Club se bloquea su contenido adicional, sin eliminar cursos comprados.
 
 ## 3. Obtener los datos públicos de conexión
 

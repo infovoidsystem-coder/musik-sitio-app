@@ -87,7 +87,11 @@ Deno.serve(async (request) => {
     if (status === "approved" && payment.membership_id)
       await admin
         .from("memberships")
-        .update({ status: "active", starts_at: new Date().toISOString() })
+        .update({
+          status: "active",
+          starts_at: new Date().toISOString(),
+          ends_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        })
         .eq("id", payment.membership_id);
     if (status === "approved" && payment.enrollment_id)
       await admin

@@ -141,7 +141,7 @@ document.querySelector("#member-dialog .modal-separator")?.remove();
 document.querySelector("#member-dialog h2").textContent =
   "Ingresá a Musik Club";
 document.querySelector("#member-dialog h2+p").textContent =
-  "Accedé con tu email y contraseña o creá una cuenta nueva.";
+  "El panel se habilita después del pago de un curso o membresía. Si ya compraste, ingresá con tu cuenta.";
 clubAuthForm.innerHTML =
   '<label>Nombre completo <small>solo para registrarte</small><input name="name" autocomplete="name" placeholder="Tu nombre"></label><label>Email<input name="email" type="email" autocomplete="username" required placeholder="vos@email.com"></label><label>Contraseña<input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Mínimo 8 caracteres"></label><button class="btn primary" type="submit">Iniciar sesión →</button><button class="auth-register" id="member-register" type="button">Crear una cuenta nueva</button>';
 clubAuthForm.onsubmit = async (event) => {
@@ -180,8 +180,10 @@ document.querySelector("#member-register").onclick = async () => {
   try {
     const result = await window.MusikAuth.signUpPassword(name, email, password);
     if (result.session) {
-      location.href = "member.html";
-    } else showToast("Cuenta creada. Revisá tu email para confirmarla.");
+      memberDialog.close();
+      document.querySelector('#planes')?.scrollIntoView({behavior:'smooth'});
+      showToast("Cuenta creada. Elegí un curso o membresía para habilitar tu panel.");
+    } else showToast("Cuenta creada. Revisá tu email y luego elegí un curso o membresía.");
   } catch (error) {
     showToast(error.message || "No pudimos crear la cuenta.");
   }
