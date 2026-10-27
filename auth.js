@@ -43,7 +43,7 @@
       document
         .querySelectorAll("[data-member]")
         .forEach(
-          (b) => (b.firstChild.textContent = `Hola, ${name.split(" ")[0]} `),
+          (b) => (b.firstChild.textContent = "Ingresar al panel "),
         );
       help.textContent =
         "Tu sesión está protegida y se mantiene activa en este dispositivo.";
