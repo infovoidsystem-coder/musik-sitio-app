@@ -12,10 +12,25 @@ const cors = {
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") return new Response("ok", { headers: cors });
 
+  const payload = await request.json().catch(() => ({}));
   const environment = Deno.env.get("ARCA_ENVIRONMENT") || "demo";
   const configured = Boolean(
     Deno.env.get("ARCA_CERTIFICATE") && Deno.env.get("ARCA_PRIVATE_KEY"),
   );
+
+  if (payload.action === "list_points_of_sale" && (environment === "demo" || !configured)) {
+    return Response.json(
+      {
+        ok: true,
+        demo: true,
+        points_of_sale: [
+          { number: 3, label: "MUSIK WEB", recommended: true },
+          { number: 1, label: "Facturación general", recommended: false },
+        ],
+      },
+      { headers: cors },
+    );
+  }
 
   if (environment === "demo" || !configured) {
     return Response.json(
