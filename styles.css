@@ -210,3 +210,7 @@ html{scrollbar-color:#767980 #111318;scrollbar-width:thin}html::-webkit-scrollba
 
 /* Botón CDJ Master Tempo: activa el desplazamiento automático de lectura. */
 .master-tempo{position:absolute;left:50%;top:-42px;display:flex;align-items:center;justify-content:center;gap:4px;width:55px;height:33px;transform:translateX(-50%);padding:4px;border:1px solid #45484f;border-radius:5px;background:linear-gradient(180deg,#24262b,#090a0c);box-shadow:inset 0 1px rgba(255,255,255,.14),0 3px 0 #020203;color:#b8bac0;cursor:pointer;font:800 5.5px/1.05 "DM Sans";letter-spacing:.08em;text-align:left}.master-tempo i{width:7px;height:7px;border:1px solid #5a5d63;border-radius:50%;background:#15171a;box-shadow:inset 0 1px 2px #000}.master-tempo:hover{border-color:#70747c;color:#fff}.master-tempo.active{color:#fff;border-color:#62676f;box-shadow:inset 0 1px rgba(255,255,255,.18),0 3px 0 #020203,0 0 12px rgba(0,234,242,.22)}.master-tempo.active i{border-color:#00eaf2;background:#00eaf2;box-shadow:0 0 9px #00eaf2}.tempo-scroll{overflow:visible}
+.tempo-scroll .master-tempo{top:7px}
+.tempo-scroll>b{top:47px}
+.tempo-scroll .tempo-plus{top:62px}
+.tempo-scroll .tempo-rail{top:70px}
