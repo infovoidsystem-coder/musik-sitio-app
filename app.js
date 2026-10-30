@@ -32,6 +32,9 @@ function setPersona(next){grooveMode=next;persona.classList.add('transforming');
 function restartPersona(){clearInterval(personaTimer);personaTimer=setInterval(()=>setPersona(!grooveMode),7000)}
 if(persona&&personaSwitch){personaSwitch.addEventListener('click',()=>{setPersona(!grooveMode);restartPersona()});restartPersona()}
 
+/* Navegación inspirada en el fader TEMPO/PITCH de una cabina profesional. */
+const tempoScroll=document.createElement('div');tempoScroll.className='tempo-scroll';tempoScroll.setAttribute('aria-hidden','true');tempoScroll.innerHTML='<span class="tempo-plus">+10</span><b>TEMPO</b><i class="tempo-zero">0</i><span class="tempo-minus">-10</span><div class="tempo-rail"><u></u></div>';document.body.appendChild(tempoScroll);const tempoHandle=tempoScroll.querySelector('u'),tempoRail=tempoScroll.querySelector('.tempo-rail');function syncTempoScroll(){const range=Math.max(1,document.documentElement.scrollHeight-innerHeight),ratio=Math.min(1,scrollY/range),travel=Math.max(0,tempoRail.clientHeight-tempoHandle.offsetHeight);tempoHandle.style.transform=`translateY(${ratio*travel}px)`}addEventListener('scroll',syncTempoScroll,{passive:true});addEventListener('resize',syncTempoScroll,{passive:true});tempoRail.addEventListener('pointerdown',event=>{const rect=tempoRail.getBoundingClientRect(),ratio=Math.min(1,Math.max(0,(event.clientY-rect.top)/rect.height));scrollTo({top:ratio*(document.documentElement.scrollHeight-innerHeight),behavior:'smooth'})});syncTempoScroll();
+
 const soundcloudFrame=document.querySelector('#soundcloud-player');
 let radioTracks=[...document.querySelectorAll('.radio-track[data-sound]')];
 let soundcloudWidget=null;
