@@ -154,6 +154,11 @@ html{scrollbar-color:#767980 #111318;scrollbar-width:thin}html::-webkit-scrollba
 @media(max-width:900px){.footer-main{grid-template-columns:1.4fr 1fr!important}.footer-brand{grid-row:span 2}.footer-bottom{align-items:flex-start;flex-direction:column}.footer-bottom nav{flex-wrap:wrap}}
 @media(max-width:620px){.site-footer{padding:0 20px 100px;text-align:left}.footer-main{grid-template-columns:1fr!important;gap:27px!important;padding:40px 0 30px}.footer-brand{grid-row:auto}.footer-contact{align-items:flex-start}.footer-bottom nav{gap:14px 20px}.footer-bottom p{text-align:left}}
 
+/* Dedicated control lane: persona buttons never overlap the photography. */
+@media(min-width:901px){.hero-visual .hernan-portrait{right:92px!important}.hero-visual>.persona-switch{right:5px!important}}
+@media(min-width:621px) and (max-width:900px){.hero-visual .hernan-portrait{right:82px!important;left:4%!important}.hero-visual>.persona-switch{right:5px!important}}
+@media(max-width:620px){.hero-visual .hernan-portrait{right:72px!important}.hero-visual>.persona-switch{right:4px!important}}
+
 /* Short commercial hero with a quieter institutional sign-off. */
 .hero h1{font-size:clamp(42px,4.8vw,70px)!important;line-height:.98!important;letter-spacing:-.05em!important;max-width:680px!important;margin:22px 0 24px!important}.hero h1 span{display:block;max-width:100%;margin-top:.12em;font-size:.78em;line-height:1.04;letter-spacing:-.035em;white-space:normal}.hero-copy>p{max-width:560px}.hero-signoff{display:flex;align-items:center;gap:9px;margin-top:22px;color:#d8d8de;font:800 9px/1 "DM Sans";letter-spacing:.22em}.hero-signoff i{width:28px;height:2px;background:linear-gradient(90deg,var(--cyan),var(--magenta));box-shadow:0 0 9px rgba(0,234,242,.45)}
 @media(max-width:620px){.hero h1{font-size:34px!important;line-height:1.02!important;letter-spacing:-.035em!important;margin:20px 0 21px!important;max-width:100%!important}.hero h1 span{font-size:.57em!important;line-height:1.08!important;letter-spacing:-.02em!important;white-space:nowrap!important}.hero-signoff{margin-top:17px;font-size:7px;letter-spacing:.18em}.hero-actions{margin-top:27px}}
