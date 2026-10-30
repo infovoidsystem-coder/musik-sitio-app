@@ -33,9 +33,16 @@ Deno.serve(async (request) => {
     const admin = createClient(url, service),
       body = await request.json(),
       kind = String(body.kind || ""),
-      sku = String(body.sku || "").trim();
+      sku = String(body.sku || "").trim(),
+      profile = body.profile || {};
     if (!["membership", "course"].includes(kind) || !sku)
       return json({ error: "Producto inválido." }, 400);
+    const fullName = String(profile.full_name || "").trim(),
+      phone = String(profile.phone || "").trim(),
+      documentNumber = String(profile.document_number || "").trim(),
+      address = String(profile.address || "").trim();
+    if (!fullName || !phone || !documentNumber || !address)
+      return json({ error: "Completá los datos obligatorios de tu ficha." }, 400);
     let title = "",
       amount = 0,
       targetId = "";
@@ -87,6 +94,19 @@ Deno.serve(async (request) => {
     }
     if (!Number.isFinite(amount) || amount <= 0)
       return json({ error: "El precio no está configurado." }, 400);
+    const { error: profileError } = await admin.from("profiles").update({
+      full_name: fullName,
+      phone,
+      document_number: documentNumber,
+      birth_date: profile.birth_date || null,
+      address,
+      emergency_contact: String(profile.emergency_contact || "").trim() || null,
+      current_course: kind === "course" ? title.replace(/^MUSIK · /, "") : null,
+      membership_label: kind === "membership" ? title.replace(/^MUSIK Club · /, "") : "Acceso por curso",
+      account_status: "pendiente",
+      updated_at: new Date().toISOString(),
+    }).eq("id", user.id);
+    if (profileError) throw profileError;
     const paymentId = crypto.randomUUID(),
       payment = {
         id: paymentId,

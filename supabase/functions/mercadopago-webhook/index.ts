@@ -98,6 +98,11 @@ Deno.serve(async (request) => {
         .from("enrollments")
         .update({ status: "active" })
         .eq("id", payment.enrollment_id);
+    if (status === "approved")
+      await admin
+        .from("profiles")
+        .update({ account_status: "activo", updated_at: new Date().toISOString() })
+        .eq("id", payment.user_id);
     if (status === "approved") {
       const { data: profile } = await admin
         .from("profiles")
