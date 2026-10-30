@@ -167,3 +167,46 @@ html{scrollbar-color:#767980 #111318;scrollbar-width:thin}html::-webkit-scrollba
 .topbar .cdj-load{display:flex!important;flex-direction:column;align-items:center;gap:5px!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}.topbar .cdj-load .load-key{display:flex!important;align-items:center;justify-content:center;gap:9px;width:72px;height:30px;margin:0!important;border:1px solid #666a71;border-radius:5px;background:linear-gradient(180deg,#292b30,#0a0b0e);box-shadow:inset 0 1px rgba(255,255,255,.2),0 3px 0 #000;color:#73edf4!important;font:900 7px/1 "DM Sans";letter-spacing:.16em}.topbar .cdj-load .load-key i{display:grid;place-items:center;width:16px;height:16px;border:1px solid #4f545a;border-radius:50%;color:var(--cyan);font-style:normal;letter-spacing:0;box-shadow:0 0 8px rgba(0,234,242,.18)}.topbar .cdj-load strong{display:block!important;color:#d7d8dc;font:700 7px/1 "DM Sans";letter-spacing:.04em}.topbar .cdj-load:hover .load-key{border-color:var(--cyan);box-shadow:inset 0 1px rgba(255,255,255,.24),0 3px 0 #000,0 0 13px rgba(0,234,242,.22)}
 @media(max-width:620px){.topbar .cdj-load{display:flex!important}.topbar .cdj-load .load-key{width:50px;height:27px;font-size:6px;gap:4px}.topbar .cdj-load .load-key i{width:13px;height:13px;font-size:9px}.topbar .cdj-load strong{display:block!important;font-size:5.5px;white-space:nowrap}}
 .section-banner-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:-16px 0 38px}.section-banner{position:relative;min-height:240px;padding:28px;border:1px solid #30323a;border-radius:20px;background:#111218 center/cover;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}.section-banner:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--section-accent);box-shadow:0 0 18px var(--section-accent)}.section-banner span{color:var(--section-accent);font-size:8px;font-weight:900;letter-spacing:.16em}.section-banner h3{margin:8px 0;font-size:clamp(22px,3vw,38px);color:#fff}.section-banner p{max-width:580px;margin:0 0 18px;color:#b5b6bd;line-height:1.5}.section-banner a{align-self:flex-start;border:1px solid #686b72;border-radius:99px;padding:10px 14px;color:#fff;text-decoration:none;font-size:10px;font-weight:900}.section-banner a:hover{border-color:var(--section-accent);color:var(--section-accent)}@media(max-width:620px){.section-banner-grid{grid-template-columns:1fr;margin:-8px 0 28px}.section-banner{min-height:210px;padding:22px}.section-banner h3{font-size:24px}}
+
+/* Novedades: mantiene cada palabra completa y equilibra los renglones. */
+.news-main h3{
+  font-size:clamp(40px,5.1vw,70px)!important;
+  line-height:.98!important;
+  letter-spacing:-.035em!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  hyphens:none!important;
+  white-space:normal;
+  text-wrap:balance;
+}
+.news-info h4{
+  max-width:100%;
+  line-height:1.15!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  hyphens:none!important;
+  text-wrap:balance;
+}
+.news-main>p,.news-callout{
+  overflow-wrap:normal;
+  word-break:normal;
+  hyphens:none;
+}
+@media(max-width:900px){
+  .news-main h3{font-size:clamp(34px,7vw,54px)!important;line-height:1.02!important}
+  .news-info h4{font-size:24px}
+}
+@media(max-width:620px){
+  .news-main{padding-left:20px!important;padding-right:20px!important}
+  .news-main h3{font-size:clamp(25px,8vw,34px)!important;line-height:1.06!important;letter-spacing:-.02em!important}
+  .news-info h4{font-size:21px}
+}
+
+/* Acceso Club: texto principal a la izquierda y tecla LOAD a la derecha. */
+.topbar .cdj-load{flex-direction:row!important;gap:10px!important}
+.topbar .cdj-load strong{order:-1;font-size:10px!important;line-height:1!important;white-space:nowrap;color:#fff!important}
+.topbar .cdj-load .load-key{width:76px;height:32px}
+@media(max-width:620px){.topbar .cdj-load{gap:6px!important}.topbar .cdj-load strong{display:block!important;font-size:9px!important}.topbar .cdj-load .load-key{width:48px;height:27px}}
+
+/* Botón CDJ Master Tempo: activa el desplazamiento automático de lectura. */
+.master-tempo{position:absolute;left:50%;top:-42px;display:flex;align-items:center;justify-content:center;gap:4px;width:55px;height:33px;transform:translateX(-50%);padding:4px;border:1px solid #45484f;border-radius:5px;background:linear-gradient(180deg,#24262b,#090a0c);box-shadow:inset 0 1px rgba(255,255,255,.14),0 3px 0 #020203;color:#b8bac0;cursor:pointer;font:800 5.5px/1.05 "DM Sans";letter-spacing:.08em;text-align:left}.master-tempo i{width:7px;height:7px;border:1px solid #5a5d63;border-radius:50%;background:#15171a;box-shadow:inset 0 1px 2px #000}.master-tempo:hover{border-color:#70747c;color:#fff}.master-tempo.active{color:#fff;border-color:#62676f;box-shadow:inset 0 1px rgba(255,255,255,.18),0 3px 0 #020203,0 0 12px rgba(0,234,242,.22)}.master-tempo.active i{border-color:#00eaf2;background:#00eaf2;box-shadow:0 0 9px #00eaf2}.tempo-scroll{overflow:visible}
