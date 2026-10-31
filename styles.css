@@ -231,3 +231,6 @@ html{scrollbar-color:#767980 #111318;scrollbar-width:thin}html::-webkit-scrollba
 .news-controls button:hover{transform:rotate(7deg) scale(1.08)}
 @keyframes hotCueGlow{0%,100%{box-shadow:0 0 12px rgba(0,234,242,.2),0 3px 0 #004d52}50%{box-shadow:0 0 27px rgba(0,234,242,.52),0 3px 0 #004d52}}
 @media(prefers-reduced-motion:reduce){.filters button.active{animation:none}.btn,.member-btn,.filters button,.event-action,.plan button,.public-download-card button,.news-controls button{transition:none}}
+.content-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:start}.content-grid .card-art,.content-grid .featured .card-art{width:100%;height:auto;aspect-ratio:4/3}.content-grid .card-info{min-height:78px;align-items:flex-start}.content-grid .big-type{font-size:clamp(58px,6vw,88px);line-height:.72}
+@media(max-width:900px){.content-grid{grid-template-columns:1fr 1fr}.content-grid .media-card:first-child{grid-column:1/-1}.content-grid .media-card:first-child .card-art{aspect-ratio:16/9}}
+@media(max-width:620px){.content-grid{grid-template-columns:1fr}.content-grid .media-card:first-child{grid-column:auto}.content-grid .media-card:first-child .card-art,.content-grid .card-art{aspect-ratio:4/3}}
