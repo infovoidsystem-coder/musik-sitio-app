@@ -183,46 +183,27 @@
   font-weight: 900;
 }
 .mini-wave {
-  height: 70px;
-  margin: 18px 0;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent 0 8px,
-    var(--cyan) 9px 12px,
-    transparent 13px 18px
-  );
-  clip-path: polygon(
-    0 50%,
-    5% 10%,
-    10% 80%,
-    15% 30%,
-    20% 75%,
-    25% 18%,
-    30% 90%,
-    35% 35%,
-    40% 65%,
-    45% 12%,
-    50% 83%,
-    55% 28%,
-    60% 70%,
-    65% 20%,
-    70% 88%,
-    75% 40%,
-    80% 68%,
-    85% 15%,
-    90% 82%,
-    95% 35%,
-    100% 50%,
-    100% 55%,
-    0 55%
-  );
-  animation: waveBeat 0.5s steps(2) infinite;
+  height: 54px;
+  margin: 18px 0 14px;
+  padding: 8px 10px;
+  border: 1px solid #252831;
+  border-radius: 12px;
+  background: rgba(8, 9, 13, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
+.mini-wave i { width: 4px; height: 12px; border-radius: 99px; background: linear-gradient(180deg, #61fbff, var(--cyan)); box-shadow: 0 0 8px rgba(0,234,242,.42); animation: phoneEq 1s ease-in-out infinite alternate; }
+.mini-wave i:nth-child(3n){height:28px;animation-delay:-.45s}.mini-wave i:nth-child(4n){height:20px;animation-delay:-.7s}.mini-wave i:nth-child(5n){height:34px;animation-delay:-.2s}.mini-wave i:nth-child(7n){height:16px;animation-delay:-.85s}
+@keyframes phoneEq { to { transform: scaleY(.48); opacity:.55; } }
 .phone-dock {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   color: #777;
 }
+.phone-dock span { min-width: 46px; display: grid; justify-items: center; gap: 4px; font-size: 6px; font-weight: 800; letter-spacing: .04em; }
+.phone-dock b { font-size: 14px; font-weight: 500; }
 .phone-dock span:first-child {
   color: var(--cyan);
 }
@@ -1011,8 +992,9 @@
 .about-team-photo {
   position: relative;
   width: min(100%, 1080px);
-  height: clamp(300px, 34vw, 430px);
-  margin: 22px auto;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: 72px auto 28px;
   border: 1px solid #30313a;
   border-radius: 20px;
   overflow: hidden;
@@ -1030,8 +1012,8 @@
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
-  object-position: center 44%;
+  object-fit: contain;
+  object-position: center;
 }
 .about-team-photo figcaption {
   position: absolute;
@@ -1079,7 +1061,7 @@
   .about-team {
     padding: 28px;
   }
-  .about-team-photo { width: 100%; height: 260px; margin: 18px 0; }
+  .about-team-photo { width: 100%; height: auto; aspect-ratio: 16 / 9; margin: 48px 0 20px; }
   .about-team-photo figcaption { left: 18px; right: 18px; bottom: 17px; align-items: flex-start; flex-direction: column; gap: 7px; }
   .about-team-photo figcaption strong { font-size: 20px; text-align: left; }
   .team-roles {
