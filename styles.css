@@ -169,8 +169,10 @@ html{scrollbar-color:#767980 #111318;scrollbar-width:thin}html::-webkit-scrollba
 .section-banner-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:-16px 0 38px}.section-banner{position:relative;min-height:240px;padding:28px;border:1px solid #30323a;border-radius:20px;background:#111218 center/cover;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}.section-banner:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--section-accent);box-shadow:0 0 18px var(--section-accent)}.section-banner span{color:var(--section-accent);font-size:8px;font-weight:900;letter-spacing:.16em}.section-banner h3{margin:8px 0;font-size:clamp(22px,3vw,38px);color:#fff}.section-banner p{max-width:580px;margin:0 0 18px;color:#b5b6bd;line-height:1.5}.section-banner a{align-self:flex-start;border:1px solid #686b72;border-radius:99px;padding:10px 14px;color:#fff;text-decoration:none;font-size:10px;font-weight:900}.section-banner a:hover{border-color:var(--section-accent);color:var(--section-accent)}@media(max-width:620px){.section-banner-grid{grid-template-columns:1fr;margin:-8px 0 28px}.section-banner{min-height:210px;padding:22px}.section-banner h3{font-size:24px}}
 
 /* Novedades: mantiene cada palabra completa y equilibra los renglones. */
+.news-main{min-width:0}
 .news-main h3{
-  font-size:clamp(40px,5.1vw,70px)!important;
+  max-width:100%;
+  font-size:clamp(32px,4.1vw,60px)!important;
   line-height:.98!important;
   letter-spacing:-.035em!important;
   overflow-wrap:normal!important;
@@ -187,6 +189,10 @@ html{scrollbar-color:#767980 #111318;scrollbar-width:thin}html::-webkit-scrollba
   hyphens:none!important;
   text-wrap:balance;
 }
+.news-info{min-width:0;overflow:hidden;background:rgba(3,3,6,.88)}
+.news-info h4{color:#fff}
+.news-prices p{color:#e1e1e6}
+.news-info>small{color:#aaa}
 .news-main>p,.news-callout{
   overflow-wrap:normal;
   word-break:normal;
