@@ -221,3 +221,5 @@ html{scrollbar-color:#767980 #111318;scrollbar-width:thin}html::-webkit-scrollba
 .tempo-scroll .tempo-plus{top:62px}
 .tempo-scroll .tempo-rail{top:70px}
 .academy .program-grid>article>span{color:#006a72;text-shadow:none}
+.card-art .round-play{position:absolute!important;right:16px!important;bottom:16px!important;left:auto!important;top:auto!important;width:44px!important;height:44px!important;color:#090b0e!important;z-index:4}.card-art .round-play:after{display:none!important}.card-art .round-play:hover{transform:scale(1.05)}
+.public-download-card p{color:#b8b8c1}.public-download-card small{color:#a5a5af}.public-download-top b{color:#5d5d68}
