@@ -28,15 +28,29 @@ const products = [
 
 const grid = document.querySelector("#product-grid");
 const moneyText = (value) => value === "Consultar" ? value : value;
+function familyFor(product){
+  const name = product.name.toUpperCase();
+  if (/XDJ-RX3|XDJ-RR|XDJ-AZ|OMNIS|PRIME GO|SC LIVE/.test(name)) return "allinone";
+  if (/CDJ|XDJ-1000|XDJ-700|SC5000/.test(name)) return "cdj";
+  if (/FLX|DDJ-SR1|DDJ-RX|DDJ-400/.test(name)) return "ddj";
+  if (/RMX|DDJ-XP1/.test(name)) return "effects";
+  if (/XONE/.test(name)) return "mixer";
+  if (/SL-1200/.test(name)) return "turntable";
+  if (/HDJ|HD25|EAH/.test(name)) return "headphone";
+  if (/CLASSIC 5|KRK/.test(name)) return "monitor";
+  return "other";
+}
 function renderProducts(){
   grid.innerHTML = products.map((product,index) => {
     const message = encodeURIComponent(`Hola MUSIK, quiero consultar por ${product.brand} ${product.name} (${product.state}).`);
-    return `<article class="product-card" data-type="${product.type}"><div class="product-media ${product.promo ? "promo" : ""}"><img src="${product.image}" alt="${product.brand} ${product.name}" loading="lazy"><span class="product-status ${product.type.includes("usado") ? "used" : ""}">${product.state}</span></div><div class="product-copy"><span class="product-brand">${product.brand}</span><h3>${product.name}</h3><p>${product.description}</p><div class="product-buy"><span class="product-price"><small>PRECIO PUBLICADO</small><strong>${moneyText(product.price)}</strong></span><a href="https://wa.me/5491157190480?text=${message}" target="_blank" rel="noopener" aria-label="Consultar por ${product.name}">Consultar →</a></div></div></article>`;
+    const state = product.type.includes("usado") ? "usado" : "nuevo";
+    return `<article class="product-card" data-family="${familyFor(product)}" data-state="${state}"><div class="product-media ${product.promo ? "promo" : ""}"><img src="${product.image}" alt="${product.brand} ${product.name}" loading="lazy"><span class="product-status ${state === "usado" ? "used" : ""}">${product.state}</span></div><div class="product-copy"><span class="product-brand">${product.brand}</span><h3>${product.name}</h3><p>${product.description}</p><div class="product-buy"><span class="product-price"><small>PRECIO PUBLICADO</small><strong>${moneyText(product.price)}</strong></span><a href="https://wa.me/5491157190480?text=${message}" target="_blank" rel="noopener" aria-label="Consultar por ${product.name}">Consultar →</a></div></div></article>`;
   }).join("");
 }
 renderProducts();
-document.querySelectorAll("[data-shop-filter]").forEach(button => button.addEventListener("click",()=>{
-  document.querySelectorAll("[data-shop-filter]").forEach(item=>item.classList.toggle("active",item===button));
-  const filter=button.dataset.shopFilter;
-  document.querySelectorAll(".product-card").forEach(card=>card.classList.toggle("hidden",filter!=="all"&&!card.dataset.type.includes(filter)));
+document.querySelectorAll("[data-shop-filter],[data-shop-state]").forEach(button => button.addEventListener("click",()=>{
+  document.querySelectorAll("[data-shop-filter],[data-shop-state]").forEach(item=>item.classList.toggle("active",item===button));
+  const family=button.dataset.shopFilter;
+  const state=button.dataset.shopState;
+  document.querySelectorAll(".product-card").forEach(card=>card.classList.toggle("hidden",family ? family!=="all"&&card.dataset.family!==family : card.dataset.state!==state));
 }));
