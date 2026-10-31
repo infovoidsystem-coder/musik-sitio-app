@@ -988,6 +988,44 @@
   color: var(--cyan);
   margin-right: 9px;
 }
+.about-team-photo {
+  grid-column: 1 / -1;
+  position: relative;
+  min-height: 420px;
+  margin: -12px -18px 6px;
+  border: 1px solid #30313a;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #08080b;
+}
+.about-team-photo:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(4, 5, 8, 0.92));
+  pointer-events: none;
+}
+.about-team-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  display: block;
+  object-fit: cover;
+  object-position: center 44%;
+}
+.about-team-photo figcaption {
+  position: absolute;
+  z-index: 1;
+  left: 28px;
+  right: 28px;
+  bottom: 25px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.about-team-photo figcaption span { color: var(--cyan); font-size: 9px; font-weight: 900; letter-spacing: 2px; }
+.about-team-photo figcaption strong { max-width: 560px; color: #fff; font-size: clamp(20px, 2.5vw, 34px); line-height: 1.05; text-align: right; }
 @media (max-width: 900px) {
   .about-heading,
   .about-story,
@@ -1021,6 +1059,10 @@
   .about-team {
     padding: 28px;
   }
+  .about-team-photo { min-height: 310px; margin: -10px -10px 4px; }
+  .about-team-photo img { min-height: 310px; }
+  .about-team-photo figcaption { left: 18px; right: 18px; bottom: 17px; align-items: flex-start; flex-direction: column; gap: 7px; }
+  .about-team-photo figcaption strong { font-size: 20px; text-align: left; }
   .team-roles {
     grid-template-columns: 1fr;
   }
