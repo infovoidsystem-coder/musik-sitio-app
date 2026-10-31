@@ -399,9 +399,9 @@ clubHero?.after(aboutSection);
 /* Foto oficial de la comunidad, restaurada desde el archivo original de MUSIK. */
 const aboutTeam = aboutSection.querySelector(".about-team");
 const teamPhoto = document.createElement("figure");
-teamPhoto.className = "about-team-photo";
-teamPhoto.innerHTML = `<img src="assets/familia-musik-hd.png" alt="Alumnos, docentes y artistas de la familia MUSIK" loading="lazy"><figcaption><span>FAMILIA MUSIK</span><strong>Una comunidad que aprende, practica y crece junta.</strong></figcaption>`;
-aboutTeam?.prepend(teamPhoto);
+teamPhoto.className = "about-team-photo about-community-photo";
+teamPhoto.innerHTML = `<img src="assets/familia-musik-hd.png" alt="Alumnos de la comunidad MUSIK reunidos en la academia" loading="lazy"><figcaption><span>ALUMNOS / COMUNIDAD MUSIK</span><strong>Una comunidad que aprende, practica y crece junta.</strong></figcaption>`;
+aboutTeam?.before(teamPhoto);
 
 /* Biblioteca visible para todos y descargable solo por miembros autenticados. */
 const appDownloadSection = document.querySelector("#app");
