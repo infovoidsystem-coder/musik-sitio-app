@@ -222,9 +222,11 @@
       <h2 id="booking-title">Reservar lugar</h2>
       <div class="booking-summary" id="booking-summary"></div>
       <form id="booking-form">
-        <label>Nombre<input required placeholder="Tu nombre" /></label
+        <label>Nombre<input name="name" required placeholder="Tu nombre" /></label
+        ><label>Nombre artístico / de fantasía <small>opcional</small><input name="artist_name" maxlength="80" placeholder="Tu alias como DJ o productor" /></label
         ><label
           >Email<input
+            name="email"
             type="email"
             required
             placeholder="vos@email.com" /></label
@@ -238,7 +240,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="auth-config.js?v=2"></script>
     <script src="auth.js"></script>
-    <script src="club.js"></script>
+    <script src="club.js?v=booking-artist-1"></script>
     <script src="payments.js"></script>
     <script src="site-extras.js"></script>
     <script src="brand-admin.js"></script>

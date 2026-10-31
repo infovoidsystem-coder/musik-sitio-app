@@ -6,6 +6,7 @@ create table if not exists public.club_bookings (
   user_id uuid references auth.users(id) on delete cascade not null,
   member_email text not null,
   member_name text,
+  member_artist_name text,
   event_key text not null,
   booking_type text not null check (booking_type in ('clase','practica','evento','sala','curso')),
   title text not null,

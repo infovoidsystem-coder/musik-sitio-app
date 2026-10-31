@@ -200,6 +200,10 @@ function openBooking(id) {
   document.querySelector("#booking-title").textContent = selectedEvent.title;
   document.querySelector("#booking-summary").innerHTML =
     `<strong>${selectedEvent.day} ${selectedEvent.month} · ${selectedEvent.time} h</strong><br>${selectedEvent.place}<br>${selectedEvent.capacity - selectedEvent.booked} lugares disponibles`;
+  const bookingForm=document.querySelector('#booking-form'),user=window.MusikAuth?.user,meta=user?.user_metadata||{},cached=user?JSON.parse(localStorage.getItem('musik-member-profiles')||'{}')[user.id]||{}:{};
+  bookingForm.elements.name.value=meta.full_name||meta.name||cached.name||'';
+  bookingForm.elements.artist_name.value=meta.artist_name||cached.artist_name||'';
+  bookingForm.elements.email.value=user?.email||'';
   bookingDialog.showModal();
 }
 document.querySelector(".booking-close").onclick = () => bookingDialog.close();
@@ -219,11 +223,13 @@ document.querySelector("#booking-form").onsubmit = async (e) => {
     entry = {
       id: crypto.randomUUID(),
       user_id: user?.id || null,
-      member_email: user?.email || String(fields[1]?.value || ""),
+      member_email: user?.email || String(fields.email?.value || ""),
       member_name:
         meta.full_name ||
         meta.name ||
-        String(fields[0]?.value || "Miembro MUSIK"),
+        String(fields.name?.value || "Miembro MUSIK"),
+      member_artist_name:
+        meta.artist_name || String(fields.artist_name?.value || "").trim(),
       event_key: String(selectedEvent.id),
       booking_type: selectedEvent.type,
       title: selectedEvent.title,
@@ -239,13 +245,15 @@ document.querySelector("#booking-form").onsubmit = async (e) => {
   try {
     let saved = false;
     if (user && client) {
-      const { error } = await client.from("club_bookings").insert(entry);
-      if (error) {
-        if (error.code === "23505")
-          throw new Error("Ya tenés una reserva para esta actividad.");
-        throw error;
+      let { error } = await client.from("club_bookings").insert(entry);
+      if (error && /member_artist_name|column/i.test(error.message || "")) {
+        const compatibleEntry = { ...entry };
+        delete compatibleEntry.member_artist_name;
+        ({ error } = await client.from("club_bookings").insert(compatibleEntry));
       }
-      saved = true;
+      if (error?.code === "23505")
+        throw new Error("Ya tenés una reserva para esta actividad.");
+      saved = !error;
     }
     if (!saved) {
       const bookings = JSON.parse(

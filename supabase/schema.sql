@@ -13,6 +13,7 @@ create table public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   email text not null,
   full_name text,
+  artist_name text,
   avatar_url text,
   phone text,
   document_number text,
