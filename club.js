@@ -382,11 +382,11 @@ if (installedApp) {
 const clubDesktopNav = document.querySelector(".club-top .desktop-nav");
 if (clubDesktopNav)
   clubDesktopNav.innerHTML =
-    '<a href="index.html">Inicio</a><a href="#nosotros">Nosotros</a><a href="#agenda">Reservas</a><a class="active" href="#home">Club</a><a href="#descargas">Descargas</a><a href="shop.html">Shop</a>';
+    '<a href="index.html">Inicio</a><a href="#nosotros">Nosotros</a><a href="programas/index.html">Cursos</a><a href="#agenda">Reservas</a><a class="active" href="#home">Club</a><a href="#descargas">Descargas</a><a href="shop.html">Shop</a>';
 const clubMobileNav = document.querySelector(".mobile-nav");
 if (clubMobileNav)
   clubMobileNav.innerHTML =
-    '<a href="index.html">⌂<span>Inicio</span></a><a href="#nosotros">◎<span>Nosotros</span></a><a href="#agenda">▣<span>Reservas</span></a><a class="active" href="#home">♫<span>Club</span></a><a href="#descargas">⇩<span>Descargas</span></a><a href="shop.html">◆<span>Shop</span></a>';
+    '<a href="index.html">⌂<span>Inicio</span></a><a href="#nosotros">◎<span>Nosotros</span></a><a href="programas/index.html">▤<span>Cursos</span></a><a href="#agenda">▣<span>Reservas</span></a><a class="active" href="#home">♫<span>Club</span></a><a href="#descargas">⇩<span>Descargas</span></a><a href="shop.html">◆<span>Shop</span></a>';
 
 /* Historia, equipo y dirección artística de MUSIK. */
 const clubHero = document.querySelector(".club-hero");

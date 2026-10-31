@@ -1,0 +1,36 @@
+.site-theme-toggle{position:fixed;right:22px;top:94px;z-index:50;height:38px;padding:0 13px;border:1px solid #4b4e56;border-radius:99px;background:rgba(10,11,14,.9);backdrop-filter:blur(12px);box-shadow:0 8px 24px #0006;color:#fff;display:flex;align-items:center;gap:7px;cursor:pointer;font-family:"DM Sans",sans-serif}.site-theme-toggle span{color:#00eaf2;font-size:14px}.site-theme-toggle b{font-size:9px;white-space:nowrap}
+html[data-site-theme="light"] body{background:#f3f1ed;color:#0a0b0e}
+html[data-site-theme="light"] .topbar,html[data-site-theme="light"] .club-top,html[data-site-theme="light"] .program-top{background:rgba(247,245,241,.94);border-color:#d3d0ca}
+html[data-site-theme="light"] .brand,html[data-site-theme="light"] .program-brand,html[data-site-theme="light"] .desktop-nav a.active{color:#08090c}
+html[data-site-theme="light"] .desktop-nav a,html[data-site-theme="light"] .program-nav a{color:#565860}
+html[data-site-theme="light"] .site-theme-toggle{background:#fff;border-color:#c9c6c0;color:#090a0d;box-shadow:0 8px 24px #807b7130}
+
+html[data-site-theme="light"] .hero,html[data-site-theme="light"] .sound-lab,html[data-site-theme="light"] .content,html[data-site-theme="light"] .membership,html[data-site-theme="light"] .news-section,html[data-site-theme="light"] .instagram-section,html[data-site-theme="light"] .home-downloads{background:#f4f2ee;color:#0b0c0f}
+html[data-site-theme="light"] .hero-copy>p,html[data-site-theme="light"] .section-head>p,html[data-site-theme="light"] .membership-intro p{color:#565861}
+html[data-site-theme="light"] .media-card .card-info p,html[data-site-theme="light"] .public-download-card p{color:#575963}
+html[data-site-theme="light"] .site-footer{background:#ece9e3;color:#55575f;border-color:#cecbc4}
+
+html[data-site-theme="light"] .club-page{background:#f3f1ed;color:#090a0d}
+html[data-site-theme="light"] .club-hero,html[data-site-theme="light"] .club-about,html[data-site-theme="light"] .club-downloads,html[data-site-theme="light"] .club-plans{background:#f3f1ed;color:#090a0d}
+html[data-site-theme="light"] .about-history,html[data-site-theme="light"] .about-founder,html[data-site-theme="light"] .about-team{background:#fff;border-color:#d0cdc6}
+html[data-site-theme="light"] .about-history>p,html[data-site-theme="light"] .founder-copy p,html[data-site-theme="light"] .about-team p{color:#555761}
+html[data-site-theme="light"] .about-values b,html[data-site-theme="light"] .founder-copy a{color:#0a0b0d}
+
+html[data-site-theme="light"] .shop-page{background:#f3f1ed;color:#090a0d}
+html[data-site-theme="light"] .shop-hero,html[data-site-theme="light"] .shop-catalog{background:#f3f1ed;color:#090a0d}
+html[data-site-theme="light"] .shop-hero-copy p,html[data-site-theme="light"] .shop-head p{color:#555761}
+html[data-site-theme="light"] .product-card{background:#fff;border-color:#d2cfc8}
+html[data-site-theme="light"] .product-copy p{color:#5d5f68}
+html[data-site-theme="light"] .shop-assistance{background:#fff;color:#090a0d;border-color:#d2cfc8}
+html[data-site-theme="light"] .shop-footer{background:#eae7e1;color:#55575f}
+
+html[data-site-theme="light"] .program-hero,html[data-site-theme="light"] .catalog-hero{background:radial-gradient(circle at 14% 16%,rgba(0,154,165,.13),transparent 28%),radial-gradient(circle at 88% 18%,rgba(207,0,255,.09),transparent 30%),#f4f2ee;color:#090a0d}
+html[data-site-theme="light"] .program-hero p,html[data-site-theme="light"] .catalog-hero p{color:#52545d}
+html[data-site-theme="light"] .program-visual{border-color:#c9c7c1}
+html[data-site-theme="light"] .related,html[data-site-theme="light"] .catalog-grid{background:#eae7e1;color:#090a0d}
+html[data-site-theme="light"] .related-card,html[data-site-theme="light"] .catalog-grid>a{background:#fff;border-color:#cfccc5;color:#090a0d}
+html[data-site-theme="light"] .related-card small,html[data-site-theme="light"] .catalog-grid small{color:#666871}
+html[data-site-theme="light"] .program-footer{background:#efede8;color:#585a62;border-color:#d1cec7}
+
+@media(max-width:620px){.site-theme-toggle{right:12px;top:76px;height:34px;padding:0 10px}.site-theme-toggle b{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.site-theme-toggle{transition:none}}

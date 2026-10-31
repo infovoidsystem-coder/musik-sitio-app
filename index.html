@@ -14,14 +14,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Michroma&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20">
+  <link rel="stylesheet" href="styles.css?v=23">
+  <link rel="stylesheet" href="theme.css?v=1">
 </head>
 <body>
   <div class="noise"></div>
   <header class="topbar">
     <a class="brand" href="#inicio" aria-label="Musik Academia de Música, inicio"><img src="assets/musik-logo-hd.png" alt="Logo de Musik"><span>ACADEMIA DE MÚSICA</span></a>
     <nav class="desktop-nav" aria-label="Navegación principal">
-      <a class="active" href="#inicio">Inicio</a><a href="club.html#nosotros">Nosotros</a><a href="club.html#agenda">Reservas</a><a href="club.html#home">Club</a><a href="#descargas">Descargas</a><a href="shop.html">Shop</a>
+      <a class="active" href="#inicio">Inicio</a><a href="club.html#nosotros">Nosotros</a><a href="programas/index.html">Cursos</a><a href="club.html#agenda">Reservas</a><a href="club.html#home">Club</a><a href="#descargas">Descargas</a><a href="shop.html">Shop</a>
     </nav>
     <a class="member-btn cdj-load" href="club.html"><span class="load-key">LOAD <i>↗</i></span><strong>Ingresá al Club</strong></a>
   </header>
@@ -44,6 +45,10 @@
           <img class="persona-image hernan-state" src="assets/hernan-paredes-dj.png" alt="Hernán Paredes tocando en una cabina de DJ">
           <img class="persona-image groovero-state" src="assets/groovero-dj.png" alt="Groovero tocando en una cabina de DJ">
           <div class="persona-flash" aria-hidden="true"></div>
+          <div class="persona-musik-transition" aria-hidden="true">
+            <span class="musik-eq-mark"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <b>MUSIK</b>
+          </div>
           <div class="hernan-caption persona-caption hernan-copy"><span>DIRECTOR / FOUNDER</span><strong>Hernán<br>Paredes</strong><p>DJ · Productor · Coach</p><a href="#musik-radio">Escuchar su música ↘</a></div>
           <div class="hernan-caption persona-caption groovero-copy"><span>ALTER EGO / FUNKY MODE</span><strong>GROOVERO</strong><p>Groove · Disco · Good vibes</p><a href="#musik-radio">Entrar en el groove ↘</a></div>
         </div>
@@ -154,7 +159,7 @@
   <footer class="site-footer" id="footer">
     <div class="footer-main">
       <div class="footer-brand"><a class="brand" href="#inicio"><img src="assets/musik-logo-hd.png" alt="Logo Musik"><span>ACADEMIA DE MÚSICA</span></a><p>Formación para DJs y productores.<br>De tu primera mezcla a la cabina profesional.</p></div>
-      <nav class="footer-contact footer-menu" aria-label="Secciones del sitio"><span>SECCIONES</span><a href="#inicio">Inicio</a><a href="club.html#nosotros">Nosotros</a><a href="club.html#agenda">Reservas</a><a href="club.html#home">Club</a><a href="#descargas">Descargas</a><a href="shop.html">MUSIK Shop</a></nav>
+      <nav class="footer-contact footer-menu" aria-label="Secciones del sitio"><span>SECCIONES</span><a href="#inicio">Inicio</a><a href="club.html#nosotros">Nosotros</a><a href="programas/index.html">Cursos</a><a href="club.html#agenda">Reservas</a><a href="club.html#home">Club</a><a href="#descargas">Descargas</a><a href="shop.html">MUSIK Shop</a></nav>
       <div class="footer-contact">
         <span>SEGUINOS</span><a href="https://www.instagram.com/musik_academy/" target="_blank" rel="noopener"><b>◎</b> @musik_academy</a>
       </div>
@@ -169,16 +174,17 @@
   </footer>
   <div class="cursor-glow" aria-hidden="true"></div>
 
-  <nav class="mobile-nav" aria-label="Navegación móvil"><a class="active" href="#inicio">⌂<span>Inicio</span></a><a href="club.html#nosotros">◎<span>Nosotros</span></a><a href="club.html#agenda">▣<span>Reservas</span></a><a href="club.html#home">♫<span>Club</span></a><a href="#descargas">⇩<span>Descargas</span></a><a href="shop.html">◆<span>Shop</span></a></nav>
+  <nav class="mobile-nav" aria-label="Navegación móvil"><a class="active" href="#inicio">⌂<span>Inicio</span></a><a href="club.html#nosotros">◎<span>Nosotros</span></a><a href="programas/index.html">▤<span>Cursos</span></a><a href="club.html#agenda">▣<span>Reservas</span></a><a href="club.html#home">♫<span>Club</span></a><a href="#descargas">⇩<span>Descargas</span></a><a href="shop.html">◆<span>Shop</span></a></nav>
   <dialog id="member-modal"><button class="modal-close" aria-label="Cerrar">×</button><div class="modal-mark">M</div><span class="kicker">BIENVENIDO AL CLUB</span><h2>Entrá a tu cuenta</h2><p>Esta demo deja listo el acceso para conectar autenticación y pagos en la próxima etapa.</p><form id="login-form"><label>Email<input type="email" placeholder="vos@email.com" required></label><label>Contraseña<input type="password" placeholder="••••••••" minlength="6" required></label><button class="btn primary" type="submit">Ingresar →</button></form><small>¿Todavía no sos miembro? <a href="#membresias" class="join-link">Ver membresías</a></small></dialog>
   <div class="toast" role="status" aria-live="polite"></div>
   <script src="https://w.soundcloud.com/player/api.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="auth-config.js?v=2"></script>
   <script src="auth.js"></script>
-  <script src="app.js?v=master-tempo-1"></script>
+  <script src="app.js?v=persona-musik-3"></script>
   <script src="payments.js"></script>
   <script src="site-extras.js"></script>
   <script src="brand-admin.js"></script>
+  <script src="theme.js?v=1"></script>
 </body>
 </html>

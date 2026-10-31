@@ -27,10 +27,34 @@ window.addEventListener('pointermove',e=>{glow.style.left=`${e.clientX}px`;glow.
 const tilt=document.querySelector('[data-tilt]');
 if(tilt){tilt.addEventListener('pointermove',e=>{const r=tilt.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;tilt.style.transform=`perspective(900px) rotateX(${-y*8}deg) rotateY(${x*9}deg) rotateZ(2deg)`});tilt.addEventListener('pointerleave',()=>tilt.style.transform='perspective(900px) rotate(2deg)')}
 
-const persona=document.querySelector('.hernan-portrait'),personaSwitch=document.querySelector('.persona-switch');let grooveMode=false,personaTimer;
-function setPersona(next){grooveMode=next;persona.classList.add('transforming');persona.classList.toggle('groove-mode',grooveMode);personaSwitch.setAttribute('aria-pressed',String(grooveMode));clearTimeout(personaSwitch._flash);personaSwitch._flash=setTimeout(()=>persona.classList.remove('transforming'),900)}
+const persona=document.querySelector('.hernan-portrait'),personaSwitch=document.querySelector('.persona-switch');let grooveMode=false,personaTimer,personaLocked=false;
+function setPersona(next){
+  if(!persona||!personaSwitch||personaLocked||next===grooveMode)return;
+  personaLocked=true;
+  persona.classList.add('transforming','musik-transitioning');
+  clearTimeout(personaSwitch._swap);
+  clearTimeout(personaSwitch._flash);
+  personaSwitch._swap=setTimeout(()=>{
+    grooveMode=next;
+    persona.classList.toggle('groove-mode',grooveMode);
+    personaSwitch.setAttribute('aria-pressed',String(grooveMode));
+  },540);
+  personaSwitch._flash=setTimeout(()=>{
+    persona.classList.remove('transforming','musik-transitioning');
+    personaLocked=false;
+  },1350);
+}
 function restartPersona(){clearInterval(personaTimer);personaTimer=setInterval(()=>setPersona(!grooveMode),7000)}
-if(persona&&personaSwitch){personaSwitch.addEventListener('click',()=>{setPersona(!grooveMode);restartPersona()});restartPersona()}
+function playPersonaIntro(){
+  personaLocked=true;
+  persona.classList.add('persona-intro');
+  clearTimeout(personaSwitch._intro);
+  personaSwitch._intro=setTimeout(()=>{
+    persona.classList.remove('persona-intro');
+    personaLocked=false;
+  },2800);
+}
+if(persona&&personaSwitch){personaSwitch.addEventListener('click',()=>{setPersona(!grooveMode);restartPersona()});playPersonaIntro();restartPersona()}
 
 /* Navegación inspirada en el fader TEMPO/PITCH de una cabina profesional. */
 const tempoScroll=document.createElement('div');

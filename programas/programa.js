@@ -27,3 +27,13 @@ document.querySelector('#program-intro').textContent=program.intro;
 document.querySelector('#program-topics').innerHTML=program.topics.map(topic=>`<li>${topic}</li>`).join('');
 document.querySelector('#program-requirements').textContent=program.requirements;
 document.querySelector('#related-programs').innerHTML=program.related.map(slug=>`<a class="related-card" href="${slug}.html"><span>PROGRAMA MUSIK</span><strong>${names[slug]}</strong><small>Conocer programa →</small></a>`).join('');
+
+/* Navegación global consistente y selector de apariencia compartido. */
+const programNav=document.querySelector('.program-nav');
+if(programNav)programNav.innerHTML='<a href="../index.html">Inicio</a><a href="../club.html#nosotros">Nosotros</a><a href="index.html">Cursos</a><a href="../club.html#agenda">Reservas</a><a href="../club.html">Club</a><a href="../index.html#descargas">Descargas</a><a href="../shop.html">Shop</a>';
+if(!document.querySelector('link[href*="theme.css"]')){
+  const themeLink=document.createElement('link');themeLink.rel='stylesheet';themeLink.href='../theme.css?v=1';document.head.append(themeLink);
+}
+if(!document.querySelector('script[src*="theme.js"]')){
+  const themeScript=document.createElement('script');themeScript.src='../theme.js?v=1';document.body.append(themeScript);
+}
