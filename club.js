@@ -126,7 +126,8 @@ function showToast(m) {
 document.querySelectorAll("[data-member]").forEach(
   (b) =>
     (b.onclick = () => {
-      if (window.MusikAuth.user) location.href = "member.html";
+      if (window.MusikAuth.user)
+        window.open("member.html", "_blank", "noopener");
       else memberDialog.showModal();
     }),
 );
@@ -156,7 +157,7 @@ clubAuthForm.onsubmit = async (event) => {
       String(form.get("password")),
     );
     memberDialog.close();
-    location.href = "member.html";
+    window.open("member.html", "_blank", "noopener");
   } catch (error) {
     showToast(
       error.message === "Invalid login credentials"
