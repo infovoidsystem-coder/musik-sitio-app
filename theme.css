@@ -16,6 +16,16 @@ html[data-site-theme="light"] .trust-row strong{color:#0a0b0e}
 html[data-site-theme="light"] .trust-row p{color:#5d5f68}
 html[data-site-theme="light"] .public-download-card h3{color:#fff}
 html[data-site-theme="light"] .public-download-card p{color:#b7b7c0}
+html[data-site-theme="light"] .service-card.online,html[data-site-theme="light"] .service-card.online h3{color:#fff}
+html[data-site-theme="light"] .service-card.online>span,html[data-site-theme="light"] .service-card.online p{color:#e6d9f5}
+html[data-site-theme="light"] .service-card.online a{color:#fff}
+html[data-site-theme="light"] .academy-strip{color:#fff}
+html[data-site-theme="light"] .academy-strip a{color:#fff}
+html[data-site-theme="light"] .marquee{color:#fff}
+html[data-site-theme="light"] .pill:not(.magenta):not(.outline):not(.dark){color:#fff}
+html[data-site-theme="light"] .round-play{color:#fff}
+html[data-site-theme="light"] .popular{color:#fff}
+html[data-site-theme="light"] .shop-filters button.active{color:#fff}
 
 html[data-site-theme="light"] .club-page{background:#f3f1ed;color:#090a0d}
 html[data-site-theme="light"] .club-hero,html[data-site-theme="light"] .club-about,html[data-site-theme="light"] .club-downloads,html[data-site-theme="light"] .club-plans{background:#f3f1ed;color:#090a0d}
