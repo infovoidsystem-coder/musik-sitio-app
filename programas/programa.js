@@ -31,9 +31,20 @@ document.querySelector('#related-programs').innerHTML=program.related.map(slug=>
 /* Navegación global consistente y selector de apariencia compartido. */
 const programNav=document.querySelector('.program-nav');
 if(programNav)programNav.innerHTML='<a href="../index.html">Inicio</a><a href="../club.html#nosotros">Nosotros</a><a href="index.html">Cursos</a><a href="../club.html#agenda">Reservas</a><a href="../club.html">Club</a><a href="../index.html#descargas">Descargas</a><a href="../shop.html">Shop</a>';
+const programHeader=document.querySelector('.program-top');
+programHeader?.classList.add('public-header');
+document.querySelector('.program-brand')?.classList.add('brand');
+programNav?.classList.add('desktop-nav');
+if(programHeader&&!programHeader.querySelector('.cdj-load'))programHeader.insertAdjacentHTML('beforeend','<a class="member-btn cdj-load" href="../club.html"><span class="load-key">LOAD <i>↗</i></span><strong>Ingresá al Club</strong></a>');
+if(!document.querySelector('link[href*="public-header.css"]')){
+  const publicHeaderStyles=document.createElement('link');publicHeaderStyles.rel='stylesheet';publicHeaderStyles.href='../public-header.css?v=1';document.head.appendChild(publicHeaderStyles);
+}
+if(!document.querySelector('link[href*="public-tools.css"]')){
+  const publicToolsStyles=document.createElement('link');publicToolsStyles.rel='stylesheet';publicToolsStyles.href='../public-tools.css?v=1';document.head.appendChild(publicToolsStyles);
+}
 if(!document.querySelector('link[href*="theme.css"]')){
-  const themeLink=document.createElement('link');themeLink.rel='stylesheet';themeLink.href='../theme.css?v=1';document.head.append(themeLink);
+  const themeLink=document.createElement('link');themeLink.rel='stylesheet';themeLink.href='../theme.css?v=3';document.head.append(themeLink);
 }
 if(!document.querySelector('script[src*="theme.js"]')){
-  const themeScript=document.createElement('script');themeScript.src='../theme.js?v=1';document.body.append(themeScript);
+  const themeScript=document.createElement('script');themeScript.src='../theme.js?v=2';document.body.append(themeScript);
 }

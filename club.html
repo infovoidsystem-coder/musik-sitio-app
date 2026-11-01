@@ -25,13 +25,15 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="club.css?v=5" />
-    <link rel="stylesheet" href="theme.css?v=1" />
+    <link rel="stylesheet" href="theme.css?v=3" />
+    <link rel="stylesheet" href="public-header.css?v=1" />
+    <link rel="stylesheet" href="public-tools.css?v=1" />
     <title>Musik Club — Comunidad DJ</title>
   </head>
   <body class="club-page">
     <div class="noise"></div>
     <div class="club-orb"></div>
-    <header class="topbar club-top">
+    <header class="topbar club-top public-header">
       <a class="brand" href="index.html"
         ><img src="assets/musik-logo-hd.png" alt="Musik" /><span
           >ACADEMIA DE MÚSICA</span
@@ -42,8 +44,8 @@
         ><a href="#agenda">Reservas</a><a href="#app">App</a
         ><a href="#planes">Membresía</a>
       </nav>
-      <button class="member-btn" data-member>
-        Ingresá al Club <span>↗</span>
+      <button class="member-btn cdj-load" data-member>
+        <span class="load-key">LOAD <i>↗</i></span><strong>Ingresá al Club</strong>
       </button>
     </header>
     <main>
@@ -245,6 +247,6 @@
     <script src="payments.js"></script>
     <script src="site-extras.js"></script>
     <script src="brand-admin.js"></script>
-    <script src="theme.js?v=1"></script>
+    <script src="theme.js?v=2"></script>
   </body>
 </html>

@@ -48,9 +48,16 @@ function renderProducts(){
   }).join("");
 }
 renderProducts();
-document.querySelectorAll("[data-shop-filter],[data-shop-state]").forEach(button => button.addEventListener("click",()=>{
-  document.querySelectorAll("[data-shop-filter],[data-shop-state]").forEach(item=>item.classList.toggle("active",item===button));
-  const family=button.dataset.shopFilter;
-  const state=button.dataset.shopState;
-  document.querySelectorAll(".product-card").forEach(card=>card.classList.toggle("hidden",family ? family!=="all"&&card.dataset.family!==family : card.dataset.state!==state));
-}));
+const stateButtons=[...document.querySelectorAll("[data-shop-state]")];
+const familySelect=document.querySelector("#shop-family-filter"),resetFilter=document.querySelector("#shop-filter-reset"),filterCount=document.querySelector("#shop-filter-count");
+let selectedState="all";
+function applyShopFilters(){
+  const selectedFamily=familySelect.value;let visible=0;
+  document.querySelectorAll(".product-card").forEach(card=>{const show=(selectedState==="all"||card.dataset.state===selectedState)&&(selectedFamily==="all"||card.dataset.family===selectedFamily);card.classList.toggle("hidden",!show);if(show)visible++});
+  filterCount.textContent=`${visible} ${visible===1?"equipo disponible":"equipos disponibles"}`;
+  resetFilter.classList.toggle("visible",selectedState!=="all"||selectedFamily!=="all");
+}
+stateButtons.forEach(button=>button.addEventListener("click",()=>{selectedState=button.dataset.shopState;stateButtons.forEach(item=>item.classList.toggle("active",item===button));applyShopFilters()}));
+familySelect.addEventListener("change",applyShopFilters);
+resetFilter.addEventListener("click",()=>{selectedState="all";familySelect.value="all";stateButtons.forEach(item=>item.classList.toggle("active",item.dataset.shopState==="all"));applyShopFilters()});
+applyShopFilters();

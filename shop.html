@@ -7,13 +7,16 @@
   <meta name="theme-color" content="#050507">
   <link rel="icon" href="assets/musik-app-192.png">
   <link rel="stylesheet" href="styles.css?v=20">
-  <link rel="stylesheet" href="shop.css?v=2">
-  <link rel="stylesheet" href="theme.css?v=1">
+  <link rel="stylesheet" href="shop.css?v=3">
+  <link rel="stylesheet" href="shop-filter.css?v=1">
+  <link rel="stylesheet" href="theme.css?v=3">
+  <link rel="stylesheet" href="public-header.css?v=1">
+  <link rel="stylesheet" href="public-tools.css?v=1">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=Michroma&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <title>MUSIK Shop — Equipos para DJs y productores</title>
 </head>
 <body class="shop-page">
-  <header class="topbar shop-top">
+  <header class="topbar shop-top public-header">
     <a class="brand" href="index.html"><img src="assets/musik-logo-hd.png" alt="MUSIK"><span>ACADEMIA DE<br>MÚSICA</span></a>
     <nav class="desktop-nav" aria-label="Navegación principal"><a href="index.html">Inicio</a><a href="club.html#nosotros">Nosotros</a><a href="programas/index.html">Cursos</a><a href="club.html#agenda">Reservas</a><a href="club.html#home">Club</a><a href="index.html#descargas">Descargas</a><a class="active" href="shop.html">Shop</a></nav>
     <a class="member-btn cdj-load" href="club.html"><span class="load-key">LOAD <i>↗</i></span><strong>Ingresá al Club</strong></a>
@@ -29,7 +32,11 @@
 
     <section class="shop-catalog" id="catalogo">
       <div class="shop-head"><div><span class="shop-kicker">CATÁLOGO ACTUAL</span><h2>Elegí tu setup.</h2></div><p>Los precios están expresados en dólares estadounidenses y corresponden a la publicación actual de MUSIK. Confirmá stock y valor antes de comprar.</p></div>
-      <div class="shop-filters" role="group" aria-label="Filtrar productos por familia"><button class="active" data-shop-filter="all">Todo</button><button data-shop-state="nuevo">Nuevos</button><button data-shop-state="usado">Usados</button><button data-shop-filter="cdj">CDJ / XDJ</button><button data-shop-filter="ddj">DDJ / Controladores</button><button data-shop-filter="allinone">Sistemas All-in-One</button><button data-shop-filter="mixer">Mixers</button><button data-shop-filter="effects">Efectos / Performance</button><button data-shop-filter="turntable">Bandejas</button><button data-shop-filter="headphone">Auriculares</button><button data-shop-filter="monitor">Monitores de estudio</button></div>
+      <div class="shop-filter-panel" aria-label="Filtros del catálogo">
+        <div class="shop-filter-state" role="group" aria-label="Estado del equipo"><span>CONDICIÓN</span><button class="active" type="button" data-shop-state="all">Todos</button><button type="button" data-shop-state="nuevo">Nuevos</button><button type="button" data-shop-state="usado">Usados</button></div>
+        <label class="shop-filter-family"><span>TIPO DE EQUIPO</span><select id="shop-family-filter" aria-label="Seleccionar tipo de equipo"><option value="all">Todas las categorías</option><option value="cdj">Reproductores CDJ / XDJ</option><option value="ddj">Controladores DJ</option><option value="allinone">Sistemas DJ All-in-One</option><option value="mixer">Mixers DJ</option><option value="effects">Performance y efectos</option><option value="turntable">Bandejas giradiscos</option><option value="headphone">Auriculares DJ</option><option value="monitor">Monitores de estudio</option></select></label>
+        <button class="shop-filter-reset" id="shop-filter-reset" type="button">Limpiar filtros ↺</button><p class="shop-filter-count" id="shop-filter-count" aria-live="polite"></p>
+      </div>
       <div class="product-grid" id="product-grid"></div>
     </section>
 
@@ -38,7 +45,7 @@
 
   <footer class="shop-footer"><a class="brand" href="index.html"><img src="assets/musik-logo-hd.png" alt="MUSIK"><span>ACADEMIA DE<br>MÚSICA</span></a><div><a href="index.html">Inicio</a><a href="club.html#nosotros">Nosotros</a><a href="programas/index.html">Cursos</a><a href="club.html#agenda">Reservas</a><a href="club.html">Club</a><a href="index.html#descargas">Descargas</a><a href="shop.html">Shop</a></div><small>Precios y stock sujetos a confirmación.</small></footer>
   <a class="shop-whatsapp" href="https://wa.me/5491157190480?text=Hola%20MUSIK%2C%20quiero%20consultar%20por%20un%20equipo" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp">☎</a>
-  <script src="shop.js?v=2"></script>
-  <script src="theme.js?v=1"></script>
+  <script src="shop.js?v=3"></script>
+  <script src="theme.js?v=2"></script>
 </body>
 </html>
