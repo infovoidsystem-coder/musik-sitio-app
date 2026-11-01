@@ -1,0 +1,18 @@
+/* Profundidad de hardware para selector de personaje y separación del fader. */
+.hero-visual>.persona-switch{border:1px solid #555a64!important;background:linear-gradient(145deg,#30333a 0,#16181d 46%,#07080a 100%)!important;box-shadow:inset 0 1px 0 #ffffff52,inset 0 -5px 10px #000,0 5px 0 #030405,0 16px 30px #000a!important;transform:translateY(-50%) perspective(600px) rotateY(-2deg)!important}
+.hero-visual>.persona-switch:before{content:"";position:absolute;inset:4px;border:1px solid #ffffff12;border-radius:8px;pointer-events:none}
+.hero-visual>.persona-switch .loop-key{z-index:1;justify-content:center!important;padding-left:38px!important;border:1px solid #373a41!important;border-radius:7px!important;background:linear-gradient(180deg,#24272d,#0c0d10)!important;box-shadow:inset 0 1px #ffffff24,0 3px 0 #030405,0 5px 8px #0007!important;text-shadow:0 1px 2px #000;transition:transform .18s,box-shadow .18s,filter .18s!important}
+.hero-visual>.persona-switch .loop-key:before{border-width:2px!important;background:radial-gradient(circle at 35% 30%,#969ba5 0 8%,#4b4f57 18%,#181a1f 56%,#050607 66%)!important;box-shadow:inset 0 2px 3px #ffffff38,inset 0 -4px 6px #000,0 3px 0 #020203,0 6px 9px #0009!important}
+.hero-visual>.persona-switch .loop-key:after{background:#5e626a!important;box-shadow:inset 0 1px #fff5,0 1px 2px #000!important}
+.hero-visual>.persona-switch .loop-key:hover{filter:brightness(1.15);transform:translateY(-1px)!important}
+.hero-visual>.persona-switch .loop-key:active{transform:translateY(2px)!important;box-shadow:inset 0 2px 5px #000,0 1px 0 #030405!important}
+.hero-visual>.persona-switch[aria-pressed="false"] .loop-key:first-child:before{background:radial-gradient(circle at 35% 30%,#efffff 0 7%,#00f4f6 20%,#00909a 48%,#061214 66%)!important;box-shadow:inset 0 2px 3px #fff9,inset 0 -4px 6px #004d53,0 3px 0 #020203,0 0 18px rgba(0,234,242,.78)!important}
+.hero-visual>.persona-switch[aria-pressed="false"] .loop-key:first-child:after{background:#d9ffff!important;box-shadow:0 0 10px #00eaf2!important}
+.hero-visual>.persona-switch[aria-pressed="true"] .loop-key:last-child:before{background:radial-gradient(circle at 35% 30%,#fff1ff 0 7%,#d77cff 20%,#78259b 48%,#16071b 66%)!important;box-shadow:inset 0 2px 3px #fff8,inset 0 -4px 6px #420052,0 3px 0 #020203,0 0 18px rgba(190,82,255,.76)!important}
+.hero-visual>.persona-switch[aria-pressed="true"] .loop-key:last-child:after{background:#f2d5ff!important;box-shadow:0 0 10px #c75cff!important}
+html[data-site-theme="light"] .hero-visual>.persona-switch{border-color:#a99bb2!important;background:linear-gradient(145deg,#fff 0,#eee7f1 48%,#d2c6d8 100%)!important;box-shadow:inset 0 1px #fff,inset 0 -4px 8px #846c9430,0 5px 0 #9b8ba5,0 15px 28px #60416f3d!important}
+html[data-site-theme="light"] .hero-visual>.persona-switch:before{border-color:#fff}
+html[data-site-theme="light"] .hero-visual>.persona-switch .loop-key{border-color:#b7aebe!important;background:linear-gradient(180deg,#fff,#ddd4e2)!important;box-shadow:inset 0 1px #fff,0 3px 0 #9d90a4,0 6px 9px #6d58752e!important;color:#352d3a!important;text-shadow:0 1px #fff}
+.tempo-scroll .master-tempo{top:-52px!important}
+.tempo-scroll>b{top:8px!important}.tempo-scroll .tempo-plus{top:27px!important}.tempo-scroll .tempo-rail{top:35px!important}
+html[data-site-theme="light"] .master-tempo{border-color:#8f8597;background:linear-gradient(180deg,#fff,#d8d0dd);box-shadow:inset 0 1px #fff,0 4px 0 #8f8296,0 8px 14px #5c46672e;color:#302a35}
