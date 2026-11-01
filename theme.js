@@ -7,7 +7,7 @@
     document.head.append(hardware);
     const lilac = document.createElement('link');
     lilac.rel = 'stylesheet';
-    lilac.href = location.pathname.includes('/programas/') ? '../light-lilac.css?v=1' : 'light-lilac.css?v=1';
+    lilac.href = location.pathname.includes('/programas/') ? '../light-lilac.css?v=2' : 'light-lilac.css?v=2';
     document.head.append(lilac);
     const navState = document.createElement('link');
     navState.rel = 'stylesheet';
