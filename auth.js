@@ -42,9 +42,10 @@
         meta.avatar_url || meta.picture || "assets/musik-logo-hd.png";
       document
         .querySelectorAll("[data-member]")
-        .forEach(
-          (b) => (b.firstChild.textContent = "Ingresar al panel "),
-        );
+        .forEach((b) => {
+          const label = b.querySelector("strong") || b.querySelector("span:last-child");
+          if (label) label.textContent = "Ingresar al panel";
+        });
       help.textContent =
         "Tu sesión está protegida y se mantiene activa en este dispositivo.";
     } else {
