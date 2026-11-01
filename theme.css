@@ -59,6 +59,7 @@ html[data-site-theme="light"] .product-brand,html[data-site-theme="light"] .pers
 html[data-site-theme="light"] .hero h1 span,html[data-site-theme="light"] h2 em,html[data-site-theme="light"] .shop-hero h1 em{-webkit-text-stroke-color:#5d1d8b!important}
 html[data-site-theme="light"] .btn.primary,html[data-site-theme="light"] .shop-primary,html[data-site-theme="light"] .program-button.primary{background:#5d1d8b!important;color:#fff!important;box-shadow:0 4px 0 #391254!important}
 html[data-site-theme="light"] .site-theme-toggle span,html[data-site-theme="light"] .public-header .brand span,html[data-site-theme="light"] .public-header .program-brand span{color:#5d1d8b!important}
+html[data-site-theme="light"] .public-header .cdj-load:hover .load-key i,html[data-site-theme="light"] .public-header .cdj-load:active .load-key i,html[data-site-theme="light"] .public-header .cdj-load:focus-visible .load-key i{background:#5d1d8b;border-color:#5d1d8b;color:#fff;box-shadow:0 0 10px #5d1d8b,0 0 2px #5d1d8b}
 html[data-site-theme="light"] .promo-slide strong,html[data-site-theme="light"] .promo-slide>a{color:#fff!important}html[data-site-theme="light"] .promo-slide p{color:#b9bbc4!important}html[data-site-theme="light"] .promo-tag{color:var(--promo)!important}
 html[data-site-theme="light"] .plan-name{color:var(--violet-indigo)!important}
 html[data-site-theme="light"] .plan{background:#fff;border-color:#d8d5cf;color:#0a0b0e}

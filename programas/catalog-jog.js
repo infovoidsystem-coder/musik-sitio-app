@@ -18,22 +18,6 @@
   const nameEl = document.getElementById("jog-name");
   const goEl = document.getElementById("jog-go");
 
-  // Build tick marks, one per course, positioned around the rim.
-  const ticks = [];
-  for (let n = 0; n < total; n++) {
-    const tick = document.createElement("i");
-    tick.className = "jog-tick";
-    wheel.appendChild(tick);
-    ticks.push(tick);
-  }
-
-  function layoutTicks() {
-    const radius = wheel.getBoundingClientRect().width / 2 - 11;
-    ticks.forEach((tick, n) => {
-      tick.style.transform = `rotate(${n * step}deg) translateY(-${radius}px)`;
-    });
-  }
-
   let index = 0;
   let rotation = 0;
   let lastIndex = -1;
@@ -47,7 +31,6 @@
     goEl.setAttribute("href", item.href);
     wheel.setAttribute("aria-valuenow", String(i + 1));
     wheel.setAttribute("aria-valuetext", item.name);
-    ticks.forEach((tick, n) => tick.classList.toggle("active", n === i));
   }
 
   function setRotation(deg, snap) {
@@ -110,7 +93,5 @@
     }
   });
 
-  window.addEventListener("resize", layoutTicks);
-  layoutTicks();
   render();
 })();

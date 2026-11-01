@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Cursos, carreras y especializaciones de MUSIK.">
-  <link rel="stylesheet" href="programa.css?v=2"><link rel="stylesheet" href="catalogo.css?v=2"><link rel="stylesheet" href="../theme.css?v=7"><link rel="stylesheet" href="../public-header.css?v=2"><link rel="stylesheet" href="../public-tools.css?v=4">
+  <link rel="stylesheet" href="programa.css?v=2"><link rel="stylesheet" href="catalogo.css?v=3"><link rel="stylesheet" href="../theme.css?v=8"><link rel="stylesheet" href="../public-header.css?v=2"><link rel="stylesheet" href="../public-tools.css?v=4">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=Michroma&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <title>Programas — MUSIK</title>
 </head>
@@ -13,18 +13,20 @@
     <section class="catalog-hero">
       <div class="catalog-hero-copy"><span class="program-eyebrow">FORMACIÓN MUSIK</span><h1>Elegí tu próximo nivel.</h1><p>Cursos, carreras y especializaciones con páginas propias, contenidos claros y acceso directo a inscripción.</p></div>
       <div class="jog-select" id="catalog-jog">
+        <div class="jog-screen">
+          <div class="jog-screen-glow">
+            <div class="jog-screen-row"><span id="jog-index">01 / 12</span><span id="jog-tag">CURSO / INICIAL</span></div>
+            <div class="jog-wave" aria-hidden="true"></div>
+            <strong class="jog-name" id="jog-name">DJ Profesional 1</strong>
+          </div>
+        </div>
         <div class="jog-dial">
-          <div class="jog-pointer" aria-hidden="true"></div>
           <div class="jog-wheel" id="jog-wheel" tabindex="0" role="slider" aria-label="Girá para elegir un curso" aria-valuemin="1" aria-valuemax="12" aria-valuenow="1">
+            <div class="jog-marker" aria-hidden="true"></div>
             <div class="jog-grip" aria-hidden="true"></div>
           </div>
         </div>
-        <div class="jog-readout">
-          <span class="jog-index" id="jog-index">01 / 12</span>
-          <span class="jog-tag" id="jog-tag">CURSO / INICIAL</span>
-          <strong class="jog-name" id="jog-name">DJ Profesional 1</strong>
-          <a class="jog-go" id="jog-go" href="dj-profesional-1.html">Ver curso →</a>
-        </div>
+        <a class="jog-go" id="jog-go" href="dj-profesional-1.html">Ver curso →</a>
       </div>
     </section>
     <section class="catalog-grid">
@@ -45,6 +47,6 @@
   <footer class="program-footer"><span>© 2026 MUSIK Argentina</span><span>Fitz Roy 1627 · Palermo · CABA</span></footer>
   <a class="whatsapp-course" href="https://wa.me/5491154190480" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp">◉</a>
   <script src="../theme.js?v=2"></script>
-  <script src="catalog-jog.js?v=1"></script>
+  <script src="catalog-jog.js?v=2"></script>
 </body>
 </html>
