@@ -200,10 +200,7 @@ html{scrollbar-color:#767980 #111318;scrollbar-width:thin}html::-webkit-scrollba
 .hernan-portrait .persona-musik-transition{display:contents!important}
 .hernan-portrait.persona-intro:before,.hernan-portrait.musik-transitioning:before{content:""!important;position:absolute!important;inset:0!important;z-index:11!important;pointer-events:none;background:#020204 url("assets/musik-logo-hd.png") center/88% auto no-repeat!important;opacity:1;animation:officialLogoPanel 3s cubic-bezier(.2,.75,.2,1) both!important}
 .hernan-portrait.musik-transitioning:before{animation-duration:1.85s!important}
-.official-logo-eq,.persona-logo-scan{opacity:0}
-.hernan-portrait.persona-intro .official-logo-eq,.hernan-portrait.musik-transitioning .official-logo-eq,.hernan-portrait.persona-intro .persona-logo-scan,.hernan-portrait.musik-transitioning .persona-logo-scan{opacity:1}
-.hernan-portrait .official-logo-eq{z-index:13;top:50%;transform:translate(-50%,-115%)}
-.hernan-portrait .persona-logo-scan{z-index:14}
+.official-logo-eq,.persona-logo-scan{opacity:0!important;display:none!important}
 @keyframes officialLogoPanel{0%{opacity:0;background-size:78% auto}12%,76%{opacity:1;background-size:88% auto}100%{opacity:0;background-size:84% auto}}
 @media(max-width:620px){.hernan-portrait.persona-intro:before,.hernan-portrait.musik-transitioning:before{background-size:90% auto!important}@keyframes officialLogoPanel{0%{opacity:0}12%,76%{opacity:1}100%{opacity:0}}}
 
