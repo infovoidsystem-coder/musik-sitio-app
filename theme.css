@@ -36,9 +36,18 @@ html[data-site-theme="light"] .program-footer{background:#efede8;color:#585a62;b
 @media(prefers-reduced-motion:reduce){.site-theme-toggle{transition:none}}
 
 /* Softer professional palette for light mode. */
-html[data-site-theme="light"]{--cyan:#006f76;--shop-cyan:#006f76;--magenta:#8c00ad;--blue:#176eb2}
-html[data-site-theme="light"] .eyebrow,html[data-site-theme="light"] .kicker,html[data-site-theme="light"] .shop-kicker,html[data-site-theme="light"] .program-eyebrow,html[data-site-theme="light"] .product-brand,html[data-site-theme="light"] .persona-caption span{color:#006f76!important}
-html[data-site-theme="light"] .hero h1 span,html[data-site-theme="light"] h2 em,html[data-site-theme="light"] .shop-hero h1 em{-webkit-text-stroke-color:#006f76!important}
-html[data-site-theme="light"] .btn.primary,html[data-site-theme="light"] .shop-primary,html[data-site-theme="light"] .program-button.primary{background:#006f76!important;color:#fff!important;box-shadow:0 4px 0 #003f44!important}
-html[data-site-theme="light"] .site-theme-toggle span,html[data-site-theme="light"] .public-header .brand span,html[data-site-theme="light"] .public-header .program-brand span{color:#006f76!important}
+html[data-site-theme="light"]{--cyan:#2364fc;--shop-cyan:#2364fc;--magenta:#8c00ad;--blue:#176eb2}
+html[data-site-theme="light"] .eyebrow,html[data-site-theme="light"] .kicker,html[data-site-theme="light"] .shop-kicker,html[data-site-theme="light"] .program-eyebrow,html[data-site-theme="light"] .product-brand,html[data-site-theme="light"] .persona-caption span{color:#2364fc!important}
+html[data-site-theme="light"] .hero h1 span,html[data-site-theme="light"] h2 em,html[data-site-theme="light"] .shop-hero h1 em{-webkit-text-stroke-color:#2364fc!important}
+html[data-site-theme="light"] .btn.primary,html[data-site-theme="light"] .shop-primary,html[data-site-theme="light"] .program-button.primary{background:#2364fc!important;color:#fff!important;box-shadow:0 4px 0 #143990!important}
+html[data-site-theme="light"] .site-theme-toggle span,html[data-site-theme="light"] .public-header .brand span,html[data-site-theme="light"] .public-header .program-brand span{color:#2364fc!important}
 html[data-site-theme="light"] .promo-slide strong,html[data-site-theme="light"] .promo-slide>a{color:#fff!important}html[data-site-theme="light"] .promo-slide p{color:#b9bbc4!important}html[data-site-theme="light"] .promo-tag{color:var(--promo)!important}
+html[data-site-theme="light"] .plan{background:#fff;border-color:#d8d5cf;color:#0a0b0e}
+html[data-site-theme="light"] .plan p{color:#5d5f68}
+html[data-site-theme="light"] .plan h3 small{color:#73757e}
+html[data-site-theme="light"] .plan ul{border-color:#e0ddd6}
+html[data-site-theme="light"] .plan li::first-letter{color:#2364fc}
+html[data-site-theme="light"] .plan button{border-color:#c9c6c0;color:#0a0b0e}
+html[data-site-theme="light"] .billing{background:#efece6}
+html[data-site-theme="light"] .billing button{color:#5d5f68}
+html[data-site-theme="light"] .billing button.active{background:#0a0b0e;color:#fff}
