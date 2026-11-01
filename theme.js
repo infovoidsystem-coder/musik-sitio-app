@@ -1,4 +1,15 @@
 (() => {
+  if (!document.querySelector('link[data-musik-hardware]')) {
+    const hardware = document.createElement('link');
+    hardware.rel = 'stylesheet';
+    hardware.dataset.musikHardware = 'true';
+    hardware.href = location.pathname.includes('/programas/') ? '../public-hardware.css?v=1' : 'public-hardware.css?v=1';
+    document.head.append(hardware);
+    const lilac = document.createElement('link');
+    lilac.rel = 'stylesheet';
+    lilac.href = location.pathname.includes('/programas/') ? '../light-lilac.css?v=1' : 'light-lilac.css?v=1';
+    document.head.append(lilac);
+  }
   const storageKey = "musik-public-theme";
   const fontStorageKey = "musik-public-font-size";
   const root = document.documentElement;
@@ -51,6 +62,21 @@
     else document.body.append(tools);
     applyTheme(initial);
     applyFontSize(localStorage.getItem(fontStorageKey) || "normal");
+    if (!document.querySelector(".musik-page-transition")) {
+      const transition = document.createElement("div");
+      transition.className = "musik-page-transition";
+      transition.setAttribute("aria-hidden", "true");
+      document.body.append(transition);
+      document.addEventListener("click", event => {
+        const link = event.target.closest("a[href]");
+        if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || link.target === "_blank" || link.hasAttribute("download")) return;
+        const url = new URL(link.href, location.href);
+        if (url.origin !== location.origin || (url.pathname === location.pathname && url.hash)) return;
+        event.preventDefault();
+        transition.classList.add("active");
+        setTimeout(() => { location.href = url.href; }, 280);
+      });
+    }
   };
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount, {once:true});
