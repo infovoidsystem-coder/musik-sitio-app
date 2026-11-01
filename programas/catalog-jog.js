@@ -8,6 +8,7 @@
     href: a.getAttribute("href"),
     tag: (a.querySelector("span") || {}).textContent || "",
     name: (a.querySelector("strong") || {}).textContent || "",
+    detail: (a.querySelector("small") || {}).textContent || "FORMACIÓN MUSIK",
   }));
   const total = items.length;
   if (!total) return;
@@ -17,6 +18,10 @@
   const tagEl = document.getElementById("jog-tag");
   const nameEl = document.getElementById("jog-name");
   const goEl = document.getElementById("jog-go");
+  const bpmEl = document.getElementById("jog-bpm");
+  const keyEl = document.getElementById("jog-key");
+  const timeEl = document.getElementById("jog-time");
+  const centerIndexEl = document.getElementById("jog-center-index");
 
   let index = 0;
   let rotation = 0;
@@ -29,8 +34,16 @@
     tagEl.textContent = item.tag;
     nameEl.textContent = item.name;
     goEl.setAttribute("href", item.href);
+    if (bpmEl) bpmEl.textContent = (122 + (i % 6) * .5).toFixed(1);
+    if (keyEl) keyEl.textContent = item.tag.includes("PRODUCCIÓN") ? "LIVE" : item.tag.includes("CARRERA") ? "PRO" : "MUSIK";
+    if (timeEl) timeEl.textContent = item.detail.split("·")[0].trim().toUpperCase();
+    if (centerIndexEl) centerIndexEl.textContent = String(i + 1).padStart(2, "0");
     wheel.setAttribute("aria-valuenow", String(i + 1));
     wheel.setAttribute("aria-valuetext", item.name);
+    grid.querySelectorAll("a").forEach((card, cardIndex) => card.classList.toggle("jog-selected", cardIndex === i));
+    document.getElementById("catalog-jog")?.classList.add("course-change");
+    clearTimeout(render.flashTimer);
+    render.flashTimer = setTimeout(() => document.getElementById("catalog-jog")?.classList.remove("course-change"), 230);
   }
 
   function setRotation(deg, snap) {
@@ -46,8 +59,7 @@
   }
 
   let dragging = false;
-  let startAngle = 0;
-  let startRotation = 0;
+  let previousAngle = 0;
   let center = { x: 0, y: 0 };
 
   function angleFromEvent(e) {
@@ -61,15 +73,18 @@
     wheel.setPointerCapture(e.pointerId);
     const rect = wheel.getBoundingClientRect();
     center = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
-    startAngle = angleFromEvent(e);
-    startRotation = rotation;
+    previousAngle = angleFromEvent(e);
     wheel.classList.add("dragging");
     wheel.focus();
   });
   wheel.addEventListener("pointermove", (e) => {
     if (!dragging) return;
-    const delta = angleFromEvent(e) - startAngle;
-    setRotation(startRotation + delta, false);
+    const currentAngle = angleFromEvent(e);
+    let delta = currentAngle - previousAngle;
+    if (delta > 180) delta -= 360;
+    if (delta < -180) delta += 360;
+    previousAngle = currentAngle;
+    setRotation(rotation + delta, false);
   });
   function endDrag() {
     if (!dragging) return;
@@ -79,6 +94,10 @@
   }
   wheel.addEventListener("pointerup", endDrag);
   wheel.addEventListener("pointercancel", endDrag);
+  wheel.addEventListener("wheel", (e) => {
+    setRotation((index + (e.deltaY > 0 ? 1 : -1)) * step, true);
+    e.preventDefault();
+  }, { passive: false });
 
   wheel.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {

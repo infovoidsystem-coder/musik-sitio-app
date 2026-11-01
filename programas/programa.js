@@ -46,5 +46,5 @@ if(!document.querySelector('link[href*="theme.css"]')){
   const themeLink=document.createElement('link');themeLink.rel='stylesheet';themeLink.href='../theme.css?v=3';document.head.append(themeLink);
 }
 if(!document.querySelector('script[src*="theme.js"]')){
-  const themeScript=document.createElement('script');themeScript.src='../theme.js?v=2';document.body.append(themeScript);
+  const themeScript=document.createElement('script');themeScript.src='../theme.js?v=5';document.body.append(themeScript);
 }
