@@ -38,13 +38,13 @@ function setPersona(next){
     grooveMode=next;
     persona.classList.toggle('groove-mode',grooveMode);
     personaSwitch.setAttribute('aria-pressed',String(grooveMode));
-  },540);
+  },920);
   personaSwitch._flash=setTimeout(()=>{
     persona.classList.remove('transforming','musik-transitioning');
     personaLocked=false;
-  },1350);
+  },1850);
 }
-function restartPersona(){clearInterval(personaTimer);personaTimer=setInterval(()=>setPersona(!grooveMode),7000)}
+function restartPersona(){clearInterval(personaTimer);personaTimer=setInterval(()=>setPersona(!grooveMode),7600)}
 function playPersonaIntro(){
   personaLocked=true;
   persona.classList.add('persona-intro');
@@ -52,7 +52,7 @@ function playPersonaIntro(){
   personaSwitch._intro=setTimeout(()=>{
     persona.classList.remove('persona-intro');
     personaLocked=false;
-  },2800);
+  },3000);
 }
 if(persona&&personaSwitch){personaSwitch.addEventListener('click',()=>{setPersona(!grooveMode);restartPersona()});playPersonaIntro();restartPersona()}
 
