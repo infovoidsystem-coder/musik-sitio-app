@@ -1,5 +1,5 @@
 /* El selector va arriba a la izquierda, como los botones de LOOP en la CDJ real. */
 .hero-visual .hernan-portrait{right:7%!important}
-.hero-visual>.persona-switch{left:18px!important;right:auto!important;top:18px!important;bottom:auto!important}
+.hero-visual>.persona-switch{left:50%!important;right:auto!important;top:14px!important;bottom:auto!important;transform:translateX(-50%)!important}
 @media(min-width:621px) and (max-width:900px){.hero-visual .hernan-portrait{right:4%!important;left:0!important}}
-@media(max-width:620px){.hero-visual .hernan-portrait{right:0!important}.hero-visual>.persona-switch{left:12px!important;top:12px!important}}
+@media(max-width:620px){.hero-visual .hernan-portrait{right:0!important}.hero-visual>.persona-switch{left:50%!important;top:10px!important;transform:translateX(-50%)!important}}

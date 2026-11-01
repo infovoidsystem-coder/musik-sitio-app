@@ -13,6 +13,7 @@
 html[data-site-theme="light"] .hero-visual>.persona-switch{border-color:#a99bb2!important;background:linear-gradient(145deg,#fff 0,#eee7f1 48%,#d2c6d8 100%)!important;box-shadow:inset 0 1px #fff,inset 0 -4px 8px #846c9430,0 5px 0 #9b8ba5,0 15px 28px #60416f3d!important}
 html[data-site-theme="light"] .hero-visual>.persona-switch:before{border-color:#fff}
 html[data-site-theme="light"] .hero-visual>.persona-switch .loop-key{border-color:#b7aebe!important;background:linear-gradient(180deg,#fff,#ddd4e2)!important;box-shadow:inset 0 1px #fff,0 3px 0 #9d90a4,0 6px 9px #6d58752e!important;color:#352d3a!important;text-shadow:0 1px #fff}
+.tempo-scroll{bottom:96px!important}
 .tempo-scroll .master-tempo{top:-52px!important}
 .tempo-scroll>b{top:8px!important}.tempo-scroll .tempo-plus{top:27px!important}.tempo-scroll .tempo-rail{top:35px!important}
 html[data-site-theme="light"] .master-tempo{border-color:#8f8597;background:linear-gradient(180deg,#fff,#d8d0dd);box-shadow:inset 0 1px #fff,0 4px 0 #8f8296,0 8px 14px #5c46672e;color:#302a35}
