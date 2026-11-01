@@ -46,7 +46,7 @@ if(!document.querySelector('link[href*="theme.css"]')){
   const themeLink=document.createElement('link');themeLink.rel='stylesheet';themeLink.href='../theme.css?v=3';document.head.append(themeLink);
 }
 if(!document.querySelector('script[src*="theme.js"]')){
-  const themeScript=document.createElement('script');themeScript.src='../theme.js?v=5';document.body.append(themeScript);
+  const themeScript=document.createElement('script');themeScript.src='../theme.js?v=6';document.body.append(themeScript);
 }
 if(!document.querySelector('script[src*="site-extras.js"]')){
   const extrasScript=document.createElement('script');extrasScript.src='../site-extras.js';document.body.append(extrasScript);

@@ -1,4 +1,9 @@
 (() => {
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  if (location.hash) {
+    window.scrollTo(0, 0);
+    window.addEventListener("load", () => window.scrollTo(0, 0), { once: true });
+  }
   if (!document.querySelector('link[data-musik-hardware]')) {
     const hardware = document.createElement('link');
     hardware.rel = 'stylesheet';
