@@ -9,6 +9,10 @@
     lilac.rel = 'stylesheet';
     lilac.href = location.pathname.includes('/programas/') ? '../light-lilac.css?v=1' : 'light-lilac.css?v=1';
     document.head.append(lilac);
+    const navState = document.createElement('link');
+    navState.rel = 'stylesheet';
+    navState.href = location.pathname.includes('/programas/') ? '../nav-state.css?v=1' : 'nav-state.css?v=1';
+    document.head.append(navState);
   }
   const storageKey = "musik-public-theme";
   const fontStorageKey = "musik-public-font-size";
@@ -62,6 +66,18 @@
     else document.body.append(tools);
     applyTheme(initial);
     applyFontSize(localStorage.getItem(fontStorageKey) || "normal");
+    const currentPath = location.pathname.replace(/\/index\.html$/, "/");
+    const currentHash = location.hash || (currentPath.endsWith("/") ? "#inicio" : "");
+    document.querySelectorAll(".public-header .desktop-nav a,.public-header .program-nav a").forEach(link => {
+      const target = new URL(link.href, location.href);
+      const targetPath = target.pathname.replace(/\/index\.html$/, "/");
+      const samePage = targetPath === currentPath;
+      link.classList.toggle("active", samePage && (!target.hash || target.hash === currentHash));
+      if (target.pathname.endsWith("/programas/index.html")) {
+        target.searchParams.set("v", "cdj-full-3");
+        link.href = target.href;
+      }
+    });
     if (!document.querySelector(".musik-page-transition")) {
       const transition = document.createElement("div");
       transition.className = "musik-page-transition";

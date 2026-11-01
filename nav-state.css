@@ -1,0 +1,1 @@
+.public-header .desktop-nav:has(a:hover) a.active:not(:hover):after,.public-header .program-nav:has(a:hover) a.active:not(:hover):after{left:50%;right:50%}.public-header .desktop-nav a:focus-visible:after,.public-header .program-nav a:focus-visible:after{left:3px;right:3px}
