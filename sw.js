@@ -1,4 +1,4 @@
-const CACHE = "musik-club-v79";
+const CACHE = "musik-club-v80";
 const ASSETS = [
   "./club.html",
   "./member.html",
@@ -30,7 +30,15 @@ self.addEventListener("install", (event) =>
   event.waitUntil(
     caches
       .open(CACHE)
-      .then((cache) => cache.addAll(ASSETS))
+      .then((cache) =>
+        Promise.all(
+          ASSETS.map((url) =>
+            fetch(url, { cache: "reload" })
+              .then((response) => cache.put(url, response))
+              .catch(() => {}),
+          ),
+        ),
+      )
       .then(() => self.skipWaiting()),
   ),
 );
@@ -48,8 +56,12 @@ self.addEventListener("activate", (event) =>
 );
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
+  const isNav =
+    event.request.mode === "navigate" ||
+    (event.request.destination === "" &&
+      event.request.headers.get("accept")?.includes("text/html"));
   event.respondWith(
-    fetch(event.request)
+    fetch(isNav ? new Request(event.request.url, { cache: "reload" }) : event.request)
       .then((response) => {
         const copy = response.clone();
         caches.open(CACHE).then((cache) => cache.put(event.request, copy));
