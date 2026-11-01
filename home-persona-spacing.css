@@ -1,0 +1,4 @@
+/* El selector ocupa una columna propia y nunca se superpone al retrato. */
+@media(min-width:901px){.hero-visual .hernan-portrait{right:124px!important}.hero-visual>.persona-switch{right:5px!important}}
+@media(min-width:621px) and (max-width:900px){.hero-visual .hernan-portrait{right:116px!important;left:4%!important}.hero-visual>.persona-switch{right:4px!important}}
+@media(max-width:620px){.hero-visual .hernan-portrait{right:106px!important}.hero-visual>.persona-switch{right:4px!important}}

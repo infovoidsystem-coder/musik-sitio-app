@@ -1,4 +1,4 @@
-const CACHE = "musik-club-v76";
+const CACHE = "musik-club-v77";
 const ASSETS = [
   "./club.html",
   "./member.html",
@@ -18,6 +18,7 @@ const ASSETS = [
   "./public-hardware.css",
   "./light-lilac.css",
   "./home-persona.css",
+  "./home-persona-spacing.css",
   "./assets/musik-logo-hd.png",
   "./assets/musik-app-180.png",
   "./assets/musik-app-192.png",
