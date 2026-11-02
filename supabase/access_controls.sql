@@ -70,5 +70,10 @@ create policy "active or manually enabled club downloads"
 on storage.objects for select to authenticated using (
   bucket_id='member-downloads'
   and not public.is_manually_blocked()
-  and (public.has_manual_access() or public.has_active_club_access() or public.is_admin())
+  and (
+    public.has_manual_access()
+    or public.has_active_club_access()
+    or public.has_paid_course_access()
+    or public.is_admin()
+  )
 );
