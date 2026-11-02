@@ -96,6 +96,7 @@ Deno.serve(async (request) => {
       return json({ error: "El precio no está configurado." }, 400);
     const { error: profileError } = await admin.from("profiles").update({
       full_name: fullName,
+      artist_name: String(profile.artist_name || "").trim() || null,
       phone,
       document_number: documentNumber,
       birth_date: profile.birth_date || null,

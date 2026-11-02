@@ -372,6 +372,26 @@
   gap: 9vw;
   background: radial-gradient(circle at 80% 50%, #1c0440, #08080b 45%);
 }
+.app-primary-banner {
+  min-height: min(760px, 100vh);
+  padding-top: 126px;
+  border-bottom: 1px solid #25252c;
+  background:
+    radial-gradient(circle at 78% 48%, rgba(207, 0, 255, 0.24), transparent 30%),
+    radial-gradient(circle at 18% 16%, rgba(0, 234, 242, 0.13), transparent 30%),
+    linear-gradient(135deg, #08080b, #10051b 60%, #050507);
+}
+.app-primary-banner .app-copy h2 {
+  max-width: 760px;
+  font-size: clamp(48px, 6vw, 92px);
+  line-height: 0.98;
+}
+.app-primary-banner .qr-card {
+  transform: rotate(1.5deg);
+}
+.club-page main > section[id] {
+  scroll-margin-top: 94px;
+}
 .app-copy > p {
   max-width: 530px;
   color: #999;
@@ -567,6 +587,10 @@
   }
   .app-download {
     grid-template-columns: 1fr;
+  }
+  .app-primary-banner {
+    min-height: auto;
+    padding-top: 112px;
   }
   .member-plan {
     grid-template-columns: 1fr 1fr;

@@ -100,7 +100,7 @@ function render() {
       .join("") || "<p>No hay fechas disponibles en esta categoría.</p>";
   grid
     .querySelectorAll("[data-reserve]")
-    .forEach((b) => (b.onclick = () => openBooking(Number(b.dataset.reserve))));
+    .forEach((b) => (b.onclick = () => openBooking(b.dataset.reserve)));
 }
 document.querySelectorAll("[data-booking-filter]").forEach(
   (btn) =>
@@ -197,7 +197,13 @@ function openBooking(id) {
     showToast("Ingresá como miembro para reservar.");
     return;
   }
-  selectedEvent = events.find((e) => e.id === id);
+  selectedEvent = events.find((e) => String(e.id) === String(id));
+  if (!selectedEvent) {
+    showToast("La fecha cambió. Actualizá la agenda e intentá nuevamente.");
+    events = loadEvents();
+    render();
+    return;
+  }
   document.querySelector("#booking-title").textContent = selectedEvent.title;
   document.querySelector("#booking-summary").innerHTML =
     `<strong>${selectedEvent.day} ${selectedEvent.month} · ${selectedEvent.time} h</strong><br>${selectedEvent.place}<br>${selectedEvent.capacity - selectedEvent.booked} lugares disponibles`;
@@ -241,6 +247,17 @@ document.querySelector("#booking-form").onsubmit = async (e) => {
       status: "confirmed",
       created_at: new Date().toISOString(),
     };
+  if (user) {
+    const profiles = JSON.parse(localStorage.getItem("musik-member-profiles") || "{}");
+    profiles[user.id] = {
+      ...(profiles[user.id] || {}),
+      name: entry.member_name,
+      artist_name: entry.member_artist_name,
+      email: entry.member_email,
+      updated_at: new Date().toISOString(),
+    };
+    localStorage.setItem("musik-member-profiles", JSON.stringify(profiles));
+  }
   submit.disabled = true;
   submit.textContent = "Confirmando…";
   try {
@@ -383,11 +400,11 @@ if (installedApp) {
 const clubDesktopNav = document.querySelector(".club-top .desktop-nav");
 if (clubDesktopNav)
   clubDesktopNav.innerHTML =
-    '<a href="index.html">Inicio</a><a href="#nosotros">Nosotros</a><a href="programas/index.html">Cursos</a><a href="#agenda">Reservas</a><a class="active" href="#home">Club</a><a href="#descargas">Descargas</a><a href="shop.html">Shop</a>';
+    '<a href="index.html">Inicio</a><a href="#nosotros">Nosotros</a><a href="programas/index.html">Cursos</a><a href="#agenda">Reservas</a><a class="active" href="#app">Club</a><a href="#descargas">Descargas</a><a href="shop.html">Shop</a>';
 const clubMobileNav = document.querySelector(".mobile-nav");
 if (clubMobileNav)
   clubMobileNav.innerHTML =
-    '<a href="index.html">⌂<span>Inicio</span></a><a href="#nosotros">◎<span>Nosotros</span></a><a href="programas/index.html">▤<span>Cursos</span></a><a href="#agenda">▣<span>Reservas</span></a><a class="active" href="#home">♫<span>Club</span></a><a href="#descargas">⇩<span>Descargas</span></a><a href="shop.html">◆<span>Shop</span></a>';
+    '<a href="index.html">⌂<span>Inicio</span></a><a href="#nosotros">◎<span>Nosotros</span></a><a href="programas/index.html">▤<span>Cursos</span></a><a href="#agenda">▣<span>Reservas</span></a><a class="active" href="#app">♫<span>Club</span></a><a href="#descargas">⇩<span>Descargas</span></a><a href="shop.html">◆<span>Shop</span></a>';
 
 /* Historia, equipo y dirección artística de MUSIK. */
 const clubHero = document.querySelector(".club-hero");
@@ -406,11 +423,13 @@ aboutTeam?.before(teamPhoto);
 
 /* Biblioteca visible para todos y descargable solo por miembros autenticados. */
 const appDownloadSection = document.querySelector("#app");
+appDownloadSection?.classList.add("app-primary-banner");
+document.querySelector(".club-page main")?.prepend(appDownloadSection);
 const downloadsSection = document.createElement("section");
 downloadsSection.className = "club-downloads section";
 downloadsSection.id = "descargas";
 downloadsSection.innerHTML = `<div class="section-head"><div><span class="kicker">BIBLIOTECA / CLUB</span><h2>Recursos para<br><em>seguir mezclando.</em></h2></div><p>Tips, tracks y materiales seleccionados por MUSIK. Podés explorar la biblioteca; la descarga está habilitada únicamente para miembros.</p></div><div class="download-filters"><button class="active" data-download-filter="all">Todo</button><button data-download-filter="tip">Tips</button><button data-download-filter="track">Tracks</button><button data-download-filter="material">Materiales</button></div><div class="download-grid" id="club-download-grid"></div>`;
-appDownloadSection?.before(downloadsSection);
+appDownloadSection?.after(downloadsSection);
 const defaultDownloads = [
   {
     id: "demo-tip",

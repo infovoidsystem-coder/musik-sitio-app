@@ -13,7 +13,21 @@
           },
         })
       : null;
-  const api = { configured, client, user: null };
+  let resolveReady;
+  let authReady = false;
+  const api = {
+    configured,
+    client,
+    user: null,
+    ready: new Promise((resolve) => {
+      resolveReady = resolve;
+    }),
+  };
+  const markReady = () => {
+    if (authReady) return;
+    authReady = true;
+    resolveReady(api.user);
+  };
   const adminRequested =
     new URLSearchParams(location.search).get("admin") === "1" ||
     sessionStorage.getItem("musik-admin-login") === "1";
@@ -110,8 +124,23 @@
     paint(null);
   };
   if (client) {
-    client.auth.getSession().then(({ data }) => paint(data.session?.user));
-    client.auth.onAuthStateChange((_event, session) => paint(session?.user));
-  } else document.addEventListener("DOMContentLoaded", () => paint(null));
+    client.auth
+      .getSession()
+      .then(({ data }) => paint(data.session?.user))
+      .catch(() => paint(null))
+      .finally(markReady);
+    client.auth.onAuthStateChange((_event, session) => {
+      paint(session?.user);
+      markReady();
+    });
+  } else {
+    const finishDemoAuth = () => {
+      paint(null);
+      markReady();
+    };
+    if (document.readyState === "loading")
+      document.addEventListener("DOMContentLoaded", finishDemoAuth, { once: true });
+    else finishDemoAuth();
+  }
   window.MusikAuth = api;
 })();

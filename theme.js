@@ -71,6 +71,18 @@
     else document.body.append(tools);
     applyTheme(initial);
     applyFontSize(localStorage.getItem(fontStorageKey) || "normal");
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    const headerOffset = () => (document.querySelector(".public-header")?.offsetHeight || 0) + 12;
+    const scrollToSection = (hash, smooth = false) => {
+      if (!hash || hash === "#") {
+        scrollTo({ top: 0, behavior: smooth ? "smooth" : "auto" });
+        return;
+      }
+      const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (!target) return;
+      const top = Math.max(0, target.getBoundingClientRect().top + scrollY - headerOffset());
+      scrollTo({ top, behavior: smooth ? "smooth" : "auto" });
+    };
     const currentPath = location.pathname.replace(/\/index\.html$/, "/");
     const currentHash = location.hash || (currentPath.endsWith("/") ? "#inicio" : "");
     document.querySelectorAll(".public-header .desktop-nav a,.public-header .program-nav a").forEach(link => {
@@ -92,12 +104,21 @@
         const link = event.target.closest("a[href]");
         if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || link.target === "_blank" || link.hasAttribute("download")) return;
         const url = new URL(link.href, location.href);
-        if (url.origin !== location.origin || (url.pathname === location.pathname && url.hash)) return;
+        if (url.origin !== location.origin) return;
+        if (url.pathname === location.pathname && url.hash) {
+          event.preventDefault();
+          history.pushState(null, "", url.hash);
+          scrollToSection(url.hash, true);
+          return;
+        }
         event.preventDefault();
         transition.classList.add("active");
         setTimeout(() => { location.href = url.href; }, 280);
       });
     }
+    addEventListener("hashchange", () => scrollToSection(location.hash, true));
+    addEventListener("pageshow", () => requestAnimationFrame(() => scrollToSection(location.hash, false)));
+    requestAnimationFrame(() => requestAnimationFrame(() => scrollToSection(location.hash, false)));
   };
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount, {once:true});

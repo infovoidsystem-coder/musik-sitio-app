@@ -73,3 +73,14 @@ La página de inicio ya consume la función segura `instagram-feed`. El token nu
 
 No guardar el token de Instagram en `auth-config.js`, archivos `.env` versionados ni GitHub Pages.
 
+## 8. Ficha, pago y vigencia del alumno
+
+Ejecutar `supabase/access_controls.sql` después de `paid_access_model.sql`. Esta migración agrega:
+
+- acceso automático solamente cuando existe un pago aprobado;
+- habilitación o bloqueo manual desde la ficha del alumno;
+- fecha de vencimiento administrativa opcional;
+- control para mantener o retirar el contenido asignado.
+
+El alumno completa sus datos antes de ir a Mercado Pago. `create-checkout` guarda la ficha en `profiles`; el webhook activa la membresía o inscripción únicamente cuando Mercado Pago confirma el cobro. Para aplicar los cambios también hay que volver a desplegar `create-checkout` y `mercadopago-webhook`.
+
