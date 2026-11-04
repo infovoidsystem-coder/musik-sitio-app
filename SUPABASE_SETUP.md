@@ -15,6 +15,7 @@
 3. Copiar todo el archivo `supabase/schema.sql`.
 4. Ejecutar con **Run**.
 5. Crear otra consulta, copiar `supabase/paid_access_model.sql` y ejecutarla.
+6. Ejecutar, en este orden, `supabase/access_controls.sql`, `supabase/course_content_workflow.sql` y `supabase/label_track_workflow.sql`.
 
 El esquema incluye perfiles, membresías, cursos, inscripciones, actividades, reservas, contenidos y referencias de pagos. Todas las tablas expuestas tienen Row Level Security.
 
@@ -83,4 +84,10 @@ Ejecutar `supabase/access_controls.sql` después de `paid_access_model.sql`. Est
 - control para mantener o retirar el contenido asignado.
 
 El alumno completa sus datos antes de ir a Mercado Pago. `create-checkout` guarda la ficha en `profiles`; el webhook activa la membresía o inscripción únicamente cuando Mercado Pago confirma el cobro. Para aplicar los cambios también hay que volver a desplegar `create-checkout` y `mercadopago-webhook`.
+
+## 9. Material por curso y sello MUSIK
+
+`course_content_workflow.sql` completa la biblioteca por curso. En el panel administrativo se selecciona el curso destinatario al publicar; Supabase muestra ese material únicamente a usuarios con una inscripción activa o completada en ese curso. El material de Club continúa dependiendo de la vigencia de la membresía.
+
+`label_track_workflow.sql` separa dos decisiones distintas: **aprobar para el sello MUSIK** y **publicar en el sitio**. Un track aprobado no se muestra públicamente hasta que el administrador elige expresamente “Publicar en el sitio”.
 

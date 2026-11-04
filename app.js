@@ -139,7 +139,7 @@ const safeTrack=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;',
 const trackSourceAttribute=url=>String(url||'').includes('soundcloud.com/')?`data-sound="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%2300eaf2&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=true"`:`data-audio="${safeTrack(url)}"`;
 function renderCommunityTracks(items){
   if(!communityTracks)return;
-  const approved=items.filter(item=>item.status==='approved');
+  const approved=items.filter(item=>item.site_published===true||item.status==='published');
   communityTracks.innerHTML=approved.map((item,index)=>`<button class="radio-track community-track" ${trackSourceAttribute(item.audio_url||item.url)}><span class="radio-number">${String(index+3).padStart(2,'0')}</span><span class="radio-avatar student">${safeTrack((item.artist_name||'M').split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase())}</span><span class="radio-copy"><small>ALUMNI MUSIK / APROBADO</small><strong>${safeTrack(item.title)}</strong><em>${safeTrack(item.artist_name)} · ${safeTrack(item.genre||'Musik')}</em></span><b>▶</b></button>`).join('');
   const dynamic=[...communityTracks.querySelectorAll('.radio-track')];
   dynamic.forEach(bindRadioTrack);
@@ -149,7 +149,7 @@ async function loadCommunityTracks(){
   let items=JSON.parse(localStorage.getItem('musik-track-submissions')||'[]');
   const config=window.MUSIK_AUTH_CONFIG||{};
   if(config.supabaseUrl&&config.supabaseAnonKey){
-    try{const response=await fetch(`${config.supabaseUrl}/rest/v1/track_submissions?status=eq.approved&select=id,title,artist_name,genre,audio_url,status&order=reviewed_at.desc`,{headers:{apikey:config.supabaseAnonKey,Authorization:`Bearer ${config.supabaseAnonKey}`}});if(response.ok)items=await response.json()}catch(_error){}
+    try{const headers={apikey:config.supabaseAnonKey,Authorization:`Bearer ${config.supabaseAnonKey}`};let response=await fetch(`${config.supabaseUrl}/rest/v1/track_submissions?site_published=eq.true&select=id,title,artist_name,genre,audio_url,status,site_published&order=published_at.desc`,{headers});if(response.ok)items=await response.json();else{response=await fetch(`${config.supabaseUrl}/rest/v1/track_submissions?status=eq.approved&select=id,title,artist_name,genre,audio_url,status&order=reviewed_at.desc`,{headers});if(response.ok)items=(await response.json()).map(item=>({...item,site_published:true}))}}catch(_error){}
   }
   renderCommunityTracks(items);
 }

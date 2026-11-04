@@ -184,11 +184,13 @@ create table if not exists public.track_submissions (
   audio_url text not null,
   message text,
   status text not null default 'pending' check (status in ('pending','approved','rejected')),
+  site_published boolean not null default false,
+  published_at timestamptz,
   created_at timestamptz not null default now(),
   reviewed_at timestamptz
 );
 alter table public.track_submissions enable row level security;
-create policy "approved tracks public read" on public.track_submissions for select to anon using (status='approved');
+create policy "published tracks public read" on public.track_submissions for select to anon using (site_published);
 create policy "members read own tracks" on public.track_submissions for select to authenticated using (user_id=auth.uid() or public.is_admin());
 create policy "members submit own tracks" on public.track_submissions for insert to authenticated with check (user_id=auth.uid() and status='pending');
 create policy "admin reviews tracks" on public.track_submissions for update to authenticated using (public.is_admin()) with check (public.is_admin());
