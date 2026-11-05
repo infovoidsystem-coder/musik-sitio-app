@@ -13,6 +13,29 @@
 html[data-site-theme="light"] .hero-visual>.persona-switch{border-color:#a99bb2!important;background:linear-gradient(145deg,#fff 0,#eee7f1 48%,#d2c6d8 100%)!important;box-shadow:inset 0 1px #fff,inset 0 -4px 8px #846c9430,0 5px 0 #9b8ba5,0 15px 28px #60416f3d!important}
 html[data-site-theme="light"] .hero-visual>.persona-switch:before{border-color:#fff}
 html[data-site-theme="light"] .hero-visual>.persona-switch .loop-key{border-color:#b7aebe!important;background:linear-gradient(180deg,#fff,#ddd4e2)!important;box-shadow:inset 0 1px #fff,0 3px 0 #9d90a4,0 6px 9px #6d58752e!important;color:#352d3a!important;text-shadow:0 1px #fff}
+
+/* In light mode this remains a real, high-contrast CDJ control instead of fading into the page. */
+html[data-site-theme="light"] .hero-visual>.persona-switch{
+  border-color:#77717d!important;
+  background:linear-gradient(145deg,#3a3b42 0,#202127 45%,#101115 100%)!important;
+  box-shadow:inset 0 1px 0 #ffffff59,inset 0 -5px 10px #050507,0 4px 0 #77707d,0 14px 28px #5f3c7142!important;
+}
+html[data-site-theme="light"] .hero-visual>.persona-switch:before{border-color:#ffffff24!important}
+html[data-site-theme="light"] .hero-visual>.persona-switch .loop-key{
+  border-color:#595b63!important;
+  background:linear-gradient(180deg,#35373e,#15161a)!important;
+  box-shadow:inset 0 1px #ffffff32,0 3px 0 #07080a,0 6px 10px #0007!important;
+  color:#f5f3f7!important;
+  text-shadow:0 1px 2px #000!important;
+  opacity:.8!important;
+}
+html[data-site-theme="light"] .hero-visual>.persona-switch[aria-pressed="false"] .loop-key:first-child,
+html[data-site-theme="light"] .hero-visual>.persona-switch[aria-pressed="true"] .loop-key:last-child{
+  color:#fff!important;
+  opacity:1!important;
+}
+html[data-site-theme="light"] .hero-visual>.persona-switch[aria-pressed="false"] .loop-key:first-child{border-color:#00dce7!important;box-shadow:inset 0 0 12px #00dce71f,0 3px 0 #07080a,0 0 13px #00dce766!important}
+html[data-site-theme="light"] .hero-visual>.persona-switch[aria-pressed="true"] .loop-key:last-child{border-color:#bf58e5!important;box-shadow:inset 0 0 12px #bf58e51f,0 3px 0 #07080a,0 0 13px #bf58e566!important}
 .tempo-scroll{bottom:96px!important}
 .tempo-scroll .master-tempo{top:-52px!important}
 .tempo-scroll>b{top:8px!important}.tempo-scroll .tempo-plus{top:27px!important}.tempo-scroll .tempo-rail{top:35px!important}
