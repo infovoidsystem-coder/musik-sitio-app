@@ -90,6 +90,9 @@ html[data-site-theme="light"] .promo-slide p{color:#5f5d68!important}
 html[data-site-theme="light"] .promo-slide>a{color:#17151c!important;border-color:#99919f;background:rgba(255,255,255,.58);box-shadow:0 5px 14px rgba(59,39,73,.08)}
 html[data-site-theme="light"] .promo-slide>a:hover{color:#fff!important}
 html[data-site-theme="light"] .promo-dots button{background:#b9b0bf}
+html[data-site-theme="light"] .promo-tag{color:#542078!important;text-shadow:none!important}
+html[data-site-theme="light"] .promo-signal i{background:#542078!important;box-shadow:0 0 7px rgba(84,32,120,.32)!important}
+html[data-site-theme="light"] .promo-slide:before{background:#7650a0!important;box-shadow:0 0 13px rgba(118,80,160,.3)!important}
 
 html[data-site-theme="light"] .content,
 html[data-site-theme="light"] .sound-lab,
