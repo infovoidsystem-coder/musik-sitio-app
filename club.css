@@ -387,7 +387,12 @@
   line-height: 0.98;
 }
 .app-primary-banner .qr-card {
-  transform: rotate(1.5deg);
+  transform: none;
+}
+.app-primary-banner .qr-card img {
+  display: block;
+  transform: none;
+  image-rendering: auto;
 }
 .club-page main > section[id] {
   scroll-margin-top: 94px;
