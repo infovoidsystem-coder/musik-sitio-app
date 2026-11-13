@@ -338,15 +338,17 @@ const installButton = document.querySelector("#install-button"),
     navigator.standalone === true;
 const installGuide = document.createElement("dialog");
 installGuide.className = "install-guide";
-installGuide.innerHTML = `<button class="modal-close" aria-label="Cerrar">×</button><span class="kicker">INSTALAR MUSIK CLUB</span><h2>${isIos ? "Instalala desde Safari" : "Instalación en el dispositivo"}</h2><p>${isIos ? "Apple requiere confirmar la instalación desde el menú Compartir." : "Abrí el menú del navegador para instalar Musik Club como aplicación."}</p><ol>${isIos ? "<li>Abrí esta página con Safari.</li><li>Tocá el botón Compartir.</li><li>Elegí “Agregar a pantalla de inicio”.</li><li>Confirmá tocando “Agregar”.</li>" : "<li>Abrí el menú ⋮ del navegador.</li><li>Elegí “Instalar aplicación”.</li><li>Confirmá la instalación.</li>"}</ol><button class="btn primary" data-close-install>Entendido</button>`;
+installGuide.innerHTML = `<button class="modal-close" aria-label="Cerrar">×</button><span class="kicker">INSTALAR MUSIK CLUB</span><h2>${isIos ? "Instalala desde Safari" : "Llevá MUSIK a tu inicio"}</h2><p>${isIos ? "Apple requiere confirmar la instalación desde el menú Compartir." : "Se instalará como una app y podrás abrirla directamente desde tu teléfono."}</p><ol>${isIos ? "<li>Abrí esta página con Safari.</li><li>Tocá el botón Compartir.</li><li>Elegí “Agregar a pantalla de inicio”.</li><li>Confirmá tocando “Agregar”.</li>" : "<li>Tocá “Instalar ahora”.</li><li>Confirmá la instalación del navegador.</li><li>Abrí MUSIK desde tu pantalla de inicio.</li>"}</ol><button class="btn primary" data-trigger-install>${isIos ? "Ver pasos para instalar" : "Instalar ahora →"}</button><button class="btn ghost" data-close-install>Ahora no</button>`;
 document.body.append(installGuide);
 installGuide
   .querySelectorAll(".modal-close,[data-close-install]")
   .forEach((button) => (button.onclick = () => installGuide.close()));
+const installAction = installGuide.querySelector("[data-trigger-install]");
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   installPrompt = e;
   installButton.textContent = "Instalar Musik Club →";
+  if (!isIos) installAction.textContent = "Instalar ahora →";
 });
 window.addEventListener("appinstalled", () => {
   installPrompt = null;
@@ -354,7 +356,7 @@ window.addEventListener("appinstalled", () => {
   showToast("Musik Club quedó instalada ✓");
 });
 if (isStandalone) document.body.classList.add("app-installed");
-installButton.onclick = async () => {
+const runInstallFlow = async () => {
   if (isStandalone) {
     location.href = "member.html";
     return;
@@ -365,8 +367,20 @@ installButton.onclick = async () => {
     if (result.outcome === "accepted") installPrompt = null;
     return;
   }
-  installGuide.showModal();
+  if (!installGuide.open) installGuide.showModal();
 };
+installButton.onclick = runInstallFlow;
+installAction.onclick = async () => {
+  if (installPrompt) {
+    installGuide.close();
+    await runInstallFlow();
+  }
+};
+const qrInstallVisit = new URLSearchParams(location.search).get("install") === "1";
+if (qrInstallVisit && !isStandalone)
+  setTimeout(() => {
+    if (!installGuide.open) installGuide.showModal();
+  }, 450);
 if ("serviceWorker" in navigator)
   navigator.serviceWorker.register("sw.js", { scope: "./" });
 render();
