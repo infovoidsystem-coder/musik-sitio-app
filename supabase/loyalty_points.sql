@@ -111,10 +111,15 @@ create policy "admin manages points" on public.loyalty_point_events for all to a
 drop policy if exists "admin manages user rewards" on public.user_rewards;
 create policy "admin manages user rewards" on public.user_rewards for all to authenticated using(public.is_admin()) with check(public.is_admin());
 
+-- Si la primera versión ya fue instalada, conserva los premios asignados y actualiza su propuesta.
+update public.loyalty_rewards set title='Acceso a Masterclass MUSIK',description='Entrada a una masterclass seleccionada',points_required=500 where title='Guest Pass MUSIK';
+update public.loyalty_rewards set title='1 hora de clase particular',description='Encuentro individual con un docente MUSIK',points_required=1000 where title='Feedback personalizado';
+update public.loyalty_rewards set title='1 hora de grabación de video set',description='Cabina, equipamiento y espacio para grabar tu sesión',points_required=2000 where title='Hora de cabina';
+
 insert into public.loyalty_rewards(title,description,points_required,auto_unlock)
 select * from (values
-  ('Guest Pass MUSIK','Invitación para una clase seleccionada',500,true),
-  ('Feedback personalizado','Devolución individual sobre un set o track',1000,true),
-  ('Hora de cabina','Una hora de práctica en cabina MUSIK',2000,true)
+  ('Acceso a Masterclass MUSIK','Entrada a una masterclass seleccionada',500,true),
+  ('1 hora de clase particular','Encuentro individual con un docente MUSIK',1000,true),
+  ('1 hora de grabación de video set','Cabina, equipamiento y espacio para grabar tu sesión',2000,true)
 ) as seed(title,description,points_required,auto_unlock)
 where not exists(select 1 from public.loyalty_rewards);
