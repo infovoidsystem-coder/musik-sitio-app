@@ -91,3 +91,7 @@ El alumno completa sus datos antes de ir a Mercado Pago. `create-checkout` guard
 
 `label_track_workflow.sql` separa dos decisiones distintas: **aprobar para el sello MUSIK** y **publicar en el sitio**. Un track aprobado no se muestra públicamente hasta que el administrador elige expresamente “Publicar en el sitio”.
 
+### Puntos, premios y progreso académico
+
+Ejecutá también `supabase/loyalty_points.sql`. Esta migración crea el saldo de puntos, movimientos, premios y asignaciones. Los pagos aprobados suman automáticamente 1 punto cada $100 (mínimo 10) y cada curso completado suma 500 puntos. Desde el panel de administración se pueden crear premios, ajustar puntajes y asignar beneficios manualmente.
+
