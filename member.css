@@ -21,6 +21,244 @@
 .member-page.access-checking main,.member-page.access-checking .member-side{visibility:hidden}.member-plan{margin:0 5vw 50px;padding:28px;border:1px solid #2b2b33;border-radius:20px;background:linear-gradient(120deg,#111116,#151024);display:flex;align-items:center;justify-content:space-between;gap:24px}.member-plan h2{font-size:clamp(26px,3vw,40px);margin:10px 0}.member-plan p{max-width:720px;color:#8b8b94;line-height:1.65}.member-plan .btn{flex:0 0 auto}.content-access{display:inline-flex;margin-bottom:10px;padding:5px 8px;border-radius:99px;background:#e9e7e2;color:#333;font-size:8px;font-weight:900;letter-spacing:1px}.content-access.club{background:#111;color:#00eaf2}.member-page.theme-light .member-plan{background:#fff;border-color:#d7d4cf}.member-page.theme-light .member-plan h2{color:#111}@media(max-width:600px){.member-plan{margin-left:16px;margin-right:16px;align-items:flex-start;flex-direction:column}.member-plan .btn{width:100%;justify-content:center}}
 .member-page main > section[id]{scroll-margin-top:16px}
 .member-page.theme-light .kicker,.member-page.theme-light .member-summary small,.member-page.theme-light .member-summary>article>span,.member-page.theme-light .content-info small,.member-page.theme-light .track-studio-head .kicker,.member-page.theme-light .member-bookings .kicker,.member-page.theme-light .member-inbox .kicker,.member-page.theme-light .member-invoices .kicker{color:#006b72;text-shadow:none}.member-page.theme-light .member-header h1 span{color:#00727a}.member-page.theme-light .next-class a,.member-page.theme-light .member-side nav a.active,.member-page.theme-light .member-side nav a:hover{color:#005d64}.member-page.theme-light .content-access.club{color:#00727a}.member-page.theme-light .inbox-item>span,.member-page.theme-light .member-booking>div>small{color:#006b72}
+
+/* La app instalada tiene una interfaz propia, enfocada en el uso diario del alumno. */
+.member-page.app-shell {
+    display: block;
+    min-height: 100dvh;
+    padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+    background:
+      radial-gradient(circle at 88% 4%, rgba(207, 0, 255, .2), transparent 31rem),
+      radial-gradient(circle at 0 22%, rgba(0, 234, 242, .12), transparent 25rem),
+      #08080b;
+  }
+
+  .app-shell .member-side {
+    position: fixed;
+    z-index: 120;
+    inset: auto 0 0;
+    width: 100%;
+    height: calc(76px + env(safe-area-inset-bottom, 0px));
+    padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+    display: block;
+    border: 1px solid rgba(255,255,255,.12);
+    border-bottom: 0;
+    border-radius: 22px 22px 0 0;
+    background: rgba(10, 10, 14, .94);
+    box-shadow: 0 -18px 45px rgba(0,0,0,.34);
+    backdrop-filter: blur(20px) saturate(145%);
+  }
+
+  .app-shell .member-side .brand,
+  .app-shell .member-side .back-site {
+    display: none;
+  }
+
+  .app-shell .member-side nav {
+    display: flex !important;
+    align-items: stretch;
+    gap: 4px;
+    width: 100%;
+    height: 60px;
+    margin: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .app-shell .member-side nav::-webkit-scrollbar { display: none; }
+
+  .app-shell .member-side nav a {
+    flex: 1 0 72px;
+    min-width: 72px;
+    min-height: 58px;
+    padding: 8px 6px;
+    display: grid;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    color: #8f909a;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    transition: transform .2s ease, color .2s ease, background .2s ease;
+  }
+
+  .app-shell .member-side nav a.active {
+    border-color: rgba(0,234,242,.32);
+    background: linear-gradient(160deg, rgba(0,234,242,.2), rgba(0,234,242,.05));
+    color: #00eaf2;
+    box-shadow: inset 0 1px rgba(255,255,255,.12), 0 5px 18px rgba(0,234,242,.08);
+  }
+
+  .app-shell .member-side nav a:active { transform: scale(.96); }
+
+  .app-shell main { padding: 0; }
+
+  .app-shell .member-header {
+    position: relative;
+    min-height: 220px;
+    padding: calc(28px + var(--app-safe-top, 0px)) 18px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    background:
+      linear-gradient(180deg, rgba(8,8,11,.12), rgba(8,8,11,.9)),
+      radial-gradient(circle at 92% 0, rgba(207,0,255,.48), transparent 48%),
+      radial-gradient(circle at 5% 42%, rgba(0,234,242,.22), transparent 42%);
+  }
+
+  .app-shell .member-header::before {
+    content: "MUSIK CLUB  /  APP";
+    display: block;
+    color: #00eaf2;
+    font: 700 9px "DM Sans", sans-serif;
+    letter-spacing: 2.2px;
+  }
+
+  .app-shell .member-header::after {
+    content: "";
+    position: absolute;
+    right: -28px;
+    bottom: -70px;
+    width: 190px;
+    aspect-ratio: 1;
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 50%;
+    box-shadow: 0 0 0 22px rgba(255,255,255,.025), 0 0 0 48px rgba(255,255,255,.015);
+    pointer-events: none;
+  }
+
+  .app-shell .member-header .kicker { display: none; }
+  .app-shell .member-header > div:first-child { flex: 0 0 auto; }
+  .app-shell .member-header h1 {
+    max-width: calc(100vw - 36px);
+    margin: 0 0 8px;
+    font-size: clamp(34px, 10.5vw, 52px);
+    line-height: .98;
+    overflow-wrap: anywhere;
+  }
+  .app-shell .member-header p {
+    max-width: 32rem;
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .app-shell .member-header-actions {
+    position: absolute;
+    z-index: 2;
+    top: calc(18px + var(--app-safe-top, 0px));
+    right: 16px;
+    width: auto;
+    margin: 0;
+    justify-content: flex-end;
+    gap: 7px;
+  }
+  .app-shell .member-header-actions .theme-toggle {
+    flex: 0 0 auto;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    padding: 0;
+    overflow: hidden;
+    color: transparent;
+    font-size: 0;
+  }
+  .app-shell .member-header-actions .theme-toggle::before {
+    content: "◐";
+    color: #fff;
+    font-size: 16px;
+  }
+  .app-shell .member-header-actions .member-avatar {
+    width: 44px;
+    max-width: 44px;
+    height: 44px;
+    padding: 3px;
+    border-color: rgba(255,255,255,.22);
+    background: rgba(9,9,13,.72);
+  }
+  .app-shell .member-header-actions .member-avatar img { width: 36px; height: 36px; }
+  .app-shell .member-header-actions .member-avatar span { display: none; }
+
+  .app-shell .member-summary {
+    display: flex;
+    gap: 12px;
+    padding: 18px 16px 28px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .app-shell .member-summary::-webkit-scrollbar { display: none; }
+  .app-shell .member-summary article {
+    flex: 0 0 min(82vw, 340px);
+    min-height: 148px;
+    padding: 20px;
+    border-radius: 22px;
+    scroll-snap-align: center;
+    box-shadow: 0 18px 34px rgba(0,0,0,.18);
+  }
+  .app-shell .next-class { grid-column: auto; }
+
+  .app-shell .member-plan {
+    margin: 0 16px 24px;
+    padding: 22px;
+    align-items: flex-start;
+    flex-direction: column;
+    border-radius: 22px;
+  }
+  .app-shell .member-plan .btn { width: 100%; justify-content: center; }
+
+  .app-shell .member-content,
+  .app-shell .member-bookings,
+  .app-shell .member-inbox,
+  .app-shell .track-studio,
+  .app-shell .progress-section,
+  .app-shell .member-invoices {
+    padding: 52px 16px;
+  }
+  .app-shell .member-content {
+    border-radius: 28px 28px 0 0;
+  }
+  .app-shell .student-content-grid { grid-template-columns: 1fr; }
+  .app-shell .student-card { border-radius: 22px; }
+  .app-shell .member-section-head h2,
+  .app-shell .progress-section h2,
+  .app-shell .track-studio-head h2 {
+    font-size: clamp(30px, 9.5vw, 42px);
+  }
+
+  .member-page.app-shell.theme-light {
+    background:
+      radial-gradient(circle at 90% 2%, rgba(159,98,211,.18), transparent 28rem),
+      radial-gradient(circle at 0 20%, rgba(0,105,113,.1), transparent 24rem),
+      #f4f2ee;
+  }
+  .app-shell.theme-light .member-side {
+    border-color: rgba(30,25,35,.14);
+    background: rgba(252,250,247,.95);
+    box-shadow: 0 -16px 40px rgba(40,32,50,.12);
+  }
+  .app-shell.theme-light .member-side nav a { color: #62616a; }
+  .app-shell.theme-light .member-side nav a.active {
+    border-color: rgba(0,95,102,.24);
+    background: linear-gradient(160deg, rgba(0,114,122,.14), rgba(159,98,211,.07));
+    color: #005d64;
+  }
+  .app-shell.theme-light .member-header {
+    border-color: rgba(30,25,35,.12);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.1), rgba(244,242,238,.88)),
+      radial-gradient(circle at 92% 0, rgba(159,98,211,.32), transparent 48%),
+      radial-gradient(circle at 5% 42%, rgba(0,114,122,.14), transparent 42%);
+  }
+  .app-shell.theme-light .member-header::before { color: #006b72; }
+  .app-shell.theme-light .member-header h1 { color: #101014; }
+  .app-shell.theme-light .member-header-actions .theme-toggle::before { color: #fff; }
 .invoice-preview-member{border-color:var(--cyan);color:var(--cyan)}
 .student-card-art{background-position:center;background-size:cover}.student-card-art.is-pdf{position:relative;background:linear-gradient(135deg,var(--accent,#008cff),#15101e)}.student-card-art.is-pdf:after{content:"PDF";position:absolute;right:18px;top:18px;color:#fff;font:800 48px "Space Grotesk";opacity:.28}
 .track-status.approved{background:#30320d;color:#f1e56d}.track-status.published{background:#083d3f;color:var(--cyan)}

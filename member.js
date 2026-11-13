@@ -1,3 +1,16 @@
+const isInstalledMusikApp =
+  window.matchMedia("(display-mode: standalone)").matches ||
+  window.navigator.standalone === true ||
+  new URLSearchParams(window.location.search).get("app") === "1";
+
+if (isInstalledMusikApp) {
+  document.body.classList.add("app-shell");
+  document.documentElement.style.setProperty(
+    "--app-safe-top",
+    "env(safe-area-inset-top, 0px)",
+  );
+}
+
 const accessMessage = sessionStorage.getItem("musik-access-message");
 if (accessMessage) {
   sessionStorage.removeItem("musik-access-message");
