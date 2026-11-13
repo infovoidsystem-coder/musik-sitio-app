@@ -144,26 +144,32 @@ document.querySelector("#member-dialog h2").textContent =
 document.querySelector("#member-dialog h2+p").textContent =
   "El panel se habilita después del pago de un curso o membresía. Si ya compraste, ingresá con tu cuenta.";
 clubAuthForm.innerHTML =
-  '<label>Nombre completo <small>solo para registrarte</small><input name="name" autocomplete="name" placeholder="Tu nombre"></label><label>Email<input name="email" type="email" autocomplete="username" required placeholder="vos@email.com"></label><label>Contraseña<input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Mínimo 8 caracteres"></label><button class="btn primary" type="submit">Iniciar sesión →</button><button class="auth-register" id="member-register" type="button">Crear una cuenta nueva</button>';
+  '<label>Nombre completo <small>solo para registrarte</small><input name="name" autocomplete="name" placeholder="Tu nombre"></label><label>Email<input name="email" type="email" autocomplete="username" required placeholder="vos@email.com"></label><label>Contraseña<input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Mínimo 8 caracteres"></label><button class="btn primary" type="submit">Iniciar sesión →</button><button class="auth-register" id="member-register" type="button">Crear una cuenta nueva</button><p class="member-auth-feedback" role="status" aria-live="polite"></p>';
+const memberAuthFeedback = clubAuthForm.querySelector(".member-auth-feedback");
+const setMemberAuthFeedback = (message, type = "error") => {
+  memberAuthFeedback.textContent = message;
+  memberAuthFeedback.dataset.type = type;
+};
 clubAuthForm.onsubmit = async (event) => {
   event.preventDefault();
   const form = new FormData(clubAuthForm),
     button = clubAuthForm.querySelector('button[type="submit"]');
   button.disabled = true;
   button.textContent = "Ingresando…";
+  setMemberAuthFeedback("Verificando tu cuenta…", "loading");
   try {
     await window.MusikAuth.signInPassword(
       String(form.get("email")).trim(),
       String(form.get("password")),
     );
-    memberDialog.close();
-    window.open("member.html", "_blank", "noopener");
+    setMemberAuthFeedback("Acceso correcto. Abriendo tu panel…", "success");
+    location.assign("member.html");
   } catch (error) {
-    showToast(
-      error.message === "Invalid login credentials"
+    const message = error.message === "Invalid login credentials"
         ? "Email o contraseña incorrectos."
-        : error.message || "No pudimos iniciar sesión.",
-    );
+        : error.message || "No pudimos iniciar sesión.";
+    setMemberAuthFeedback(message);
+    showToast(message);
   } finally {
     button.disabled = false;
     button.textContent = "Iniciar sesión →";
@@ -175,18 +181,27 @@ document.querySelector("#member-register").onclick = async () => {
     email = String(form.get("email") || "").trim(),
     password = String(form.get("password") || "");
   if (!name || !email || password.length < 8) {
-    showToast("Completá nombre, email y una contraseña de 8 caracteres.");
+    const message = "Completá nombre, email y una contraseña de 8 caracteres.";
+    setMemberAuthFeedback(message);
+    showToast(message);
     return;
   }
   try {
+    setMemberAuthFeedback("Creando tu cuenta…", "loading");
     const result = await window.MusikAuth.signUpPassword(name, email, password);
     if (result.session) {
       memberDialog.close();
       document.querySelector('#planes')?.scrollIntoView({behavior:'smooth'});
+      setMemberAuthFeedback("Cuenta creada correctamente.", "success");
       showToast("Cuenta creada. Elegí un curso o membresía para habilitar tu panel.");
-    } else showToast("Cuenta creada. Revisá tu email y luego elegí un curso o membresía.");
+    } else {
+      setMemberAuthFeedback("Cuenta creada. Revisá tu email para confirmarla.", "success");
+      showToast("Cuenta creada. Revisá tu email y luego elegí un curso o membresía.");
+    }
   } catch (error) {
-    showToast(error.message || "No pudimos crear la cuenta.");
+    const message = error.message || "No pudimos crear la cuenta.";
+    setMemberAuthFeedback(message);
+    showToast(message);
   }
 };
 document.querySelector("#google-logout").onclick = () =>

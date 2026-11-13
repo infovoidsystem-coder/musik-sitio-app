@@ -1,4 +1,4 @@
-const CACHE = "musik-club-v83";
+const CACHE = "musik-club-v84";
 const ASSETS = [
   "./club.html",
   "./member.html",

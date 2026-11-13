@@ -1202,6 +1202,20 @@
   border-color: var(--cyan);
   color: var(--cyan);
 }
+.member-auth-feedback {
+  min-height: 18px;
+  margin: 0;
+  color: #ff8aa8;
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: center;
+}
+.member-auth-feedback[data-type="loading"] {
+  color: #b9b6c0;
+}
+.member-auth-feedback[data-type="success"] {
+  color: #5ff0cf;
+}
 .installed-app #member-dialog .modal-close {
   display: none;
 }

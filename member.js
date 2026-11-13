@@ -1,50 +1,721 @@
-const accessMessage=sessionStorage.getItem('musik-access-message');if(accessMessage){sessionStorage.removeItem('musik-access-message');setTimeout(()=>showToast(accessMessage),150)};const defaultContent=[{id:1,type:'clase',access_scope:'course',label:'CLASE',title:'Fundamentos de mezcla',text:'Ecualización, ganancia y transiciones limpias para construir un set sólido.',duration:'24 min',color:'#00eaf2',url:'#',enabled:true},{id:2,type:'video',access_scope:'club',label:'MASTERCLASS',title:'Secretos de cabina',text:'Hernán Paredes comparte decisiones y recursos de una sesión profesional.',duration:'38 min',color:'#cf00ff',url:'#',enabled:true},{id:3,type:'material',access_scope:'course',label:'DESCARGABLE',title:'Guía de preparación de set',text:'Checklist Musik para organizar música, cues y energía antes de tocar.',duration:'PDF · 12 págs.',color:'#008cff',url:'#',enabled:true}];const loadContent=()=>JSON.parse(localStorage.getItem('musik-content')||'null')||defaultContent;let filter='all',memberEntitlement={hasCourse:false,hasClub:false};const grid=document.querySelector('#student-content-grid'),toast=document.querySelector('.toast');async function openMemberContent(item){if(item.file_path){const client=window.MusikAuth?.client;if(!client){showToast('No pudimos conectar con la biblioteca.');return}const{data,error}=await client.storage.from('member-downloads').createSignedUrl(item.file_path,300,{download:item.file_kind==='pdf'?item.file_name:undefined});if(error){showToast(error.message);return}open(data.signedUrl,'_blank','noopener')}else if(item.url&&item.url!=='#')open(item.url,'_blank','noopener');else showToast('Contenido de demostración')}function render(){const allContent=loadContent(),visible=allContent.filter(c=>{const scope=c.access_scope||'course',allowed=scope==='club'?memberEntitlement.hasClub:memberEntitlement.hasCourse;return c.enabled&&allowed&&(filter==='all'||c.type===filter)});grid.innerHTML=visible.map(c=>`<article class="student-card"><div class="student-card-art ${c.file_kind==='pdf'?'is-pdf':''}" style="--accent:${c.color};${c.preview?`background-image:linear-gradient(0deg,rgba(8,8,12,.58),rgba(8,8,12,.05)),url('${c.preview}')`:''}"><span>${c.file_kind==='pdf'?'PDF · ':''}${c.label}</span></div><div class="student-card-body"><span class="content-access ${(c.access_scope||'course')==='club'?'club':''}">${(c.access_scope||'course')==='club'?'MUSIK CLUB · VIGENTE':'MI CURSO · PERMANENTE'}</span><small>${c.duration}</small><h3>${c.title}</h3><p>${c.text}</p><button data-open-content="${c.id}">${c.file_kind==='pdf'?'Abrir / descargar PDF':'Abrir contenido'} →</button></div></article>`).join('')||'<p>No hay contenido habilitado en esta categoría. Tus cursos comprados aparecerán de forma permanente y el contenido Club requiere una vigencia activa.</p>';grid.querySelectorAll('[data-open-content]').forEach(button=>button.onclick=()=>openMemberContent(allContent.find(item=>String(item.id)===String(button.dataset.openContent))))}function showToast(m){toast.textContent=m;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2500)}document.querySelectorAll('[data-content-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-content-filter]').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.contentFilter;render()});window.addEventListener('storage',e=>{if(e.key==='musik-content')render()});async function paintMemberIdentity(){const auth=window.MusikAuth;if(auth?.ready)await auth.ready;const user=auth?.user;if(!user)return;const meta=user.user_metadata||{},name=meta.full_name||meta.name||user.email.split('@')[0];document.querySelector('#student-name').textContent=name.split(' ')[0];document.querySelector('#student-email').textContent=user.email;document.querySelector('#student-avatar').src=meta.avatar_url||meta.picture||'assets/musik-logo-hd.png'}paintMemberIdentity();
+const accessMessage = sessionStorage.getItem("musik-access-message");
+if (accessMessage) {
+  sessionStorage.removeItem("musik-access-message");
+  setTimeout(() => showToast(accessMessage), 150);
+}
+const defaultContent = [
+  {
+    id: 1,
+    type: "clase",
+    access_scope: "course",
+    label: "CLASE",
+    title: "Fundamentos de mezcla",
+    text: "Ecualización, ganancia y transiciones limpias para construir un set sólido.",
+    duration: "24 min",
+    color: "#00eaf2",
+    url: "#",
+    enabled: true,
+  },
+  {
+    id: 2,
+    type: "video",
+    access_scope: "club",
+    label: "MASTERCLASS",
+    title: "Secretos de cabina",
+    text: "Hernán Paredes comparte decisiones y recursos de una sesión profesional.",
+    duration: "38 min",
+    color: "#cf00ff",
+    url: "#",
+    enabled: true,
+  },
+  {
+    id: 3,
+    type: "material",
+    access_scope: "course",
+    label: "DESCARGABLE",
+    title: "Guía de preparación de set",
+    text: "Checklist Musik para organizar música, cues y energía antes de tocar.",
+    duration: "PDF · 12 págs.",
+    color: "#008cff",
+    url: "#",
+    enabled: true,
+  },
+];
+const loadContent = () =>
+  JSON.parse(localStorage.getItem("musik-content") || "null") || defaultContent;
+let filter = "all",
+  memberEntitlement = { hasCourse: false, hasClub: false };
+const grid = document.querySelector("#student-content-grid"),
+  toast = document.querySelector(".toast");
+async function openMemberContent(item) {
+  if (item.file_path) {
+    const client = window.MusikAuth?.client;
+    if (!client) {
+      showToast("No pudimos conectar con la biblioteca.");
+      return;
+    }
+    const { data, error } = await client.storage
+      .from("member-downloads")
+      .createSignedUrl(item.file_path, 300, {
+        download: item.file_kind === "pdf" ? item.file_name : undefined,
+      });
+    if (error) {
+      showToast(error.message);
+      return;
+    }
+    open(data.signedUrl, "_blank", "noopener");
+  } else if (item.url && item.url !== "#") open(item.url, "_blank", "noopener");
+  else showToast("Contenido de demostración");
+}
+function render() {
+  const allContent = loadContent(),
+    visible = allContent.filter((c) => {
+      const scope = c.access_scope || "course",
+        allowed =
+          scope === "club"
+            ? memberEntitlement.hasClub
+            : memberEntitlement.hasCourse;
+      return c.enabled && allowed && (filter === "all" || c.type === filter);
+    });
+  grid.innerHTML =
+    visible
+      .map(
+        (c) =>
+          `<article class="student-card"><div class="student-card-art ${c.file_kind === "pdf" ? "is-pdf" : ""}" style="--accent:${c.color};${c.preview ? `background-image:linear-gradient(0deg,rgba(8,8,12,.58),rgba(8,8,12,.05)),url('${c.preview}')` : ""}"><span>${c.file_kind === "pdf" ? "PDF · " : ""}${c.label}</span></div><div class="student-card-body"><span class="content-access ${(c.access_scope || "course") === "club" ? "club" : ""}">${(c.access_scope || "course") === "club" ? "MUSIK CLUB · VIGENTE" : "MI CURSO · PERMANENTE"}</span><small>${c.duration}</small><h3>${c.title}</h3><p>${c.text}</p><button data-open-content="${c.id}">${c.file_kind === "pdf" ? "Abrir / descargar PDF" : "Abrir contenido"} →</button></div></article>`,
+      )
+      .join("") ||
+    "<p>No hay contenido habilitado en esta categoría. Tus cursos comprados aparecerán de forma permanente y el contenido Club requiere una vigencia activa.</p>";
+  grid
+    .querySelectorAll("[data-open-content]")
+    .forEach(
+      (button) =>
+        (button.onclick = () =>
+          openMemberContent(
+            allContent.find(
+              (item) => String(item.id) === String(button.dataset.openContent),
+            ),
+          )),
+    );
+}
+function showToast(m) {
+  toast.textContent = m;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2500);
+}
+document.querySelectorAll("[data-content-filter]").forEach(
+  (b) =>
+    (b.onclick = () => {
+      document
+        .querySelectorAll("[data-content-filter]")
+        .forEach((x) => x.classList.remove("active"));
+      b.classList.add("active");
+      filter = b.dataset.contentFilter;
+      render();
+    }),
+);
+window.addEventListener("storage", (e) => {
+  if (e.key === "musik-content") render();
+});
+async function paintMemberIdentity() {
+  const auth = window.MusikAuth;
+  if (auth?.ready) await auth.ready;
+  const user = auth?.user;
+  if (!user) return;
+  const meta = user.user_metadata || {},
+    name = meta.full_name || meta.name || user.email.split("@")[0];
+  document.querySelector("#student-name").textContent = name.split(" ")[0];
+  document.querySelector("#student-email").textContent = user.email;
+  document.querySelector("#student-avatar").src =
+    meta.avatar_url || meta.picture || "assets/musik-logo-hd.png";
+}
+paintMemberIdentity();
 
-async function validatePaidAccess(){const auth=window.MusikAuth;if(!auth?.configured||!auth.client){memberEntitlement={hasCourse:true,hasClub:true,demo:true};document.body.classList.remove('access-checking');render();return}if(auth.ready)await auth.ready;const user=auth.user;if(!user){sessionStorage.setItem('musik-access-message','Iniciá sesión para abrir tu panel.');location.replace('club.html');return}const now=new Date(),client=auth.client,[membershipResult,enrollmentResult,profileResult]=await Promise.all([client.from('memberships').select('id,status,starts_at,ends_at,membership_plans(name)').eq('user_id',user.id),client.from('enrollments').select('id,status,enrolled_at,courses(id,title,starts_at,ends_at)').eq('user_id',user.id).in('status',['active','completed']),client.from('profiles').select('access_mode,access_ends_at,content_enabled').eq('id',user.id).maybeSingle()]);if(membershipResult.error||enrollmentResult.error){memberEntitlement={hasCourse:true,hasClub:true,verificationPending:true};document.body.classList.remove('access-checking');render();showToast('No pudimos actualizar tu acceso, pero mantuvimos abierta tu sesión.');return}const accessProfile=profileResult.data||{},manualExpired=accessProfile.access_mode==='manual_on'&&accessProfile.access_ends_at&&new Date(accessProfile.access_ends_at)<=now,manualBlocked=accessProfile.access_mode==='manual_off'||accessProfile.content_enabled===false||manualExpired,manualActive=accessProfile.access_mode==='manual_on'&&!manualExpired&&accessProfile.content_enabled!==false,memberships=membershipResult.data||[],enrollments=enrollmentResult.data||[],activeMembership=memberships.find(item=>item.status==='active'&&(!item.ends_at||new Date(item.ends_at)>now)),paidCourses=enrollments.filter(item=>['active','completed'].includes(item.status)),activeCourse=paidCourses.find(item=>item.status==='active'&&(!item.courses?.ends_at||new Date(item.courses.ends_at)>now));memberEntitlement={hasCourse:!manualBlocked&&(manualActive||paidCourses.length>0),hasClub:!manualBlocked&&Boolean(manualActive||activeMembership||activeCourse),membership:activeMembership,activeCourse,courses:paidCourses,manualActive};if(!memberEntitlement.hasCourse&&!memberEntitlement.hasClub){sessionStorage.setItem('musik-access-message',manualBlocked?'Tu acceso está pausado o vencido. Contactá a MUSIK para actualizarlo.':'El panel se habilita después de aprobarse el pago de un curso o membresía.');location.replace('club.html#planes');return}const plan=document.querySelector('#access-plan'),expiry=document.querySelector('#access-expiry'),title=document.querySelector('#plan-title'),description=document.querySelector('#plan-description'),action=document.querySelector('#plan-action');if(manualActive){plan.textContent='ACCESO HABILITADO';expiry.textContent=accessProfile.access_ends_at?`Vigente hasta ${new Date(accessProfile.access_ends_at).toLocaleDateString('es-AR')}`:'Sin vencimiento definido';title.textContent='Tu acceso MUSIK está activo.';description.textContent='La administración habilitó manualmente tu panel, contenidos y beneficios asignados.';action.textContent='Ver contenidos →';action.href='#contenidos'}else if(activeMembership){plan.textContent='MEMBRESÍA CLUB';expiry.textContent=activeMembership.ends_at?`Vigente hasta ${new Date(activeMembership.ends_at).toLocaleDateString('es-AR')}`:'Membresía mensual activa';title.textContent='Tu membresía Club está activa.';description.textContent='Además de conservar tus cursos, tenés acceso al contenido y beneficios exclusivos del Club mientras la cuota esté vigente.';action.textContent='Gestionar pagos →'}else if(activeCourse){plan.textContent='ALUMNO + CLUB';expiry.textContent=activeCourse.courses?.ends_at?`Club incluido hasta ${new Date(activeCourse.courses.ends_at).toLocaleDateString('es-AR')}`:'Club incluido durante el curso';title.textContent='Tu curso incluye acceso temporal al Club.';description.textContent='El material del curso queda permanentemente en tu biblioteca. Cuando finalice, podrás continuar en el Club con la membresía mensual.';action.textContent='Conocer membresía →'}else{plan.textContent='CURSO COMPLETADO';expiry.textContent='Material del curso disponible permanentemente';title.textContent='Tu curso sigue en tu biblioteca.';description.textContent='El beneficio temporal del Club terminó. Podés contratar la membresía mensual para acceder nuevamente al contenido exclusivo.';action.textContent='Activar membresía →'}document.body.classList.remove('access-checking');render()}
-let assignedCourseContent=null;async function loadAssignedContent(){const client=window.MusikAuth?.client,user=window.MusikAuth?.user;if(!client||!user)return;let result=await client.from('club_content').select('id,title,description,content_type,duration_label,content_url,cover_url,accent_color,published,access_scope,course_id,file_path,file_name,file_kind').eq('published',true).order('created_at',{ascending:false});if(result.error)result=await client.from('club_content').select('id,title,description,content_type,duration_label,content_url,cover_url,accent_color,published,access_scope,course_id').eq('published',true).order('created_at',{ascending:false});if(!result.error){assignedCourseContent=(result.data||[]).map(item=>({id:item.id,type:item.content_type==='class'?'clase':item.content_type,access_scope:item.access_scope||'club',course_id:item.course_id,label:item.content_type==='class'?'CLASE':item.content_type==='video'?'MASTERCLASS':'DESCARGABLE',title:item.title,text:item.description||'',duration:item.duration_label||'',url:item.content_url||'#',file_path:item.file_path||'',file_name:item.file_name||'',file_kind:item.file_kind||'',preview:item.cover_url||'',color:item.accent_color||'#00eaf2',enabled:item.published!==false}));render()}}const renderAssignedContent=render;render=function(){if(!assignedCourseContent)return renderAssignedContent();const courseIds=new Set((memberEntitlement.courses||[]).map(item=>String(item.courses?.id||item.course_id||''))),visible=assignedCourseContent.filter(item=>{const allowed=item.access_scope==='club'?memberEntitlement.hasClub:memberEntitlement.hasCourse&&(!item.course_id||courseIds.has(String(item.course_id)));return item.enabled&&allowed&&(filter==='all'||item.type===filter)});grid.innerHTML=visible.map(c=>`<article class="student-card"><div class="student-card-art ${c.file_kind==='pdf'?'is-pdf':''}" style="--accent:${c.color};${c.preview?`background-image:linear-gradient(0deg,rgba(8,8,12,.58),rgba(8,8,12,.05)),url('${c.preview}')`:''}"><span>${c.file_kind==='pdf'?'PDF · ':''}${c.label}</span></div><div class="student-card-body"><span class="content-access ${c.access_scope==='club'?'club':''}">${c.access_scope==='club'?'MUSIK CLUB · VIGENTE':'MI CURSO · PERMANENTE'}</span><small>${c.duration}</small><h3>${c.title}</h3><p>${c.text}</p><button data-open-content="${c.id}">${c.file_kind==='pdf'?'Abrir / descargar PDF':'Abrir contenido'} →</button></div></article>`).join('')||'<p>No hay contenido publicado para tus cursos en esta categoría.</p>';grid.querySelectorAll('[data-open-content]').forEach(button=>button.onclick=()=>openMemberContent(assignedCourseContent.find(item=>String(item.id)===String(button.dataset.openContent))))};
+async function validatePaidAccess() {
+  const auth = window.MusikAuth;
+  if (!auth?.configured || !auth.client) {
+    memberEntitlement = { hasCourse: true, hasClub: true, demo: true };
+    document.body.classList.remove("access-checking");
+    render();
+    return;
+  }
+  if (auth.ready) await auth.ready;
+  const user = auth.user;
+  if (!user) {
+    sessionStorage.setItem(
+      "musik-access-message",
+      "Iniciá sesión para abrir tu panel.",
+    );
+    location.replace("club.html");
+    return;
+  }
+  const now = new Date(),
+    client = auth.client,
+    [membershipResult, enrollmentResult, profileResult] = await Promise.all([
+      client
+        .from("memberships")
+        .select("id,status,starts_at,ends_at,membership_plans(name)")
+        .eq("user_id", user.id),
+      client
+        .from("enrollments")
+        .select("id,status,enrolled_at,courses(id,title,starts_at,ends_at)")
+        .eq("user_id", user.id)
+        .in("status", ["active", "completed"]),
+      client
+        .from("profiles")
+        .select("role,access_mode,access_ends_at,content_enabled")
+        .eq("id", user.id)
+        .maybeSingle(),
+    ]);
+  if (membershipResult.error || enrollmentResult.error) {
+    memberEntitlement = {
+      hasCourse: true,
+      hasClub: true,
+      verificationPending: true,
+    };
+    document.body.classList.remove("access-checking");
+    render();
+    showToast(
+      "No pudimos actualizar tu acceso, pero mantuvimos abierta tu sesión.",
+    );
+    return;
+  }
+  const accessProfile = profileResult.data || {},
+    isAdmin = accessProfile.role === "admin",
+    manualExpired =
+      accessProfile.access_mode === "manual_on" &&
+      accessProfile.access_ends_at &&
+      new Date(accessProfile.access_ends_at) <= now,
+    manualBlocked =
+      !isAdmin &&
+      (accessProfile.access_mode === "manual_off" ||
+        accessProfile.content_enabled === false ||
+        manualExpired),
+    manualActive =
+      isAdmin ||
+      (accessProfile.access_mode === "manual_on" &&
+        !manualExpired &&
+        accessProfile.content_enabled !== false),
+    memberships = membershipResult.data || [],
+    enrollments = enrollmentResult.data || [],
+    activeMembership = memberships.find(
+      (item) =>
+        item.status === "active" &&
+        (!item.ends_at || new Date(item.ends_at) > now),
+    ),
+    paidCourses = enrollments.filter((item) =>
+      ["active", "completed"].includes(item.status),
+    ),
+    activeCourse = paidCourses.find(
+      (item) =>
+        item.status === "active" &&
+        (!item.courses?.ends_at || new Date(item.courses.ends_at) > now),
+    );
+  memberEntitlement = {
+    hasCourse: !manualBlocked && (manualActive || paidCourses.length > 0),
+    hasClub:
+      !manualBlocked &&
+      Boolean(manualActive || activeMembership || activeCourse),
+    membership: activeMembership,
+    activeCourse,
+    courses: paidCourses,
+    manualActive,
+  };
+  if (!memberEntitlement.hasCourse && !memberEntitlement.hasClub) {
+    sessionStorage.setItem(
+      "musik-access-message",
+      manualBlocked
+        ? "Tu acceso está pausado o vencido. Contactá a MUSIK para actualizarlo."
+        : "El panel se habilita después de aprobarse el pago de un curso o membresía.",
+    );
+    location.replace("club.html#planes");
+    return;
+  }
+  const plan = document.querySelector("#access-plan"),
+    expiry = document.querySelector("#access-expiry"),
+    title = document.querySelector("#plan-title"),
+    description = document.querySelector("#plan-description"),
+    action = document.querySelector("#plan-action");
+  if (manualActive) {
+    plan.textContent = "ACCESO HABILITADO";
+    expiry.textContent = accessProfile.access_ends_at
+      ? `Vigente hasta ${new Date(accessProfile.access_ends_at).toLocaleDateString("es-AR")}`
+      : "Sin vencimiento definido";
+    title.textContent = "Tu acceso MUSIK está activo.";
+    description.textContent =
+      "La administración habilitó manualmente tu panel, contenidos y beneficios asignados.";
+    action.textContent = "Ver contenidos →";
+    action.href = "#contenidos";
+  } else if (activeMembership) {
+    plan.textContent = "MEMBRESÍA CLUB";
+    expiry.textContent = activeMembership.ends_at
+      ? `Vigente hasta ${new Date(activeMembership.ends_at).toLocaleDateString("es-AR")}`
+      : "Membresía mensual activa";
+    title.textContent = "Tu membresía Club está activa.";
+    description.textContent =
+      "Además de conservar tus cursos, tenés acceso al contenido y beneficios exclusivos del Club mientras la cuota esté vigente.";
+    action.textContent = "Gestionar pagos →";
+  } else if (activeCourse) {
+    plan.textContent = "ALUMNO + CLUB";
+    expiry.textContent = activeCourse.courses?.ends_at
+      ? `Club incluido hasta ${new Date(activeCourse.courses.ends_at).toLocaleDateString("es-AR")}`
+      : "Club incluido durante el curso";
+    title.textContent = "Tu curso incluye acceso temporal al Club.";
+    description.textContent =
+      "El material del curso queda permanentemente en tu biblioteca. Cuando finalice, podrás continuar en el Club con la membresía mensual.";
+    action.textContent = "Conocer membresía →";
+  } else {
+    plan.textContent = "CURSO COMPLETADO";
+    expiry.textContent = "Material del curso disponible permanentemente";
+    title.textContent = "Tu curso sigue en tu biblioteca.";
+    description.textContent =
+      "El beneficio temporal del Club terminó. Podés contratar la membresía mensual para acceder nuevamente al contenido exclusivo.";
+    action.textContent = "Activar membresía →";
+  }
+  document.body.classList.remove("access-checking");
+  render();
+}
+let assignedCourseContent = null;
+async function loadAssignedContent() {
+  const client = window.MusikAuth?.client,
+    user = window.MusikAuth?.user;
+  if (!client || !user) return;
+  let result = await client
+    .from("club_content")
+    .select(
+      "id,title,description,content_type,duration_label,content_url,cover_url,accent_color,published,access_scope,course_id,file_path,file_name,file_kind",
+    )
+    .eq("published", true)
+    .order("created_at", { ascending: false });
+  if (result.error)
+    result = await client
+      .from("club_content")
+      .select(
+        "id,title,description,content_type,duration_label,content_url,cover_url,accent_color,published,access_scope,course_id",
+      )
+      .eq("published", true)
+      .order("created_at", { ascending: false });
+  if (!result.error) {
+    assignedCourseContent = (result.data || []).map((item) => ({
+      id: item.id,
+      type: item.content_type === "class" ? "clase" : item.content_type,
+      access_scope: item.access_scope || "club",
+      course_id: item.course_id,
+      label:
+        item.content_type === "class"
+          ? "CLASE"
+          : item.content_type === "video"
+            ? "MASTERCLASS"
+            : "DESCARGABLE",
+      title: item.title,
+      text: item.description || "",
+      duration: item.duration_label || "",
+      url: item.content_url || "#",
+      file_path: item.file_path || "",
+      file_name: item.file_name || "",
+      file_kind: item.file_kind || "",
+      preview: item.cover_url || "",
+      color: item.accent_color || "#00eaf2",
+      enabled: item.published !== false,
+    }));
+    render();
+  }
+}
+const renderAssignedContent = render;
+render = function () {
+  if (!assignedCourseContent) return renderAssignedContent();
+  const courseIds = new Set(
+      (memberEntitlement.courses || []).map((item) =>
+        String(item.courses?.id || item.course_id || ""),
+      ),
+    ),
+    visible = assignedCourseContent.filter((item) => {
+      const allowed =
+        item.access_scope === "club"
+          ? memberEntitlement.hasClub
+          : memberEntitlement.hasCourse &&
+            (!item.course_id || courseIds.has(String(item.course_id)));
+      return (
+        item.enabled && allowed && (filter === "all" || item.type === filter)
+      );
+    });
+  grid.innerHTML =
+    visible
+      .map(
+        (c) =>
+          `<article class="student-card"><div class="student-card-art ${c.file_kind === "pdf" ? "is-pdf" : ""}" style="--accent:${c.color};${c.preview ? `background-image:linear-gradient(0deg,rgba(8,8,12,.58),rgba(8,8,12,.05)),url('${c.preview}')` : ""}"><span>${c.file_kind === "pdf" ? "PDF · " : ""}${c.label}</span></div><div class="student-card-body"><span class="content-access ${c.access_scope === "club" ? "club" : ""}">${c.access_scope === "club" ? "MUSIK CLUB · VIGENTE" : "MI CURSO · PERMANENTE"}</span><small>${c.duration}</small><h3>${c.title}</h3><p>${c.text}</p><button data-open-content="${c.id}">${c.file_kind === "pdf" ? "Abrir / descargar PDF" : "Abrir contenido"} →</button></div></article>`,
+      )
+      .join("") ||
+    "<p>No hay contenido publicado para tus cursos en esta categoría.</p>";
+  grid
+    .querySelectorAll("[data-open-content]")
+    .forEach(
+      (button) =>
+        (button.onclick = () =>
+          openMemberContent(
+            assignedCourseContent.find(
+              (item) => String(item.id) === String(button.dataset.openContent),
+            ),
+          )),
+    );
+};
 validatePaidAccess().then(loadAssignedContent);
-setInterval(()=>{if(document.visibilityState==='visible')validatePaidAccess()},60000);
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')validatePaidAccess()});
+setInterval(() => {
+  if (document.visibilityState === "visible") validatePaidAccess();
+}, 60000);
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") validatePaidAccess();
+});
 
 /* Envío de tracks del alumno y circuito de aprobación. */
-const progressSection=document.querySelector('#progreso');
-const trackStudio=document.createElement('section');
-trackStudio.className='track-studio';trackStudio.id='mis-tracks';
-trackStudio.innerHTML=`<div class="track-studio-head"><div><span class="kicker">TU MÚSICA / SELLO MUSIK</span><h2>Presentá tu track.</h2><p>Enviá tu producción a la discográfica de MUSIK. El equipo la evaluará primero para el sello y, si la aprueba, podrá seleccionarla después para publicarla en el sitio.</p></div><span class="review-flow">ENVÍO → SELLO MUSIK → PUBLICACIÓN OPCIONAL</span></div><form id="track-submission-form" class="track-form"><div class="track-form-grid"><label>Nombre artístico<input name="artist_name" required maxlength="60" placeholder="Tu nombre o alias"></label><label>Título del track<input name="title" required maxlength="90" placeholder="Nombre del track"></label><label>Género<input name="genre" required maxlength="50" placeholder="House, Techno, Melodic…"></label><label>Enlace de audio <small>SoundCloud o MP3 público</small><input name="audio_url" type="url" placeholder="https://..."></label></div><label class="track-file">O subí el archivo de audio <small>MP3, WAV o M4A · máximo 50 MB</small><input name="audio_file" type="file" accept="audio/mpeg,audio/wav,audio/mp4,audio/x-m4a"></label><label>Mensaje para el sello<textarea name="message" rows="3" maxlength="300" placeholder="Contanos brevemente sobre el track"></textarea></label><button class="btn primary" type="submit">Enviar al sello MUSIK →</button></form><div class="my-track-list" id="my-track-list"></div>`;
+const progressSection = document.querySelector("#progreso");
+const trackStudio = document.createElement("section");
+trackStudio.className = "track-studio";
+trackStudio.id = "mis-tracks";
+trackStudio.innerHTML = `<div class="track-studio-head"><div><span class="kicker">TU MÚSICA / SELLO MUSIK</span><h2>Presentá tu track.</h2><p>Enviá tu producción a la discográfica de MUSIK. El equipo la evaluará primero para el sello y, si la aprueba, podrá seleccionarla después para publicarla en el sitio.</p></div><span class="review-flow">ENVÍO → SELLO MUSIK → PUBLICACIÓN OPCIONAL</span></div><form id="track-submission-form" class="track-form"><div class="track-form-grid"><label>Nombre artístico<input name="artist_name" required maxlength="60" placeholder="Tu nombre o alias"></label><label>Título del track<input name="title" required maxlength="90" placeholder="Nombre del track"></label><label>Género<input name="genre" required maxlength="50" placeholder="House, Techno, Melodic…"></label><label>Enlace de audio <small>SoundCloud o MP3 público</small><input name="audio_url" type="url" placeholder="https://..."></label></div><label class="track-file">O subí el archivo de audio <small>MP3, WAV o M4A · máximo 50 MB</small><input name="audio_file" type="file" accept="audio/mpeg,audio/wav,audio/mp4,audio/x-m4a"></label><label>Mensaje para el sello<textarea name="message" rows="3" maxlength="300" placeholder="Contanos brevemente sobre el track"></textarea></label><button class="btn primary" type="submit">Enviar al sello MUSIK →</button></form><div class="my-track-list" id="my-track-list"></div>`;
 progressSection?.before(trackStudio);
-const memberNav=document.querySelector('.member-side nav');
-if(memberNav){const link=document.createElement('a');link.href='#mis-tracks';link.textContent='♫ Mis tracks';memberNav.children[1]?.after(link)}
-const trackForm=document.querySelector('#track-submission-form'),myTrackList=document.querySelector('#my-track-list');
-const trackStatusLabel={pending:'EN REVISIÓN DEL SELLO',approved:'APROBADO POR MUSIK',rejected:'NO APROBADO'};
-function renderMyTracks(items){if(!myTrackList)return;myTrackList.innerHTML=items.length?`<h3>Mis envíos</h3>${items.map(item=>{const label=item.site_published?'PUBLICADO EN EL SITIO':trackStatusLabel[item.status]||item.status,statusClass=item.site_published?'published':item.status;return `<article class="my-track"><span class="track-status ${statusClass}">${label}</span><div><strong>${item.title}</strong><small>${item.artist_name} · ${item.genre}</small></div><a href="${item.audio_url}" target="_blank" rel="noopener">Escuchar ↗</a></article>`}).join('')}`:'<p class="track-empty">Todavía no enviaste tracks para revisión.</p>'}
-async function loadMyTracks(){const user=window.MusikAuth?.user;let items=JSON.parse(localStorage.getItem('musik-track-submissions')||'[]').filter(x=>!user||x.user_id===user.id||x.user_email===user.email);if(user&&window.MusikAuth?.client){const{data,error}=await window.MusikAuth.client.from('track_submissions').select('*').eq('user_id',user.id).order('created_at',{ascending:false});if(!error)items=data}renderMyTracks(items)}
-trackForm?.addEventListener('submit',async event=>{event.preventDefault();const user=window.MusikAuth?.user,client=window.MusikAuth?.client,form=new FormData(trackForm),file=form.get('audio_file');let audioUrl=String(form.get('audio_url')||'').trim();if(file?.size>50*1024*1024){showToast('El archivo supera los 50 MB.');return}const submit=trackForm.querySelector('button[type="submit"]');submit.disabled=true;submit.textContent='Enviando…';try{if(file?.size){if(!user||!client)throw new Error('Iniciá sesión para subir el archivo.');const clean=file.name.replace(/[^a-zA-Z0-9._-]/g,'-'),path=`${user.id}/${crypto.randomUUID()}-${clean}`;const{error:uploadError}=await client.storage.from('track-audio').upload(path,file,{contentType:file.type,upsert:false});if(uploadError)throw uploadError;audioUrl=client.storage.from('track-audio').getPublicUrl(path).data.publicUrl}if(!audioUrl)throw new Error('Agregá un enlace o seleccioná un archivo.');const entry={id:crypto.randomUUID(),user_id:user?.id||null,user_email:user?.email||'',artist_name:String(form.get('artist_name')),title:String(form.get('title')),genre:String(form.get('genre')),audio_url:audioUrl,message:String(form.get('message')||''),status:'pending',created_at:new Date().toISOString()};let saved=false;if(user&&client){const{error}=await client.from('track_submissions').insert(entry);if(!error)saved=true}if(!saved){const local=JSON.parse(localStorage.getItem('musik-track-submissions')||'[]');local.unshift(entry);localStorage.setItem('musik-track-submissions',JSON.stringify(local))}trackForm.reset();showToast('Track enviado al sello MUSIK para evaluación ✓');await loadMyTracks()}catch(error){showToast(error.message||'No pudimos enviar el track.')}finally{submit.disabled=false;submit.textContent='Enviar al sello MUSIK →'}});
-const trackUserWait=setInterval(()=>{if(window.MusikAuth?.user){clearInterval(trackUserWait);loadMyTracks()}},400);setTimeout(()=>{clearInterval(trackUserWait);loadMyTracks()},4000);
+const memberNav = document.querySelector(".member-side nav");
+if (memberNav) {
+  const link = document.createElement("a");
+  link.href = "#mis-tracks";
+  link.textContent = "♫ Mis tracks";
+  memberNav.children[1]?.after(link);
+}
+const trackForm = document.querySelector("#track-submission-form"),
+  myTrackList = document.querySelector("#my-track-list");
+const trackStatusLabel = {
+  pending: "EN REVISIÓN DEL SELLO",
+  approved: "APROBADO POR MUSIK",
+  rejected: "NO APROBADO",
+};
+function renderMyTracks(items) {
+  if (!myTrackList) return;
+  myTrackList.innerHTML = items.length
+    ? `<h3>Mis envíos</h3>${items
+        .map((item) => {
+          const label = item.site_published
+              ? "PUBLICADO EN EL SITIO"
+              : trackStatusLabel[item.status] || item.status,
+            statusClass = item.site_published ? "published" : item.status;
+          return `<article class="my-track"><span class="track-status ${statusClass}">${label}</span><div><strong>${item.title}</strong><small>${item.artist_name} · ${item.genre}</small></div><a href="${item.audio_url}" target="_blank" rel="noopener">Escuchar ↗</a></article>`;
+        })
+        .join("")}`
+    : '<p class="track-empty">Todavía no enviaste tracks para revisión.</p>';
+}
+async function loadMyTracks() {
+  const user = window.MusikAuth?.user;
+  let items = JSON.parse(
+    localStorage.getItem("musik-track-submissions") || "[]",
+  ).filter(
+    (x) => !user || x.user_id === user.id || x.user_email === user.email,
+  );
+  if (user && window.MusikAuth?.client) {
+    const { data, error } = await window.MusikAuth.client
+      .from("track_submissions")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+    if (!error) items = data;
+  }
+  renderMyTracks(items);
+}
+trackForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const user = window.MusikAuth?.user,
+    client = window.MusikAuth?.client,
+    form = new FormData(trackForm),
+    file = form.get("audio_file");
+  let audioUrl = String(form.get("audio_url") || "").trim();
+  if (file?.size > 50 * 1024 * 1024) {
+    showToast("El archivo supera los 50 MB.");
+    return;
+  }
+  const submit = trackForm.querySelector('button[type="submit"]');
+  submit.disabled = true;
+  submit.textContent = "Enviando…";
+  try {
+    if (file?.size) {
+      if (!user || !client)
+        throw new Error("Iniciá sesión para subir el archivo.");
+      const clean = file.name.replace(/[^a-zA-Z0-9._-]/g, "-"),
+        path = `${user.id}/${crypto.randomUUID()}-${clean}`;
+      const { error: uploadError } = await client.storage
+        .from("track-audio")
+        .upload(path, file, { contentType: file.type, upsert: false });
+      if (uploadError) throw uploadError;
+      audioUrl = client.storage.from("track-audio").getPublicUrl(path)
+        .data.publicUrl;
+    }
+    if (!audioUrl) throw new Error("Agregá un enlace o seleccioná un archivo.");
+    const entry = {
+      id: crypto.randomUUID(),
+      user_id: user?.id || null,
+      user_email: user?.email || "",
+      artist_name: String(form.get("artist_name")),
+      title: String(form.get("title")),
+      genre: String(form.get("genre")),
+      audio_url: audioUrl,
+      message: String(form.get("message") || ""),
+      status: "pending",
+      created_at: new Date().toISOString(),
+    };
+    let saved = false;
+    if (user && client) {
+      const { error } = await client.from("track_submissions").insert(entry);
+      if (!error) saved = true;
+    }
+    if (!saved) {
+      const local = JSON.parse(
+        localStorage.getItem("musik-track-submissions") || "[]",
+      );
+      local.unshift(entry);
+      localStorage.setItem("musik-track-submissions", JSON.stringify(local));
+    }
+    trackForm.reset();
+    showToast("Track enviado al sello MUSIK para evaluación ✓");
+    await loadMyTracks();
+  } catch (error) {
+    showToast(error.message || "No pudimos enviar el track.");
+  } finally {
+    submit.disabled = false;
+    submit.textContent = "Enviar al sello MUSIK →";
+  }
+});
+const trackUserWait = setInterval(() => {
+  if (window.MusikAuth?.user) {
+    clearInterval(trackUserWait);
+    loadMyTracks();
+  }
+}, 400);
+setTimeout(() => {
+  clearInterval(trackUserWait);
+  loadMyTracks();
+}, 4000);
 
 /* Bandeja privada de mensajes y contenidos enviados por administración. */
-const memberInbox=document.createElement('section');memberInbox.className='member-inbox';memberInbox.id='mensajes';memberInbox.innerHTML=`<div class="member-section-head"><div><span class="kicker">MENSAJES / CONTENIDO PERSONAL</span><h2>Tu bandeja Musik.</h2></div><span class="inbox-live"><i></i> Actualizada</span></div><div class="member-inbox-list" id="member-inbox-list"><p>Cargando envíos…</p></div>`;trackStudio.before(memberInbox);
-if(memberNav){const inboxLink=document.createElement('a');inboxLink.href='#mensajes';inboxLink.textContent='✦ Mensajes';memberNav.children[1]?.after(inboxLink)}
-const inboxList=document.querySelector('#member-inbox-list');
-function renderInbox(items){inboxList.innerHTML=items.length?items.map(item=>`<article class="inbox-item ${item.kind}"><span>${item.kind==='content'?'CONTENIDO':'MENSAJE'}</span><div><small>${new Date(item.created_at).toLocaleDateString('es-AR')}</small><h3>${item.title}</h3><p>${item.body}</p>${item.url?`<a href="${item.url}" target="_blank" rel="noopener">Abrir contenido →</a>`:''}</div></article>`).join(''):'<p class="track-empty">Todavía no recibiste mensajes ni contenidos personalizados.</p>'}
-async function loadMemberInbox(){const user=window.MusikAuth?.user;let items=JSON.parse(localStorage.getItem('musik-member-deliveries')||'[]').filter(x=>!x.recipient_email||x.recipient_email===user?.email);if(user&&window.MusikAuth?.client){const{data,error}=await window.MusikAuth.client.from('member_deliveries').select('*').or(`recipient_email.is.null,recipient_email.eq.${user.email}`).order('created_at',{ascending:false});if(!error)items=data}renderInbox(items)}
-const inboxUserWait=setInterval(()=>{if(window.MusikAuth?.user){clearInterval(inboxUserWait);loadMemberInbox()}},400);setTimeout(()=>{clearInterval(inboxUserWait);loadMemberInbox()},4000);
+const memberInbox = document.createElement("section");
+memberInbox.className = "member-inbox";
+memberInbox.id = "mensajes";
+memberInbox.innerHTML = `<div class="member-section-head"><div><span class="kicker">MENSAJES / CONTENIDO PERSONAL</span><h2>Tu bandeja Musik.</h2></div><span class="inbox-live"><i></i> Actualizada</span></div><div class="member-inbox-list" id="member-inbox-list"><p>Cargando envíos…</p></div>`;
+trackStudio.before(memberInbox);
+if (memberNav) {
+  const inboxLink = document.createElement("a");
+  inboxLink.href = "#mensajes";
+  inboxLink.textContent = "✦ Mensajes";
+  memberNav.children[1]?.after(inboxLink);
+}
+const inboxList = document.querySelector("#member-inbox-list");
+function renderInbox(items) {
+  inboxList.innerHTML = items.length
+    ? items
+        .map(
+          (item) =>
+            `<article class="inbox-item ${item.kind}"><span>${item.kind === "content" ? "CONTENIDO" : "MENSAJE"}</span><div><small>${new Date(item.created_at).toLocaleDateString("es-AR")}</small><h3>${item.title}</h3><p>${item.body}</p>${item.url ? `<a href="${item.url}" target="_blank" rel="noopener">Abrir contenido →</a>` : ""}</div></article>`,
+        )
+        .join("")
+    : '<p class="track-empty">Todavía no recibiste mensajes ni contenidos personalizados.</p>';
+}
+async function loadMemberInbox() {
+  const user = window.MusikAuth?.user;
+  let items = JSON.parse(
+    localStorage.getItem("musik-member-deliveries") || "[]",
+  ).filter((x) => !x.recipient_email || x.recipient_email === user?.email);
+  if (user && window.MusikAuth?.client) {
+    const { data, error } = await window.MusikAuth.client
+      .from("member_deliveries")
+      .select("*")
+      .or(`recipient_email.is.null,recipient_email.eq.${user.email}`)
+      .order("created_at", { ascending: false });
+    if (!error) items = data;
+  }
+  renderInbox(items);
+}
+const inboxUserWait = setInterval(() => {
+  if (window.MusikAuth?.user) {
+    clearInterval(inboxUserWait);
+    loadMemberInbox();
+  }
+}, 400);
+setTimeout(() => {
+  clearInterval(inboxUserWait);
+  loadMemberInbox();
+}, 4000);
 
 /* Reservas y notificaciones vinculadas a la cuenta del alumno. */
-const memberContentSection=document.querySelector('#contenidos');
-const myBookings=document.createElement('section');myBookings.className='member-bookings';myBookings.id='mis-reservas';myBookings.innerHTML=`<div class="member-section-head"><div><span class="kicker">AGENDA PERSONAL</span><h2>Mis reservas.</h2><p>Salas de práctica, cursos y clases presenciales confirmadas.</p></div><a class="book-more" href="club.html#agenda">＋ Nueva reserva</a></div><div class="booking-notifications" id="booking-notifications"></div><div class="member-booking-list" id="member-booking-list"><p>Cargando reservas…</p></div>`;memberContentSection?.before(myBookings);
-if(memberNav){const bookingLink=document.createElement('a');bookingLink.href='#mis-reservas';bookingLink.textContent='▣ Mis reservas';memberNav.children[1]?.after(bookingLink)}
-const memberBookingList=document.querySelector('#member-booking-list'),bookingNotifications=document.querySelector('#booking-notifications');
-function renderMemberBookings(items){const active=items.filter(item=>item.status==='confirmed');memberBookingList.innerHTML=active.length?active.map(item=>`<article class="member-booking"><div class="member-booking-date"><strong>${item.day}</strong><span>${item.month}</span></div><div><small>${item.booking_type==='practica'?'SALA / PRÁCTICA':item.booking_type==='clase'?'CLASE / MEMBRESÍA':String(item.booking_type).toUpperCase()}</small><h3>${item.title}</h3><p>${item.time_label} h · ${item.place}</p></div><span class="booking-confirmed"><i></i> Confirmada</span><button data-cancel-booking="${item.id}">Cancelar</button></article>`).join(''):'<div class="empty-bookings"><strong>No tenés reservas activas.</strong><span>Elegí una sala, curso o clase desde la agenda del Club.</span><a href="club.html#agenda">Ver agenda →</a></div>';memberBookingList.querySelectorAll('[data-cancel-booking]').forEach(button=>button.onclick=()=>cancelMemberBooking(button.dataset.cancelBooking));const next=active[0],card=document.querySelector('.next-class');if(card&&next){card.querySelector('h2').textContent=next.title;card.querySelector('p').textContent=`${next.day} ${next.month} · ${next.time_label} h · ${next.place}`;card.querySelector('a').href='#mis-reservas'}}
-function renderBookingNotifications(items){bookingNotifications.innerHTML=items.slice(0,3).map(item=>`<article><span>✓</span><div><strong>${item.title}</strong><p>${item.body}</p><small>${new Date(item.created_at).toLocaleString('es-AR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</small></div></article>`).join('')}
-async function loadMemberBookings(){const user=window.MusikAuth?.user;let bookings=JSON.parse(localStorage.getItem('musik-club-bookings')||'[]').filter(item=>!user||item.user_id===user.id||item.member_email===user.email),notifications=JSON.parse(localStorage.getItem('musik-member-notifications')||'[]').filter(item=>!user||item.user_id===user.id||item.member_email===user.email);if(user&&window.MusikAuth?.client){const[{data:bookingData,error:bookingError},{data:notificationData,error:notificationError}]=await Promise.all([window.MusikAuth.client.from('club_bookings').select('*').eq('user_id',user.id).order('created_at',{ascending:false}),window.MusikAuth.client.from('member_notifications').select('*').eq('user_id',user.id).order('created_at',{ascending:false})]);if(!bookingError)bookings=bookingData;if(!notificationError)notifications=notificationData}renderMemberBookings(bookings);renderBookingNotifications(notifications)}
-async function cancelMemberBooking(id){const user=window.MusikAuth?.user,client=window.MusikAuth?.client;let saved=false;if(user&&client){const{error}=await client.from('club_bookings').update({status:'cancelled'}).eq('id',id).eq('user_id',user.id);saved=!error}if(!saved){const items=JSON.parse(localStorage.getItem('musik-club-bookings')||'[]'),item=items.find(entry=>String(entry.id)===String(id));if(item){item.status='cancelled';localStorage.setItem('musik-club-bookings',JSON.stringify(items))}}showToast('Reserva cancelada. El cupo vuelve a estar disponible.');loadMemberBookings()}
-const bookingUserWait=setInterval(()=>{if(window.MusikAuth?.user){clearInterval(bookingUserWait);loadMemberBookings()}},400);setTimeout(()=>{clearInterval(bookingUserWait);loadMemberBookings()},4000);
-const memberThemeKey='musik-member-theme';
-function applyMemberTheme(theme){document.body.classList.toggle('theme-light',theme==='light');const button=document.querySelector('#member-theme-toggle');if(button){button.textContent=theme==='light'?'☾ Modo oscuro':'☀ Modo claro';button.setAttribute('aria-pressed',String(theme==='light'))}}
-let memberTheme='dark';try{memberTheme=localStorage.getItem(memberThemeKey)||'dark'}catch{}applyMemberTheme(memberTheme);
-const memberThemeButton=document.createElement('button');memberThemeButton.id='member-theme-toggle';memberThemeButton.className='theme-toggle';memberThemeButton.type='button';memberThemeButton.setAttribute('aria-label','Cambiar fondo del panel');const memberAvatarButton=document.querySelector('#student-menu'),memberHeaderActions=document.createElement('div');memberHeaderActions.className='member-header-actions';memberAvatarButton?.before(memberHeaderActions);if(memberAvatarButton)memberHeaderActions.append(memberThemeButton,memberAvatarButton);applyMemberTheme(memberTheme);memberThemeButton.onclick=()=>{memberTheme=document.body.classList.contains('theme-light')?'dark':'light';try{localStorage.setItem(memberThemeKey,memberTheme)}catch{}applyMemberTheme(memberTheme)};
+const memberContentSection = document.querySelector("#contenidos");
+const myBookings = document.createElement("section");
+myBookings.className = "member-bookings";
+myBookings.id = "mis-reservas";
+myBookings.innerHTML = `<div class="member-section-head"><div><span class="kicker">AGENDA PERSONAL</span><h2>Mis reservas.</h2><p>Salas de práctica, cursos y clases presenciales confirmadas.</p></div><a class="book-more" href="club.html#agenda">＋ Nueva reserva</a></div><div class="booking-notifications" id="booking-notifications"></div><div class="member-booking-list" id="member-booking-list"><p>Cargando reservas…</p></div>`;
+memberContentSection?.before(myBookings);
+if (memberNav) {
+  const bookingLink = document.createElement("a");
+  bookingLink.href = "#mis-reservas";
+  bookingLink.textContent = "▣ Mis reservas";
+  memberNav.children[1]?.after(bookingLink);
+}
+const memberBookingList = document.querySelector("#member-booking-list"),
+  bookingNotifications = document.querySelector("#booking-notifications");
+function renderMemberBookings(items) {
+  const active = items.filter((item) => item.status === "confirmed");
+  memberBookingList.innerHTML = active.length
+    ? active
+        .map(
+          (item) =>
+            `<article class="member-booking"><div class="member-booking-date"><strong>${item.day}</strong><span>${item.month}</span></div><div><small>${item.booking_type === "practica" ? "SALA / PRÁCTICA" : item.booking_type === "clase" ? "CLASE / MEMBRESÍA" : String(item.booking_type).toUpperCase()}</small><h3>${item.title}</h3><p>${item.time_label} h · ${item.place}</p></div><span class="booking-confirmed"><i></i> Confirmada</span><button data-cancel-booking="${item.id}">Cancelar</button></article>`,
+        )
+        .join("")
+    : '<div class="empty-bookings"><strong>No tenés reservas activas.</strong><span>Elegí una sala, curso o clase desde la agenda del Club.</span><a href="club.html#agenda">Ver agenda →</a></div>';
+  memberBookingList
+    .querySelectorAll("[data-cancel-booking]")
+    .forEach(
+      (button) =>
+        (button.onclick = () =>
+          cancelMemberBooking(button.dataset.cancelBooking)),
+    );
+  const next = active[0],
+    card = document.querySelector(".next-class");
+  if (card && next) {
+    card.querySelector("h2").textContent = next.title;
+    card.querySelector("p").textContent =
+      `${next.day} ${next.month} · ${next.time_label} h · ${next.place}`;
+    card.querySelector("a").href = "#mis-reservas";
+  }
+}
+function renderBookingNotifications(items) {
+  bookingNotifications.innerHTML = items
+    .slice(0, 3)
+    .map(
+      (item) =>
+        `<article><span>✓</span><div><strong>${item.title}</strong><p>${item.body}</p><small>${new Date(item.created_at).toLocaleString("es-AR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })}</small></div></article>`,
+    )
+    .join("");
+}
+async function loadMemberBookings() {
+  const user = window.MusikAuth?.user;
+  let bookings = JSON.parse(
+      localStorage.getItem("musik-club-bookings") || "[]",
+    ).filter(
+      (item) =>
+        !user || item.user_id === user.id || item.member_email === user.email,
+    ),
+    notifications = JSON.parse(
+      localStorage.getItem("musik-member-notifications") || "[]",
+    ).filter(
+      (item) =>
+        !user || item.user_id === user.id || item.member_email === user.email,
+    );
+  if (user && window.MusikAuth?.client) {
+    const [
+      { data: bookingData, error: bookingError },
+      { data: notificationData, error: notificationError },
+    ] = await Promise.all([
+      window.MusikAuth.client
+        .from("club_bookings")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false }),
+      window.MusikAuth.client
+        .from("member_notifications")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false }),
+    ]);
+    if (!bookingError) bookings = bookingData;
+    if (!notificationError) notifications = notificationData;
+  }
+  renderMemberBookings(bookings);
+  renderBookingNotifications(notifications);
+}
+async function cancelMemberBooking(id) {
+  const user = window.MusikAuth?.user,
+    client = window.MusikAuth?.client;
+  let saved = false;
+  if (user && client) {
+    const { error } = await client
+      .from("club_bookings")
+      .update({ status: "cancelled" })
+      .eq("id", id)
+      .eq("user_id", user.id);
+    saved = !error;
+  }
+  if (!saved) {
+    const items = JSON.parse(
+        localStorage.getItem("musik-club-bookings") || "[]",
+      ),
+      item = items.find((entry) => String(entry.id) === String(id));
+    if (item) {
+      item.status = "cancelled";
+      localStorage.setItem("musik-club-bookings", JSON.stringify(items));
+    }
+  }
+  showToast("Reserva cancelada. El cupo vuelve a estar disponible.");
+  loadMemberBookings();
+}
+const bookingUserWait = setInterval(() => {
+  if (window.MusikAuth?.user) {
+    clearInterval(bookingUserWait);
+    loadMemberBookings();
+  }
+}, 400);
+setTimeout(() => {
+  clearInterval(bookingUserWait);
+  loadMemberBookings();
+}, 4000);
+const memberThemeKey = "musik-member-theme";
+function applyMemberTheme(theme) {
+  document.body.classList.toggle("theme-light", theme === "light");
+  const button = document.querySelector("#member-theme-toggle");
+  if (button) {
+    button.textContent = theme === "light" ? "☾ Modo oscuro" : "☀ Modo claro";
+    button.setAttribute("aria-pressed", String(theme === "light"));
+  }
+}
+let memberTheme = "dark";
+try {
+  memberTheme = localStorage.getItem(memberThemeKey) || "dark";
+} catch {}
+applyMemberTheme(memberTheme);
+const memberThemeButton = document.createElement("button");
+memberThemeButton.id = "member-theme-toggle";
+memberThemeButton.className = "theme-toggle";
+memberThemeButton.type = "button";
+memberThemeButton.setAttribute("aria-label", "Cambiar fondo del panel");
+const memberAvatarButton = document.querySelector("#student-menu"),
+  memberHeaderActions = document.createElement("div");
+memberHeaderActions.className = "member-header-actions";
+memberAvatarButton?.before(memberHeaderActions);
+if (memberAvatarButton)
+  memberHeaderActions.append(memberThemeButton, memberAvatarButton);
+applyMemberTheme(memberTheme);
+memberThemeButton.onclick = () => {
+  memberTheme = document.body.classList.contains("theme-light")
+    ? "dark"
+    : "light";
+  try {
+    localStorage.setItem(memberThemeKey, memberTheme);
+  } catch {}
+  applyMemberTheme(memberTheme);
+};
 
 /* Navegación estable del panel: cada solapa comienza desde su encabezado. */
-if('scrollRestoration' in history)history.scrollRestoration='manual';
-document.querySelectorAll('.member-side a[href^="#"]').forEach(link=>link.addEventListener('click',event=>{const target=document.querySelector(link.getAttribute('href'));if(!target)return;event.preventDefault();document.querySelectorAll('.member-side nav a').forEach(item=>item.classList.remove('active'));link.classList.add('active');history.pushState(null,'',link.getAttribute('href'));target.scrollIntoView({behavior:'smooth',block:'start'})}));
-addEventListener('pageshow',()=>requestAnimationFrame(()=>{if(location.hash){document.querySelector(location.hash)?.scrollIntoView({block:'start'})}else scrollTo(0,0)}));
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+document.querySelectorAll('.member-side a[href^="#"]').forEach((link) =>
+  link.addEventListener("click", (event) => {
+    const target = document.querySelector(link.getAttribute("href"));
+    if (!target) return;
+    event.preventDefault();
+    document
+      .querySelectorAll(".member-side nav a")
+      .forEach((item) => item.classList.remove("active"));
+    link.classList.add("active");
+    history.pushState(null, "", link.getAttribute("href"));
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }),
+);
+addEventListener("pageshow", () =>
+  requestAnimationFrame(() => {
+    if (location.hash) {
+      document.querySelector(location.hash)?.scrollIntoView({ block: "start" });
+    } else scrollTo(0, 0);
+  }),
+);
