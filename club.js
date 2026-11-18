@@ -144,11 +144,25 @@ document.querySelector("#member-dialog h2").textContent =
 document.querySelector("#member-dialog h2+p").textContent =
   "El panel se habilita después del pago de un curso o membresía. Si ya compraste, ingresá con tu cuenta.";
 clubAuthForm.innerHTML =
-  '<label>Nombre completo <small>solo para registrarte</small><input name="name" autocomplete="name" placeholder="Tu nombre"></label><label>Email<input name="email" type="email" autocomplete="username" required placeholder="vos@email.com"></label><label>Contraseña<input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Mínimo 8 caracteres"></label><button class="btn primary" type="submit">Iniciar sesión →</button><button class="auth-register" id="member-register" type="button">Crear una cuenta nueva</button><p class="member-auth-feedback" role="status" aria-live="polite"></p>';
+  '<label>Nombre completo <small>solo para registrarte</small><input name="name" autocomplete="name" placeholder="Tu nombre"></label><label>Email<input name="email" type="email" autocomplete="username" required placeholder="vos@email.com"></label><label>Contraseña<input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Mínimo 8 caracteres"></label><button class="btn primary" type="submit">Iniciar sesión →</button><p class="member-auth-feedback" role="status" aria-live="polite"></p><button class="auth-register" id="member-register" type="button">Crear una cuenta nueva</button>';
 const memberAuthFeedback = clubAuthForm.querySelector(".member-auth-feedback");
 const setMemberAuthFeedback = (message, type = "error") => {
   memberAuthFeedback.textContent = message;
   memberAuthFeedback.dataset.type = type;
+};
+const friendlyAuthError = (error) => {
+  const message = String(error?.message || "").toLowerCase();
+  if (message.includes("invalid login credentials"))
+    return "Email o contraseña incorrectos.";
+  if (
+    message.includes("failed to fetch") ||
+    message.includes("network") ||
+    message.includes("timeout")
+  )
+    return "El servicio de acceso no está disponible en este momento. No es un problema de tu contraseña.";
+  if (message.includes("email not confirmed"))
+    return "Primero confirmá tu email desde el mensaje que te enviamos.";
+  return error?.message || "No pudimos iniciar sesión.";
 };
 clubAuthForm.onsubmit = async (event) => {
   event.preventDefault();
@@ -158,16 +172,19 @@ clubAuthForm.onsubmit = async (event) => {
   button.textContent = "Ingresando…";
   setMemberAuthFeedback("Verificando tu cuenta…", "loading");
   try {
-    await window.MusikAuth.signInPassword(
-      String(form.get("email")).trim(),
-      String(form.get("password")),
-    );
+    await Promise.race([
+      window.MusikAuth.signInPassword(
+        String(form.get("email")).trim(),
+        String(form.get("password")),
+      ),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Authentication timeout")), 12000),
+      ),
+    ]);
     setMemberAuthFeedback("Acceso correcto. Abriendo tu panel…", "success");
     location.assign("member.html");
   } catch (error) {
-    const message = error.message === "Invalid login credentials"
-        ? "Email o contraseña incorrectos."
-        : error.message || "No pudimos iniciar sesión.";
+    const message = friendlyAuthError(error);
     setMemberAuthFeedback(message);
     showToast(message);
   } finally {
