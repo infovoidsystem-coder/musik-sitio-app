@@ -1225,6 +1225,10 @@
 .installed-app #member-dialog::backdrop {
   background: #050507;
 }
+.member-session[hidden],
+#club-register[hidden] {
+  display: none !important;
+}
 .install-guide {
   max-width: 440px;
   text-align: center;

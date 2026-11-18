@@ -427,19 +427,25 @@ if (installedApp) {
   const openInstalledLogin = () => {
     if (!memberDialog.open) memberDialog.showModal();
   };
-  const appAuthWait = setInterval(() => {
-    if (window.MusikAuth?.user) {
-      clearInterval(appAuthWait);
-      location.replace("member.html");
-    } else if (window.MusikAuth?.configured) {
-      clearInterval(appAuthWait);
+  const resolveInstalledSession = async () => {
+    const auth = window.MusikAuth;
+    if (!auth?.configured || !auth.client) {
       openInstalledLogin();
+      return;
     }
-  }, 350);
-  setTimeout(() => {
-    clearInterval(appAuthWait);
-    if (!window.MusikAuth?.user) openInstalledLogin();
-  }, 3500);
+    try {
+      await Promise.race([
+        auth.ready,
+        new Promise((resolve) => setTimeout(resolve, 8000)),
+      ]);
+    } catch {}
+    if (auth.user) {
+      location.replace("member.html?app=1");
+      return;
+    }
+    openInstalledLogin();
+  };
+  resolveInstalledSession();
 }
 
 /* Navegación directa del Club, sin enlaces duplicados. */
