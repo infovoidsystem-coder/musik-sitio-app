@@ -424,12 +424,23 @@ const installedApp =
   new URLSearchParams(location.search).get("app") === "1";
 if (installedApp) {
   document.body.classList.add("installed-app");
+  const appSplash = document.querySelector("#app-splash"),
+    splashStartedAt = performance.now(),
+    finishAppSplash = async () => {
+      const minimumDuration = 1750,
+        remaining = Math.max(0, minimumDuration - (performance.now() - splashStartedAt));
+      if (remaining) await new Promise((resolve) => setTimeout(resolve, remaining));
+      appSplash?.classList.add("leaving");
+      await new Promise((resolve) => setTimeout(resolve, 420));
+      appSplash?.remove();
+    };
   const openInstalledLogin = () => {
     if (!memberDialog.open) memberDialog.showModal();
   };
   const resolveInstalledSession = async () => {
     const auth = window.MusikAuth;
     if (!auth?.configured || !auth.client) {
+      await finishAppSplash();
       openInstalledLogin();
       return;
     }
@@ -439,6 +450,7 @@ if (installedApp) {
         new Promise((resolve) => setTimeout(resolve, 8000)),
       ]);
     } catch {}
+    await finishAppSplash();
     if (auth.user) {
       location.replace("member.html?app=1");
       return;
