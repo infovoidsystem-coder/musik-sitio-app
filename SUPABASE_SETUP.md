@@ -93,5 +93,5 @@ El alumno completa sus datos antes de ir a Mercado Pago. `create-checkout` guard
 
 ### Puntos, premios y progreso académico
 
-Ejecutá también `supabase/loyalty_points.sql`. Esta migración crea el saldo de puntos, movimientos, premios y asignaciones. Cada compra aprobada suma automáticamente 250 puntos —tanto online como registrada por administración— y cada curso completado suma 500 puntos. Desde el panel de administración se pueden crear premios, ajustar puntajes y asignar beneficios manualmente.
+Ejecutá también `supabase/loyalty_points.sql`. Esta migración crea el saldo de puntos, movimientos, premios y asignaciones. Cada pago online realizado desde la página y confirmado por Mercado Pago suma automáticamente 250 puntos; las cargas manuales no suman puntos de compra. Cada curso completado suma 500 puntos. Desde el panel de administración se pueden crear premios, ajustar puntajes y asignar beneficios manualmente.
 

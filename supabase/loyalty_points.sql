@@ -66,9 +66,9 @@ for each row execute procedure public.loyalty_after_point_event();
 create or replace function public.loyalty_award_payment()
 returns trigger language plpgsql security definer set search_path=public as $$
 begin
-  if new.status='approved' and (tg_op='INSERT' or old.status is distinct from 'approved') then
+  if new.provider='mercadopago' and new.status='approved' and (tg_op='INSERT' or old.status is distinct from 'approved') then
     insert into public.loyalty_point_events(user_id,points,reason,source_type,source_id)
-    values(new.user_id,250,'Compra aprobada','purchase',new.id)
+    values(new.user_id,250,'Pago online realizado','purchase',new.id)
     on conflict do nothing;
   end if;
   return new;
@@ -77,8 +77,12 @@ drop trigger if exists loyalty_points_payment on public.payments;
 create trigger loyalty_points_payment after insert or update of status on public.payments
 for each row execute procedure public.loyalty_award_payment();
 
--- Normaliza compras anteriores a la escala actual de MUSIK Rewards.
+-- Conserva únicamente pagos online de Mercado Pago y normaliza la escala actual.
+delete from public.loyalty_point_events e
+using public.payments p
+where e.source_type='purchase' and e.source_id=p.id and p.provider<>'mercadopago';
 update public.loyalty_point_events set points=250 where source_type='purchase' and points<>250;
+update public.loyalty_point_events set reason='Pago online realizado' where source_type='purchase';
 
 create or replace function public.loyalty_award_course()
 returns trigger language plpgsql security definer set search_path=public as $$
