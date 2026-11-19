@@ -33,6 +33,21 @@
       #08080b;
   }
 
+  /* En la app, WhatsApp queda por encima de la navegación y sin globo lateral. */
+  .member-page.app-shell .whatsapp-float {
+    right: 14px;
+    bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+    z-index: 115;
+    gap: 0;
+  }
+  .member-page.app-shell .whatsapp-tooltip { display: none; }
+  .member-page.app-shell .whatsapp-button {
+    width: 48px;
+    height: 48px;
+    box-shadow: 0 9px 24px rgba(0,0,0,.28);
+  }
+  .member-page.app-shell .whatsapp-button svg { width: 27px; height: 27px; }
+
   .app-shell .member-side {
     position: fixed;
     z-index: 120;
